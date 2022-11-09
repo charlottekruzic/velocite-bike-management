@@ -11,11 +11,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
- *  Quelques tests pour le package parser.
+ *  Quelques tests pour le package parser.*
  */
 public class ParserTest {
 
-    /** Chemin vers les fichiers de test */
+    /** Chemin vers les fichiers de test **/
     final String path = "./target/classes/data/";
 
     /** Instance singleton du parser de stations */
