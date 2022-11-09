@@ -14,7 +14,6 @@ public class AbonneTest {
     public void testNomCorrect() throws IncorrectNameException{
         // création d'un nouvel abonné
         Abonne a = new Abonne("Fred");
-        Abonne b = new Abonne("Test");
 
         // vérification de son nom
         Assert.assertEquals("Fred", a.getNom());
