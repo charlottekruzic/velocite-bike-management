@@ -8,8 +8,7 @@ import org.mockito.Mock;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 
 public class StationIntegrationTest {
@@ -283,6 +282,438 @@ public class StationIntegrationTest {
         // vérification de la distance entre deux bornes
         assertEquals(73.227,s.distance(s2),DELTA);
 
+    }
+
+    /**
+     * Tests Set & Get
+     */
+    @Test
+    public void testConstructorStationCapacityNeg() {
+        Station s = new Station("Station_1", 10020, 12200, -1);
+        assertEquals(s.capacite(),0);
+    }
+
+    @Test
+    public void testConstructorStationName() {
+        Station s = new Station("Station_1", 10020, 12200, 10);
+        assertEquals(s.getNom(),"Station_1");
+    }
+
+    @Test
+    public void testBornesLibresDepart() {
+        Station s = new Station("Station_1", 10020, 12200, 10);
+        assertEquals(s.nbBornesLibres(),10);
+    }
+
+    /**
+     * Tests emprunter
+     */
+    @Test
+    public void testEmprunterVeloSuccess() throws IncorrectNameException {
+        Station s = new Station("Station_1", 10020, 12200, 10);
+        Abonne a = new Abonne("Charlotte", "19372-10383-09976354833-37");
+        IRegistre r = new JRegistre();
+        s.setRegistre(r);
+        IVelo v = new Velo();
+        s.arrimerVelo(v,1);
+        assertNotNull(s.emprunterVelo(a, 1));
+    }
+
+    @Test
+    public void ck_testEmprunterVeloAbonneNull(){
+        Station s = new Station("Station_1", 10020, 12200, 10);
+        IRegistre r = new JRegistre();
+        s.setRegistre(r);
+        IVelo v = new Velo();
+        s.arrimerVelo(v,1);
+        assertNull(s.emprunterVelo(null,1));
+    }
+
+    @Test
+    public void testEmprunterVeloBorneInexistante() throws IncorrectNameException {
+        Station s = new Station("Station_1", 10020, 12200, 10);
+        Abonne a = new Abonne("Charlotte", "19372-10383-09976354833-37");
+        IRegistre r = new JRegistre();
+        s.setRegistre(r);
+        assertNull(s.emprunterVelo(a,s.capacite()+1));
+        assertNull(s.emprunterVelo(a,0));
+        assertNull(s.emprunterVelo(a,-1));
+    }
+
+    @Test
+    public void testEmprunterVeloBorneVide() throws IncorrectNameException {
+        Station s = new Station("Station_1", 10020, 12200, 10);
+        Abonne a = new Abonne("Charlotte", "19372-10383-09976354833-37");
+        IRegistre r = new JRegistre();
+        s.setRegistre(r);
+        assertNull(s.emprunterVelo(a,1));
+    }
+
+    @Test
+    public void ck_testEmprunterVeloAbonneBloque() throws IncorrectNameException {
+        Station s = new Station("Station_1", 10020, 12200, 10);
+        Abonne a = new Abonne("Charlotte", "19372-10383-09976354833-37");
+        a.bloquer();
+        IRegistre r = new JRegistre();
+        s.setRegistre(r);
+        IVelo v = new Velo();
+        s.arrimerVelo(v,1);
+        assertNull(s.emprunterVelo(a,1));
+    }
+
+
+    @Test
+    public void ck_testEmprunterVeloRegistreNull() throws IncorrectNameException {
+        Station s = new Station("Station_1", 10020, 12200, 10);
+        Abonne a = new Abonne("Charlotte", "19372-10383-09976354833-37");
+        IRegistre r = new JRegistre();
+        s.setRegistre(r);
+        IVelo v = new Velo();
+        s.arrimerVelo(v,1);
+        s.setRegistre(null);
+        assertNull(s.emprunterVelo(a,1));
+    }
+
+    @Test
+    public void testEmprunterVeloEmpruntEnCours() throws IncorrectNameException {
+        Station s = new Station("Station_1", 10020, 12200, 10);
+        Abonne a = new Abonne("Charlotte", "19372-10383-09976354833-37");
+        IRegistre r = new JRegistre();
+        s.setRegistre(r);
+        IVelo v1 = new Velo();
+        IVelo v2 = new Velo();
+        s.arrimerVelo(v1,1);
+        s.arrimerVelo(v2,2);
+        assertNotNull(s.emprunterVelo(a, 1));
+        assertNull(s.emprunterVelo(a, 2));
+    }
+
+    @Test
+    public void testEmprunterVeloDejaDecroche() throws IncorrectNameException {
+        Station s = new Station("Station_1", 10020, 12200, 10);
+        Abonne a = new Abonne("Charlotte", "19372-10383-09976354833-37");
+        IRegistre r = new JRegistre();
+        s.setRegistre(r);
+        IVelo v = new Velo();
+        s.arrimerVelo(v,1);
+        v.decrocher();
+        assertNull(s.emprunterVelo(a, 1));
+    }
+
+    @Test
+    public void testEmprunterVeloDejaEmprunte() throws IncorrectNameException {
+        Station s = new Station("Station_1", 10020, 12200, 10);
+        Abonne a = new Abonne("Charlotte", "19372-10383-09976354833-37");
+        Abonne b = new Abonne("Jeanne", "13341-89317-13746913443-92");
+        IRegistre r = new JRegistre();
+        s.setRegistre(r);
+        IVelo v = new Velo();
+        s.arrimerVelo(v,1);
+        assertNotNull(s.emprunterVelo(b, 1));
+        s.arrimerVelo(v,2);
+        assertNull(s.emprunterVelo(a, 2));
+    }
+
+    /**
+     * Test arrimer
+     */
+
+    @Test
+    public void testArrimerVeloSuccess() throws IncorrectNameException {
+        Station s = new Station("Station_1", 10020, 12200, 10);
+        Abonne a = new Abonne("Charlotte", "19372-10383-09976354833-37");
+        IRegistre r = new JRegistre();
+        s.setRegistre(r);
+        IVelo v = new Velo();
+        s.arrimerVelo(v,1);
+        assertNotNull(s.emprunterVelo(a, 1));
+        assertEquals(0,s.arrimerVelo(v, 1));
+    }
+
+    @Test
+    public void ck_testArrimerVeloNull(){
+        Station s = new Station("Station_1", 10020, 12200, 10);
+        IRegistre r = new JRegistre();
+        s.setRegistre(r);
+        assertEquals(s.arrimerVelo(null, 1),-1);
+    }
+
+
+    @Test
+    public void testArrimerBorneInexistante() throws IncorrectNameException {
+        Station s = new Station("Station_1", 10020, 12200, 10);
+        Abonne a = new Abonne("Charlotte", "19372-10383-09976354833-37");
+        IRegistre r = new JRegistre();
+        s.setRegistre(r);
+        IVelo v = new Velo();
+        s.arrimerVelo(v,1);
+        s.emprunterVelo(a,1);
+        assertEquals(s.arrimerVelo(v,s.capacite()+1),-1);
+        assertEquals(s.arrimerVelo(v,0),-1);
+        assertEquals(s.arrimerVelo(v,-1),-1);
+    }
+
+    @Test
+    public void testArrimerRegistreNull() throws IncorrectNameException {
+        Station s = new Station("Station_1", 10020, 12200, 10);
+        Abonne a = new Abonne("Charlotte", "19372-10383-09976354833-37");
+        IVelo v = new Velo();
+        s.arrimerVelo(v,1);
+        s.emprunterVelo(a,1);
+        assertEquals(s.arrimerVelo(v,2),-2);
+    }
+
+    @Test
+    public void testArrimerBorneOccupee() throws IncorrectNameException {
+        Station s = new Station("Station_1", 10020, 12200, 10);
+        Abonne a = new Abonne("Charlotte", "19372-10383-09976354833-37");
+        IRegistre r = new JRegistre();
+        s.setRegistre(r);
+        IVelo v1 = new Velo();
+        IVelo v2 = new Velo();
+        s.arrimerVelo(v1,1);
+        s.arrimerVelo(v2,2);
+        s.emprunterVelo(a,1);
+        assertEquals(s.arrimerVelo(v1,2),-2);
+    }
+
+    @Test
+    public void testArrimerVeloDejaArrime() throws IncorrectNameException {
+        Station s = new Station("Station_1", 10020, 12200, 10);
+        Abonne a = new Abonne("Charlotte", "19372-10383-09976354833-37");
+        IRegistre r = new JRegistre();
+        s.setRegistre(r);
+        IVelo v = new Velo();
+        s.arrimerVelo(v,1);
+        s.emprunterVelo(a,1);
+        v.arrimer();
+        assertEquals(s.arrimerVelo(v,1),-3);
+    }
+
+    @Test
+    public void testArrimerErreurRegistre(){
+        Station s = new Station("Station_1", 10020, 12200, 10);
+        IRegistre r = new JRegistre();
+        s.setRegistre(r);
+        IVelo v = new Velo();
+        s.arrimerVelo(v,1);
+        v.decrocher();
+        assertEquals(s.arrimerVelo(v,2),-4);
+        assertNotNull(s.veloALaBorne(2));
+    }
+
+    /**
+     * Test equilibrer
+     */
+
+    @Test
+    public void testEquilibrerCompleterBornesPaire(){
+        Station s = new Station("Station_1", 10020, 12200, 10);
+        IRegistre r = new JRegistre();
+        s.setRegistre(r);
+        Set<IVelo> velos = new HashSet<>();
+        for(int i=0;i<s.capacite();i++){
+            velos.add(new Velo());
+        }
+        s.equilibrer(velos);
+        assertEquals(5,s.nbBornesLibres());
+    }
+
+    @Test
+    public void testEquilibrerCompleterBornesImpaire(){
+        Station s = new Station("Station_1", 10020, 12200, 11);
+        IRegistre r = new JRegistre();
+        s.setRegistre(r);
+        Set<IVelo> velos = new HashSet<>();
+        for(int i=0;i<s.capacite();i++){
+            velos.add(new Velo());
+        }
+        s.equilibrer(velos);
+        assertEquals(5,s.nbBornesLibres());
+    }
+
+    @Test
+    public void testEquilibrerPasAssezVelosCompleter(){
+        Station s = new Station("Station_1", 10020, 12200, 11);
+        IRegistre r = new JRegistre();
+        s.setRegistre(r);
+        Set<IVelo> velos = new HashSet<>();
+        for(int i=0;i<3;i++){
+            velos.add(new Velo());
+        }
+        s.equilibrer(velos);
+        assertEquals(8,s.nbBornesLibres());
+    }
+
+    @Test
+    public void testEquilibrerRemplacerAbime(){
+        Station s = new Station("Station_1", 10020, 12200, 10);
+        IRegistre r = new JRegistre();
+        s.setRegistre(r);
+
+        //Ajout de 3 vélos abimés à la station
+        IVelo v1 = new Velo();
+        IVelo v2 = new Velo();
+        IVelo v3 = new Velo();
+        v1.abimer();
+        v2.abimer();
+        v3.abimer();
+        s.arrimerVelo(v1,1);
+        s.arrimerVelo(v2,3);
+        s.arrimerVelo(v3,8);
+
+        //Equilibré avec 6 vélos non abimés
+        Set<IVelo> velos_remplacement = new HashSet<>();
+        for(int i=0;i<6;i++){
+            velos_remplacement.add(new Velo());
+        }
+        s.equilibrer(velos_remplacement);
+
+        //Vérifie qu'ils ont été changés
+        for(int i=0;i<s.capacite();i++){
+            IVelo v =s.veloALaBorne(i);
+            if(v!=null ){
+                assertFalse(v.estAbime());
+            }
+        }
+
+        //Vérifie qu'ils ont été ajoutés au Set
+        int nb_abime=0;
+        for(IVelo v : velos_remplacement) {
+            if(v!=null && v.estAbime()){
+                nb_abime+=1;
+            }
+        }
+        assertEquals(3, nb_abime);
+        assertEquals(4, velos_remplacement.size());
+        assertEquals(5,s.nbBornesLibres());
+    }
+
+    @Test
+    public void testEquilibrerRemplacerAbimePasAssezSecours(){
+        Station s = new Station("Station_1", 10020, 12200, 10);
+        IRegistre r = new JRegistre();
+        s.setRegistre(r);
+
+        //Ajout de 3 vélos abimés à la station
+        IVelo v1 = new Velo();
+        IVelo v2 = new Velo();
+        IVelo v3 = new Velo();
+        v1.abimer();
+        v2.abimer();
+        v3.abimer();
+        s.arrimerVelo(v1,1);
+        s.arrimerVelo(v2,3);
+        s.arrimerVelo(v3,8);
+
+        //Equilibré avec 1 vélo non abimé
+        Set<IVelo> velos_remplacement = new HashSet<>();
+        velos_remplacement.add(new Velo());
+        s.equilibrer(velos_remplacement);
+
+        //Vérifie qu'ils ont été enlevés
+        int nb_abime=0;
+        for(int i=0;i<s.capacite();i++){
+            IVelo v =s.veloALaBorne(i);
+            if(v!=null){
+                assertFalse(v.estAbime());
+            }
+        }
+
+        //Vérifie qu'ils ont été ajoutés au Set
+        for(IVelo v : velos_remplacement) {
+            if(v!=null && v.estAbime()){
+                nb_abime+=1;
+            }
+        }
+
+        assertEquals(3, nb_abime);
+        assertEquals(3, velos_remplacement.size());
+        assertEquals(9,s.nbBornesLibres());
+    }
+
+    @Test
+    public void testEquilibrerRemplacerReviser(){
+        Station s = new Station("Station_1", 10020, 12200, 10);
+        IRegistre r = new JRegistre();
+        s.setRegistre(r);
+
+        //Ajout de 3 vélos à réviser
+        IVelo v1 = new Velo();
+        IVelo v2 = new Velo();
+        IVelo v3 = new Velo();
+        v1.parcourir(600);
+        v2.parcourir(650);
+        v3.parcourir(660);
+        s.arrimerVelo(v1,1);
+        s.arrimerVelo(v2,3);
+        s.arrimerVelo(v3,8);
+
+        Set<IVelo> velos_remplacement = new HashSet<>();
+        for(int i=0;i<s.capacite();i++){
+            velos_remplacement.add(new Velo());
+        }
+        s.equilibrer(velos_remplacement);
+
+
+        //Vérifie qu'ils ont été ajoutés au Set
+        int nb_revise=0;
+        for(IVelo v : velos_remplacement) {
+            if(v!=null && v.kilometrage()!=0){
+                nb_revise+=1;
+            }
+        }
+        assertEquals(3, nb_revise);
+        assertEquals(5, s.nbBornesLibres());
+    }
+
+
+    @Test
+    public void testEquilibrerRemplacerReviserPasAssez(){
+        Station s = new Station("Station_1", 10020, 12200, 6);
+        IRegistre r = new JRegistre();
+        s.setRegistre(r);
+
+        //Ajout de 3 vélos à réviser
+        IVelo v1 = new Velo();
+        IVelo v2 = new Velo();
+        IVelo v3 = new Velo();
+        v1.parcourir(600);
+        v2.parcourir(650);
+        v3.parcourir(660);
+        s.arrimerVelo(v1,1);
+        s.arrimerVelo(v2,3);
+        s.arrimerVelo(v3,5);
+
+        //Equilibré avec 1 vélo non abimé
+        Set<IVelo> velos_remplacement = new HashSet<>();
+        velos_remplacement.add(new Velo());
+        s.equilibrer(velos_remplacement);
+
+        //Vérifie qu'ils ont été ajoutés au Set
+        int nb_revise=0;
+        for(IVelo v : velos_remplacement) {
+            if(v!=null && v.kilometrage()>=500){
+                nb_revise+=1;
+            }
+        }
+        assertEquals(1, nb_revise);
+        assertEquals(1, velos_remplacement.size());
+    }
+
+
+    @Test
+    public void testDistancePositive() {
+        Station s1 = new Station("Station_1", 10000, 12000, 10);
+        Station s2 = new Station("Station_2", 20000, 14000, 8);
+        assertEquals(9326,s1.distance(s2),1);
+    }
+
+    @Test
+    public void testDistanceNegative() {
+        Station s1 = new Station("Station_1", -10000, 12000, 10);
+        Station s2 = new Station("Station_2", 20000, -14000, 8);
+        assertEquals(13981,s1.distance(s2),1);
     }
 
 
