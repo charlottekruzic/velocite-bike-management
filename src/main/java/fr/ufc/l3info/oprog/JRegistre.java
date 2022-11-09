@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- *  Classe implantant un registre simple en Java.
+ *  Classe implantant un registre simple en Java. *
  */
 public class JRegistre implements IRegistre {
 
