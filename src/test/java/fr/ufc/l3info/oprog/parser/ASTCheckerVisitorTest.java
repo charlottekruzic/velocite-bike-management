@@ -46,4 +46,15 @@ public class ASTCheckerVisitorTest {
 
 
     }
+
+    @Test
+    public void testASTListeStationsDuplicateName() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File("./target/classes/data/stationDuplicateName.txt"));
+        ASTCheckerVisitor v = new ASTCheckerVisitor();
+
+        n.accept(v);
+        assertEquals(1, v.getErrors().size());
+
+
+    }
 }
