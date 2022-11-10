@@ -26,8 +26,19 @@ public class ASTCheckerVisitorTest {
     }
 
     @Test
-    public void testASTListeStations2() throws StationParserException, IOException {
+    public void testASTListeStationsListeNull() throws StationParserException, IOException {
         ASTNode n = parser.parse(new File("./target/classes/data/stationNull.txt"));
+        ASTCheckerVisitor v = new ASTCheckerVisitor();
+
+        n.accept(v);
+        assertEquals(1, v.getErrors().size());
+
+
+    }
+
+    @Test
+    public void testASTListeStationsNameNull() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File("./target/classes/data/stationNullName.txt"));
         ASTCheckerVisitor v = new ASTCheckerVisitor();
 
         n.accept(v);
