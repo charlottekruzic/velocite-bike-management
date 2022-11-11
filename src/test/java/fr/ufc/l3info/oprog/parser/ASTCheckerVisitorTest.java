@@ -183,4 +183,38 @@ public class ASTCheckerVisitorTest {
 
 
     }
+
+    @Test
+    public void testASTListeStationsDuplicateDeclaration() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File("./target/classes/data/stationsDuplicateDeclaration.txt"));
+        ASTCheckerVisitor v = new ASTCheckerVisitor();
+
+        n.accept(v);
+        assertEquals(1, v.getErrors().size());
+
+
+    }
+
+    @Test
+    public void testASTListeStationsMissingDeclaration() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File("./target/classes/data/stationsMissingDeclaration.txt"));
+        ASTCheckerVisitor v = new ASTCheckerVisitor();
+
+        n.accept(v);
+        assertEquals(1, v.getErrors().size());
+
+
+    }
+
+
+    @Test
+    public void testASTListeStationsWRONG_NUMBER_VALUE() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File("./target/classes/data/stationsWrongNumberValue.txt"));
+        ASTCheckerVisitor v = new ASTCheckerVisitor();
+
+        n.accept(v);
+        assertEquals(1, v.getErrors().size());
+
+
+    }
 }
