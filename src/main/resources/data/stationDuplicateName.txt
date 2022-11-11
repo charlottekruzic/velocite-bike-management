@@ -1,0 +1,11 @@
+station "Avenue du Maréchal Foch" {
+    capacite : 10 ;
+    longitude : 6.022671 ;
+    latitude : 47.246511
+}
+
+station "Avenue du Maréchal Foch" {
+    capacite : 7 ;
+    longitude : 6.022673 ;
+    latitude : 47.246514
+}
