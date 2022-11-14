@@ -519,7 +519,6 @@ public class AbonneTest {
         abonnes.add(lucien);
         assertEquals(1, abonnes.size());
     }
-    <<<<<<< test-elo
     public void testNom() throws IncorrectNameException {
         // création d'un nouvel abonné
         Abonne a = new Abonne("Fred");
