@@ -100,6 +100,62 @@ public class ParserTest {
         assertEquals(0, nb);
     }
 
+    @Test (expected = StationParserException.class)
+    public void teststationsKO_s_enplus() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File(path + "stations_KO_s_enplus.txt"));
+    }
+    @Test (expected = StationParserException.class)
+    public void teststationsKO_chaine_pour_chiffre() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File(path + "stationsKO_chaine_pour_chiffre.txt"));
+    }
+    @Test (expected = StationParserException.class)
+    public void teststationsKO_double_chaine() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File(path + "stationsKO_double_chaine.txt"));
+    }
+    @Test (expected = StationParserException.class)
+    public void teststationsKO_guillemet_en_trop() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File(path + "stationsKO_guillemet_en_trop.txt"));
+    }
+    @Test (expected = StationParserException.class)
+    public void teststationsKO_identificateur_incorrect() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File(path + "stationsKO_identificateur_incorrect.txt"));
+    }
+    @Test (expected = StationParserException.class)
+    public void teststationsKO_capacite() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File(path + "stationsKO_capacite.txt"));
+    }
+
+    @Test (expected = StationParserException.class)
+    public void teststationsKO_pas_2p() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File(path + "stationsKO_pas_2p.txt"));
+    }
+    @Test (expected = StationParserException.class)
+    public void teststationsKO_pas_point_vir() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File(path + "stationsKO_pas_point_vir.txt"));
+    }
+    @Test (expected = StationParserException.class)
+    public void teststationsKO_pas_station() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File(path + "stationsKO_pas_station.txt"));
+    }
+
+    @Test (expected = StationParserException.class)
+    public void teststationsKO_pasAccolade_f() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File(path + "stationsKO_pasAccolade_f.txt"));
+    }
+
+    @Test (expected = StationParserException.class)
+    public void teststationsKO_pasAccolade_O() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File(path + "stationsKO_pasAccolade_O.txt"));
+    }
+    @Test
+    public void teststationsOK_CAPACITE() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File(path + "stationsOK_CAPACITE.txt"));
+    }
+    @Test
+    public void teststationsOK_sTAtion() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File(path + "stationsOK_sTAtion.txt"));
+    }
+
 
 
 
