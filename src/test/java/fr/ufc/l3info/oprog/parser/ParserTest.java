@@ -156,7 +156,108 @@ public class ParserTest {
         ASTNode n = parser.parse(new File(path + "stationsOK_sTAtion.txt"));
     }
 
+    @Test (expected=StationParserException.class)
+    public void testParserDoubleCoteInterieur() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File("./target/classes/data/stationsDoubleCoteInterieur.txt"));
+    }
 
+    @Test (expected=StationParserException.class)
+    public void testParserDoubleCoteInterieurBackSlash() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File("./target/classes/data/stationsDoubleCoteInterieurBackSlash.txt"));
+    }
+
+    @Test (expected=StationParserException.class)
+    public void testParserAccoladeOuverteManquante() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File("./target/classes/data/stationsAccoladeOuverteManquante.txt"));
+    }
+
+    @Test (expected=StationParserException.class)
+    public void testParserAccoladeFermanteManquante() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File("./target/classes/data/stationsAccoladeFermanteManquante.txt"));
+    }
+
+    @Test (expected=StationParserException.class)
+    public void testParserDeuxAccoladesManquantes() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File("./target/classes/data/stationsDeuxAccoladesManquantes.txt"));
+    }
+
+    @Test (expected=StationParserException.class)
+    public void testParserSans2Points() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File("./target/classes/data/stationsSans2Points.txt"));
+    }
+
+
+    @Test(expected=StationParserException.class)
+    public void testParserAvecEgal() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File("./target/classes/data/stationsAvecEgal.txt"));
+    }
+
+    @Test(expected=StationParserException.class)
+    public void testParserManquePointVirgule() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File("./target/classes/data/stationsManquePointVirgule.txt"));
+    }
+
+    @Test (expected=StationParserException.class)
+    public void testParserDeclarationSansValeur() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File("./target/classes/data/declarationSansValeur.txt"));
+    }
+
+    @Test(expected=StationParserException.class)
+    public void testParserAucunPointVirgule() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File("./target/classes/data/declarationAucunPointVirgule.txt"));
+    }
+
+    @Test
+    public void testParserPasDecimal() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File("./target/classes/data/declarationPasDecimal.txt"));
+        ASTStationBuilder builder = new ASTStationBuilder();
+        n.accept(builder);
+        assertEquals(1, builder.getStations().size());
+    }
+
+    @Test(expected=StationParserException.class)
+    public void testParserVirguleDecimal() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File("./target/classes/data/declarationVirguleDecimal.txt"));
+    }
+
+    @Test(expected=StationParserException.class)
+    public void testParserIdentificateursSupplementaires() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File("./target/classes/data/identificateursSupplementaires.txt"));
+    }
+
+
+    @Test(expected=StationParserException.class)
+    public void testParserDeclarationSansNom() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File("./target/classes/data/declarationSansNom.txt"));
+    }
+
+    @Test(expected=StationParserException.class)
+    public void testParserDeclarationSansValeurSansNom() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File("./target/classes/data/declarationSansValeurSansNom.txt"));
+    }
+
+    @Test
+    public void testParserOrdreTokenDifferent() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File("./target/classes/data/stationOrdreTokenDifferent.txt"));
+        ASTStationBuilder builder = new ASTStationBuilder();
+        n.accept(builder);
+        assertEquals(1, builder.getStations().size());
+    }
+
+    @Test(expected=StationParserException.class)
+    public void testParserPointVirguleDerniereLigne() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File("./target/classes/data/stationPointVirguleDerniereLigne.txt"));
+    }
+
+    @Test(expected=StationParserException.class)
+    public void testParserStationSansStationDebut() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File(path + "stationsStationSansStationDebut.txt"));
+    }
+
+    @Test(expected=StationParserException.class)
+    public void testParserStationSansGuillemetsNom() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File(path + "stationsStationSansGuillemetsNom.txt"));
+    }
 
 
 }

@@ -7,8 +7,8 @@ public class Abonne {
     String nom;
     String rib;
     static Integer count = 0;
-    Integer Id=0;
-    boolean bloque=false;
+    Integer Id;
+    boolean bloque;
     /**
      * Créé un abonné dont le nom est passé en paramètre, sans informations bancaires.
      *  Si le nom de l'abonné n'est pas correct (vide ou ne contenant pas des lettres éventuellementséparées par des espaces ou des traits d'union), le constructeur déclenchera l'exception IncorrectNameException.
@@ -21,14 +21,14 @@ public class Abonne {
         if(nom==null|| nom.length()==0){
             throw new IncorrectNameException();
         }
+        nom = nom.trim();
         for (int i = 0; i < nom.length(); i++) {
-            if (!Character.isLetter(nom.charAt(i))
-                    && !Character.isWhitespace(nom.charAt(i))){
+            if ((!Character.isLetter(nom.charAt(i)) && !Character.isWhitespace(nom.charAt(i)) && nom.charAt(i)!='-')
+                    || (nom.charAt(i)=='-' && i==nom.length()-1)
+                    || (nom.charAt(i)=='-' && i==0)){
                 throw new IncorrectNameException();
             }
         }
-
-        nom = nom.trim();
 
         this.nom=nom;
         count++;
@@ -55,12 +55,26 @@ public class Abonne {
             }
         }
         nom = nom.trim();
+        this.nom=nom;
+        count++;
+        this.Id=count;
+        this.bloque=true;
 
-        bloque=true;
+        //Vérifier qu'il n'y a que des chiffres et des tirets
+        for(int i=0;i<rib.length();i++){
+            if(rib.charAt(i)!='-' && rib.charAt(i)!='0' && rib.charAt(i)!='1' && rib.charAt(i)!='2' && rib.charAt(i)!='3' && rib.charAt(i)!='4'
+                    && rib.charAt(i)!='5' && rib.charAt(i)!='6' && rib.charAt(i)!='7' && rib.charAt(i)!='8' && rib.charAt(i)!='9'){
+                return;
+            }
+        }
 
-        String split[] = rib.split("-", 0);
+        String[] split = rib.split("-", 0);
         for (String s : split) {
             System.out.println(s);
+        }
+
+        if(split.length!=4) {
+            return;
         }
         long codeBanque=Long.parseLong(split[0]);
         long codeGuichet=Long.parseLong(split[1]);
@@ -68,15 +82,12 @@ public class Abonne {
         long cle=Long.parseLong(split[3]);
         long cleRib=97-((89*codeBanque+15*codeGuichet+3*numCompte) % 97);
         System.out.println("clerib"+cleRib);
-        if((cleRib==cle)){
+        System.out.println("cle"+cle);
+        if(cleRib==cle){
             bloque=false;
             this.rib=rib;
-            this.nom=nom;
-            count++;
-            Id=count;
             System.out.println(Id);
         }
-
 
     }
 
@@ -102,7 +113,7 @@ public class Abonne {
      * @param rib nouveau RIB pour la mise à jour.
      */
     public void miseAJourRIB(String rib) {
-        String split[] = rib.split("-", 0);
+        String[] split = rib.split("-", 0);
         long codeBanque = Integer.parseInt(split[0]);
         long codeGuichet = Integer.parseInt(split[1]);
         long numCompte = Long.parseLong(split[2]);
@@ -110,6 +121,7 @@ public class Abonne {
         long cleRib = 97 - ((89 * codeBanque + 15 * codeGuichet + 3 * numCompte) % 97);
         System.out.println("clerib" + cleRib);
         if (cleRib == cle) {
+            this.bloque=false;
             this.rib = rib;
         }
 
@@ -138,10 +150,7 @@ public class Abonne {
      * @return true si l'abonné est considéré comme bloqué, false sinon.
      */
     public boolean estBloque() {
-        if(this.bloque==true) {
-            return true;
-        }
-        return false;
+        return this.bloque;
     }
 
     /**
