@@ -152,8 +152,9 @@ public class AbonneTest {
         // vérification de son id
         assertTrue(a.getID()<b.getID());
 
-    }
 
+    }
+*/
     /*Test bloquer abonne*/
     @Test
     public void testBloqueAbonne() throws IncorrectNameException {
@@ -446,6 +447,7 @@ public class AbonneTest {
     public void testMemeAbonne() throws IncorrectNameException {
         Abonne lucien = new Abonne("Lucien");
         assertTrue(lucien.equals(lucien));
+
     }
 
     @Test
@@ -487,5 +489,381 @@ public class AbonneTest {
         abonnes.add(lucien);
         assertEquals(1, abonnes.size());
     }
+    public void testNom() throws IncorrectNameException {
+        // création d'un nouvel abonné
+        Abonne a = new Abonne("Fred");
+        // vérification de son nom
+        Assert.assertEquals("Fred", a.getNom());
+
+    }
+    @Test
+    public void testConstructeurValideNomSimple() throws IncorrectNameException {
+        // création d'un nouvel abonné
+        Abonne a = new Abonne("Anne");
+        // vérification de son nom
+        Assert.assertEquals("Anne", a.getNom());
+
+    }
+    /*@Test
+    public void testConstructeur2ValideNomSimple() throws IncorrectNameException {
+        // création d'un nouvel abonné
+        Abonne a = new Abonne("Anne","77777-11111-11111111111-77");
+        // vérification de son nom
+        Assert.assertEquals("Anne", a.getNom());
+
+    }*/
+    @Test
+    public void testConstructeurValideNomAccentSimple() throws IncorrectNameException {
+        // création d'un nouvel abonné
+        Abonne a = new Abonne("Léa");
+        // vérification de son nom
+        Assert.assertEquals("Léa", a.getNom());
+
+    }
+    /*@Test
+    public void testConstructeur2ValideNomAccentSimple() throws IncorrectNameException {
+        // création d'un nouvel abonné
+        Abonne a = new Abonne("Léa","77777-11111-11111111111-77");
+        // vérification de son nom
+        Assert.assertEquals("Léa", a.getNom());
+
+    }*/
+    @Test
+    public void testConstructeurValideNomSimpleAvecEspaceExterne() throws IncorrectNameException {
+        // création d'un nouvel abonné
+        Abonne a = new Abonne(" Anne ");
+        // vérification de son nom
+        Assert.assertEquals("Anne", a.getNom());
+
+    }
+    /*@Test
+    public void testConstructeur2ValideNomSimpleAvecEspaceExterne() throws IncorrectNameException {
+        // création d'un nouvel abonné
+        Abonne a = new Abonne(" Anne ","77777-11111-11111111111-77");
+        // vérification de son nom
+        Assert.assertEquals("Anne", a.getNom());
+
+    }*/
+    @Test
+    public void testValideAvec1Espace() throws IncorrectNameException {
+        // création d'un nouvel abonné
+        Abonne a = new Abonne("Jean Pierre");
+        Assert.assertEquals("Jean Pierre", a.getNom());
+
+    }
+    /*@Test
+    public void testValideAvec1Espace2() throws IncorrectNameException {
+        // création d'un nouvel abonné
+        Abonne a = new Abonne("Jean Pierre","77777-11111-11111111111-77");
+        Assert.assertEquals("Jean Pierre", a.getNom());
+
+    }*/
+    /*@Test
+    public void testValideAvec1Trait() throws IncorrectNameException {
+        // création d'un nouvel abonné
+        Abonne a = new Abonne("Jean-Pierre");
+        Assert.assertEquals("Jean-Pierre", a.getNom());
+
+    }*/
+    /*@Test
+    public void testValideAvec1Trait2() throws IncorrectNameException {
+        // création d'un nouvel abonné
+        Abonne a = new Abonne("Jean-Pierre","77777-11111-11111111111-77" );
+        Assert.assertEquals("Jean-Pierre", a.getNom());
+
+    }*/
+    @Test (expected= IncorrectNameException.class)
+    public void testNom_Vide() throws IncorrectNameException {
+        // création d'un nouvel abonné
+        Abonne a = new Abonne("");
+        Assert.assertEquals(new IncorrectNameException(),a.getNom());
+
+    }
+    @Test (expected= IncorrectNameException.class)
+    public void testNomVide2() throws IncorrectNameException {
+        // création d'un nouvel abonné
+        Abonne a = new Abonne("","77777-11111-11111111111-77");
+        Assert.assertEquals(new IncorrectNameException(),a.getNom());
+
+    }
+    @Test (expected= IncorrectNameException.class)
+    public void testNomPasValideChiffre() throws IncorrectNameException {
+        // création d'un nouvel abonné
+        Abonne a = new Abonne("charles 2");
+        Assert.assertEquals(new IncorrectNameException(), a.getNom());
+
+    }
+    @Test (expected= IncorrectNameException.class)
+    public void testNomPasValideChiffre2() throws IncorrectNameException {
+        // création d'un nouvel abonné
+        Abonne a = new Abonne("charles 2","77777-11111-11111111111-77");
+        Assert.assertEquals(new IncorrectNameException(), a.getNom());
+
+
+    }
+    @Test (expected= IncorrectNameException.class)
+    public void testNomPasValideTrait() throws IncorrectNameException {
+        // création d'un nouvel abonné
+        Abonne a = new Abonne("charles-Emilien-----");
+        Assert.assertEquals(new IncorrectNameException(), a.getNom());
+
+
+    @Test
+    public void testDifferentsAbonnes() throws IncorrectNameException {
+        Abonne lucien = new Abonne("Lucien");
+        Abonne jason = new Abonne("Jason");
+        assertFalse(lucien.equals(jason));
+    }
+
+    @Test
+    public void testAbonneNull() throws IncorrectNameException {
+        Abonne lucien = new Abonne("Lucien");
+        Abonne nul = null;
+        assertFalse(lucien.equals(nul));
+    }
+
+    @Test
+    public void testPasUnAbonne() throws IncorrectNameException {
+        Abonne lucien = new Abonne("Lucien");
+        int pasUnAbonne = 12;
+        assertFalse(lucien.equals(pasUnAbonne));
+    }
+
+    @Test
+    public void testDifferentsAbonnesHash() throws IncorrectNameException {
+        Abonne lucien = new Abonne("Lucien");
+        Abonne agathe = new Abonne("Agathe");
+        HashSet<Abonne> abonnes = new HashSet<Abonne>();
+        abonnes.add(lucien);
+        abonnes.add(agathe);
+        assertEquals(2, abonnes.size());
+    }
+
+    @Test
+    public void testMemeAbonneHash() throws IncorrectNameException {
+        Abonne lucien = new Abonne("Lucien");
+        HashSet<Abonne> abonnes = new HashSet<Abonne>();
+        abonnes.add(lucien);
+        abonnes.add(lucien);
+        assertEquals(1, abonnes.size());
+    }
+    }
+    @Test (expected= IncorrectNameException.class)
+    public void testNomPasValideTrait2() throws IncorrectNameException {
+        // création d'un nouvel abonné
+        Abonne a = new Abonne("charles-Emilien-----","77777-11111-11111111111-77");
+        Assert.assertEquals(new IncorrectNameException(), a.getNom());
+
+    }
+    /*@Test (expected= IncorrectNameException.class)
+    public void testNomPasValideEspaceInterne() throws IncorrectNameException {
+        // création d'un nouvel abonné
+        Abonne a = new Abonne("charles   Emilien");
+        Assert.assertEquals(new IncorrectNameException(), a.getNom());
+
+    }*/
+    /*@Test (expected= IncorrectNameException.class)
+    public void testNomPasValideEspaceInterne2() throws IncorrectNameException {
+        // création d'un nouvel abonné
+        Abonne a = new Abonne("charles   Emilien","77777-11111-11111111111-77");
+        Assert.assertEquals(new IncorrectNameException(), a.getNom());
+
+    }*/
+
+    /*@Test
+    public void testRibCorrect() throws IncorrectNameException {
+        // création d'un nouvel abonné
+        Abonne a = new Abonne("Fred","77777-11111-11111111111-77");
+        // vérification de son nom
+        Assert.assertEquals(false, a.estBloque());
+
+    }*/
+    @Test
+    public void testRibIncorrectChiffreEnTrop() throws IncorrectNameException {
+        // création d'un nouvel abonné
+        Abonne a = new Abonne("Fred","123451-12345-78945612341-22");
+        // vérification de son nom
+        Assert.assertTrue(a.estBloque());
+    }
+   /* @Test
+    public void testRibIncorrectLettre() throws IncorrectNameException {
+        // création d'un nouvel abonné
+        Abonne a = new Abonne("Fred","12345-12345-7894561234B-22");
+        // vérification de son nom
+        Assert.assertTrue(a.estBloque());
+    }*/
+    @Test
+    public void testRibIncorrectChiffreEnMoins() throws IncorrectNameException {
+        // création d'un nouvel abonné
+        Abonne a = new Abonne("Fred","123451-23457-89456423412-3");
+        // vérification de son nom
+        Assert.assertTrue(a.estBloque());
+    }
+    /*@Test
+    public void testRibIncorrectEspace() throws IncorrectNameException {
+        // création d'un nouvel abonné
+        Abonne a = new Abonne("Fred"," 123451-23457-89456123412-42");
+        // vérification de son nom
+        Assert.assertTrue(a.estBloque());
+    }*/
+    @Test
+    public void testRibIncorrectSup97() throws IncorrectNameException {
+        // création d'un nouvel abonné
+        Abonne a = new Abonne("Fred","123451-23457-89456123412-98");
+        // vérification de son nom
+        Assert.assertTrue(a.estBloque());
+    }
+    @Test
+    public void testRibIncorrectInf01() throws IncorrectNameException {
+        // création d'un nouvel abonné
+        Abonne a = new Abonne("Fred","123451-23457-89456123412-00");
+        // vérification de son nom
+        Assert.assertTrue(a.estBloque());
+    }
+    /*@Test
+    public void testRibIncorrectSansTrait() throws IncorrectNameException {
+        // création d'un nouvel abonné
+        Abonne a = new Abonne("Fred","12345126857894561234122");
+        // vérification de son nom
+        Assert.assertTrue(a.estBloque());
+    }*/
+    @Test
+    public void testIdIncrementIncorrect() throws IncorrectNameException {
+        // création d'un nouvel abonné
+        Abonne a = new Abonne("Fred");
+        Abonne b = new Abonne("Fred");
+        // vérification de son nom
+        Assert.assertFalse(a.getID()==b.getID());
+    }
+
+    @Test
+    public void testIdIncrementCorrect() throws IncorrectNameException {
+        // création d'un nouvel abonné
+        Abonne a = new Abonne("Fred");
+        Abonne b = new Abonne("Fred");
+        // vérification de son nom
+        Assert.assertTrue(a.getID()+1==b.getID());
+    }
+
+    /*@Test
+    public void testMAJRibIncorrect() throws IncorrectNameException {
+        // création d'un nouvel abonné
+        Abonne a = new Abonne("Fred","12345-56845-78943332341-22");
+        a.miseAJourRIB("16519qza5erd");
+        // vérification de son nom
+        Assert.assertTrue(a.estBloque());
+    }*/
+
+    /*@Test
+    public void testMAJRib() throws IncorrectNameException {
+        // création d'un nouvel abonné
+        Abonne a = new Abonne("Fred","12345-14445-7987661sdfsdf2341-22");
+        a.miseAJourRIB("33345-12399-78947712341-32");
+        // vérification de son nom
+        Assert.assertTrue(a.estBloque());
+    }*/
+
+    /*@Test
+    public void testBloqueDebloque() throws IncorrectNameException {
+        // création d'un nouvel abonné
+        Abonne a = new Abonne("Fred","12345-12345-78235782341-32");
+        // vérification de son état non bloqué
+        Assert.assertFalse(a.estBloque());
+        // blocage de l'abonné
+        a.bloquer();
+        // vérification de son état bloqué
+        Assert.assertTrue(a.estBloque());
+        // déblocage de l'abonné
+        a.debloquer();
+        // vérification de son état non bloqué
+        Assert.assertFalse(a.estBloque());
+    }*/
+
+    @Test
+    public void testDebloque() throws IncorrectNameException {
+        // création d'un nouvel abonné
+        Abonne a = new Abonne("Fred");
+        // déblocage de l'abonné
+        a.debloquer();
+        // vérification de son état non bloqué
+        Assert.assertTrue(a.estBloque());
+    }
+
+    /*@Test
+    public void testDebloquePasValide() throws IncorrectNameException {
+        // création d'un nouvel abonné
+        Abonne a = new Abonne("Fred","AAAA-21-Q-1-FO-2354");
+        // déblocage de l'abonné
+        a.debloquer();
+        // vérification de son état non bloqué
+        Assert.assertTrue(a.estBloque());
+    }*/
+
+    /*@Test
+    public void testDebloqueValide() throws IncorrectNameException {
+        // création d'un nouvel abonné
+        Abonne a = new Abonne("Fred","AAAA-21-Q-1-FO-2354");
+        a.miseAJourRIB("12345-12345-78235782341-32");
+        // déblocage de l'abonné
+        a.debloquer();
+        // vérification de son état non bloqué
+        Assert.assertFalse(a.estBloque());
+    }*/
+
+    /*@Test
+    public void testDebloqueNonValideMAJ() throws IncorrectNameException {
+        // création d'un nouvel abonné
+        Abonne a = new Abonne("Fred","AAAA-21-Q-1-FO-2354");
+        a.miseAJourRIB("BBBB-21-Q-1-FO-2354");
+        // déblocage de l'abonné
+        a.debloquer();
+        // vérification de son état non bloqué
+        Assert.assertTrue(a.estBloque());
+    }*/
+
+    /*@Test
+    public void testEquals() throws IncorrectNameException {
+        // création d'un nouvel abonné
+        Abonne a = new Abonne("Fred","33345-12399-78947712341-32");
+        // création d'un nouvel abonné
+        Abonne b = new Abonne("Fred","33345-12399-78947712341-32");
+        // vérification de son nom
+        Assert.assertFalse(a.equals(b));
+    }*/
+
+    @Test
+    public void testEqualsSame() throws IncorrectNameException {
+        // création d'un nouvel abonné
+        Abonne a = new Abonne("Fred","33345-12399-78947712341-32");
+        // vérification de son nom
+        Assert.assertTrue(a.equals(a));
+    }
+
+    @Test
+    public void testEqualsNull() throws IncorrectNameException {
+        // création d'un nouvel abonné
+        Abonne a = new Abonne("Fred","33345-12399-78947712341-32");
+        // vérification de son nom
+        Assert.assertFalse(a.equals(null));
+    }
+
+    @Test
+    public void testNotEquals() throws IncorrectNameException {
+        // création d'un nouvel abonné
+        Abonne a = new Abonne("Fred");
+        String b = "Fred";
+        // vérification de son nom
+        Assert.assertFalse(a.equals(b));
+    }
+
+    /*@Test
+    public void testHashcode() throws IncorrectNameException {
+        // création d'un nouvel abonné
+        Abonne a = new Abonne("Fred","33345-12399-78947712341-32");
+        // création d'un nouvel abonné
+        Abonne b = new Abonne("Fred","33345-12399-78947712341-32");
+        // vérification de son nom
+        Assert.assertFalse(a.hashCode()==b.hashCode());
+    }*/
 
 }

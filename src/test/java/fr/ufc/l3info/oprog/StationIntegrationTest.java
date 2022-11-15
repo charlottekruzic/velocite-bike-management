@@ -1,5 +1,6 @@
 package fr.ufc.l3info.oprog;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mock;
 
@@ -283,6 +284,428 @@ public class StationIntegrationTest {
         assertEquals(73.227,s.distance(s2),DELTA);
 
     }
+    @Test
+    public void TestgetNom(){
+        Station s = new Station("test",1.0,1.0,1);
+        Assert.assertEquals("test",s.getNom());
+    }
+    @Test
+    public void testCapStation() {
+        Station s = new Station("test",30,1,10);
+        Assert.assertTrue(s.capacite()==10);
+    }
+    @Test
+    public void TestnbBorneLibre(){
+        IRegistre r=new JRegistre();
+        Station s = new Station("test",1.0,1.0,3);
+        IVelo v= new Velo('f');
+        v.decrocher();
+        s.setRegistre(r);
+        s.arrimerVelo(v,1);
+        Assert.assertEquals(2,s.nbBornesLibres());
+    }
+    @Test
+    public void TestCapaciteSupAZero(){
+        Station s = new Station("test",1.0,1.0,3);
+        Assert.assertTrue(s.capacite()>0);
+    }
+    @Test
+    public void TestveloALaBorneVide(){
+
+
+        IVelo v=new Velo('m');
+        Station s=new Station("test",1.0,1.0,1);
+        s.arrimerVelo(v,2);
+        v.decrocher();
+        Assert.assertEquals(null,s.veloALaBorne(2));
+    }
+    @Test
+    public void TestVeloAlaBorneNumIncorrect(){
+        Station s=new Station("test",1.0,1.0,3);
+        Assert.assertNull(s.veloALaBorne(4));
+    }
+    @Test
+    public void TestVeloAlaBorneNumIncorrectLarge(){
+        Station s=new Station("test",1.0,1.0,3);
+        Assert.assertNull(s.veloALaBorne(-1));
+    }
+    /*@Test
+    public void TestArrimerVeloRegistrepasvalide()throws IncorrectNameException{
+        IRegistre r=null;
+        Abonne a=new Abonne("Jean-Eude");
+        IVelo v=new Velo('m');
+        Station s=new Station("test",1.0,1.0,3);
+        s.setRegistre(r);
+        Assert.assertEquals(-2,s.arrimerVelo(v,2));
+
+    }
+    @Test
+    public void TestArrimerVeloBorneOccupe() throws IncorrectNameException{
+        IRegistre r=new JRegistre();
+        Abonne a=new Abonne("Jean-Eude");
+        IVelo v=new Velo('m');
+        IVelo v2= new Velo('f');
+        Station s=new Station("test",1.0,1.0,3);
+        s.arrimerVelo(v2,2);
+        Assert.assertEquals(-2,s.arrimerVelo(v,2));
+
+    }
+
+    @Test
+    public void TestEmpruntAbonneBloque() throws IncorrectNameException{
+        Abonne a=new Abonne("Jean-Eude");
+        Station s = new Station("test",1.0,1.0,1);
+        Assert.assertEquals(null, s.emprunterVelo(a, 1));
+
+    }
+    @Test
+    public void testEmpruntNoBorne1() throws IncorrectNameException{
+        Abonne a=new Abonne("Jean-Eude");
+        IRegistre r = new JRegistre();
+
+        // objet sous test
+        Station s = new Station("test",30,1,10);
+        IVelo v = new Velo('m');
+        v.decrocher();
+        s.setRegistre(r);
+        s.arrimerVelo(v,1);
+
+        Assert.assertEquals(null, s.emprunterVelo(a, -1));
+    }
+    @Test
+    public void testEmpruntNoBorne2() throws IncorrectNameException{
+        Abonne a=new Abonne("Jean-Eude");
+        IRegistre r = new JRegistre();
+        Station s = new Station("test",30,1,10);
+        IVelo v = new Velo('m');
+        v.decrocher();
+        s.setRegistre(r);
+        s.arrimerVelo(v,1);
+
+        Assert.assertEquals(null, s.emprunterVelo(a, 15));
+    }
+    @Test
+    public void testEmpruntAbonneBloque() throws IncorrectNameException{
+        Abonne a=new Abonne("Jean-Eude");
+        a.bloquer();
+        Station s = new Station("test",30,1,10);
+
+        Assert.assertEquals(null, s.emprunterVelo(a, 1));
+
+    }
+    @Test
+    public void testEmpruntAbonneNonBloque() throws IncorrectNameException{
+        Abonne a=new Abonne("Jean-Eude");
+        IVelo v = new Velo('m');
+        IVelo v2 = new Velo('m');
+        a.debloquer();
+        IRegistre r= new JRegistre();
+        r.emprunter(a,v,12102022);
+        r.emprunter(a,v2,12102022);
+        Station s = new Station("test",30,1,10);
+        v.decrocher();
+        s.setRegistre(r);
+        s.arrimerVelo(v,1);
+
+        Assert.assertEquals(null, s.emprunterVelo(a, 1));
+
+    }
+    @Test
+    public void testEmprunt2emprunts() throws IncorrectNameException{
+        Abonne a=new Abonne("Jean-Eude");
+        IVelo v = new Velo('m');
+        IVelo v2 = new Velo('m');
+        IRegistre r= new JRegistre();
+        a.debloquer();
+        // objet sous test
+        Station s = new Station("test",30,1,10);
+        v.decrocher();
+        s.setRegistre(r);
+        s.arrimerVelo(v,1);
+
+        s.emprunterVelo(a, 1);
+        Assert.assertEquals(null, s.emprunterVelo(a, 1));
+    }
+
+    @Test
+    public void testArrimerNoVelo() {
+        Station s = new Station("test",30,1,10);
+        Assert.assertTrue(s.arrimerVelo(null,1)==-1);
+    }
+    @Test
+    public void testArrimerNoBorneValide() {
+        Station s = new Station("test",30,1,10);
+        IVelo v = new Velo('m');
+        Assert.assertTrue(s.arrimerVelo(v,12)==-1);
+    }
+    @Test
+    public void testArrimerNoBorneValide2() {
+        Station s = new Station("test",30,1,10);
+        IVelo v = new Velo('m');
+        Assert.assertTrue(s.arrimerVelo(v,-4)==-1);
+    }*/
+    @Test
+    public void testArrimerNoReg() {
+        Station s = new Station("test",30,1,10);
+        IVelo v = new Velo('m');
+        Assert.assertTrue(s.arrimerVelo(v,1)==-2);
+    }
+    /*@Test
+    public void testArrimerNoPlace() throws IncorrectNameException{
+        Abonne a=new Abonne("Jean-Eude");
+        IVelo v = new Velo('m');
+        IVelo v2 = new Velo('m');
+        IRegistre r= new JRegistre();
+        Station s = new Station("test",30,1,10);
+        s.setRegistre(r);
+        s.arrimerVelo(v,1);
+        Assert.assertTrue(s.arrimerVelo(v2,1)==-2);
+    }
+    @Test
+    public void testArrimerNoArrimer() {
+        IRegistre r= new JRegistre();
+        Station s = new Station("test",30,1,10);
+        IVelo v = new Velo('m');
+        s.setRegistre(r);
+        s.arrimerVelo(v,1);
+        Assert.assertTrue(s.arrimerVelo(v,2)==-3);
+    }
+    @Test
+    public void testArrimerSuccess() throws IncorrectNameException{
+        IRegistre r= new JRegistre();
+        Abonne a=new Abonne("Jean-Eude");
+        Station s = new Station("test",30,1,10);
+        IVelo v = new Velo('m');
+        r.emprunter(a,v,2000000);
+        s.setRegistre(r);
+        Assert.assertEquals(0,s.arrimerVelo(v,1));
+    }*/
+    @Test
+    public void testStationNbBornes() {
+        IRegistre r= new JRegistre();
+        Station s = new Station("test",30,1,10);
+        IVelo v = new Velo('m');
+        s.setRegistre(r);
+        s.arrimerVelo(v,1);
+        Assert.assertTrue(s.nbBornesLibres()==9);
+    }
+    @Test
+    public void testStationNbBornesPlein() {
+        Station s = new Station("test",30,1,10);
+        Assert.assertTrue(s.nbBornesLibres()==10);
+    }
+    @Test
+    public void testQuelVeloBorne() {
+        IRegistre r= new JRegistre();
+        Station s = new Station("test",30,1,10);
+        IVelo v = new Velo('m');
+        s.setRegistre(r);
+        s.arrimerVelo(v,1);
+        Assert.assertEquals(v,s.veloALaBorne(1));
+    }
+    @Test
+    public void testAucunVeloBorne() {
+        Station s = new Station("test",30,1,10);
+        Assert.assertEquals(null,s.veloALaBorne(1));
+    }
+
+    /*@Test
+    public void testStationEquilibrer1() throws IncorrectNameException {
+
+        Abonne a = new Abonne("Jean-Eude","11111-11111-11111111111-11");
+        IRegistre r = new JRegistre();
+
+        Station s = new Station("test",30,1,3);
+        s.setRegistre(r);
+
+        IVelo v = new Velo();
+        s.arrimerVelo(v,1);
+
+        Set<IVelo> hash_Set = new HashSet<IVelo>();
+
+        s.equilibrer(hash_Set);
+        Assert.assertTrue(s.nbBornesLibres()==2);
+
+    }
+
+    @Test
+    public void testStationEquilibrer2() throws IncorrectNameException {
+
+        Abonne a = new Abonne("Jean-Eude","11111-11111-11111111111-11");
+        IRegistre r = new JRegistre();
+
+        // objet sous test
+        Station s = new Station("test",30,1,3);
+        s.setRegistre(r);
+
+        IVelo v = new Velo();
+        s.arrimerVelo(v,1);
+
+        IVelo v2 = new Velo();
+        s.arrimerVelo(v2,2);
+
+        IVelo v3 = new Velo();
+        s.arrimerVelo(v3,3);
+
+        Set<IVelo> hash_Set = new HashSet<IVelo>();
+
+        s.equilibrer(hash_Set);
+        Assert.assertTrue(s.nbBornesLibres()==1);
+
+    }
+
+    @Test
+    public void testStationEquilibrer3() throws IncorrectNameException {
+        Abonne a = new Abonne("Jean-Eude","11111-11111-11111111111-11");
+        IRegistre r = new JRegistre();
+
+        // objet sous test
+        Station s = new Station("test",30,1,3);
+        s.setRegistre(r);
+
+        IVelo v = new Velo();
+        s.arrimerVelo(v,1);
+
+        IVelo v2 = new Velo();
+        s.arrimerVelo(v2,2);
+
+        Set<IVelo> hash_Set = new HashSet<IVelo>();
+
+        s.equilibrer(hash_Set);
+        Assert.assertTrue(s.nbBornesLibres()==1);
+
+    }
+
+    @Test
+    public void testStationEquilibrer4() throws IncorrectNameException {
+        Abonne a = new Abonne("Jean-Eude","11111-11111-11111111111-11");
+        Abonne a2 = new Abonne("Christophe","11111-11111-11111111111-11");
+        IRegistre r = new JRegistre();
+
+        Station s = new Station("test",30,1,3);
+        s.setRegistre(r);
+
+        IVelo v = new Velo();
+        s.arrimerVelo(v,1);
+        s.emprunterVelo(a,1);
+        v.abimer();
+        s.arrimerVelo(v,1);
+
+        IVelo v2 = new Velo();
+        s.arrimerVelo(v2,2);
+        s.emprunterVelo(a2,2);
+        v2.abimer();
+        s.arrimerVelo(v2,2);
+
+        Set<IVelo> hash_Set = new HashSet<IVelo>();
+
+        s.equilibrer(hash_Set);
+        Assert.assertTrue(s.nbBornesLibres()==3);
+
+    }
+
+    @Test
+    public void testStationEquilibrer5() throws IncorrectNameException {
+        Abonne a = new Abonne("Jean-Eude","11111-11111-11111111111-11");
+        IRegistre r = new JRegistre();
+
+        // objet sous test
+        Station s = new Station("test",30,1,3);
+        s.setRegistre(r);
+
+        IVelo v = new Velo();
+        v.parcourir(500);
+        s.arrimerVelo(v,1);
+
+        IVelo v2 = new Velo();
+        v.parcourir(500);
+        s.arrimerVelo(v2,2);
+
+        IVelo v3 = new Velo();
+        v.parcourir(500);
+        s.arrimerVelo(v3,3);
+
+        Set<IVelo> hash_Set = new HashSet<IVelo>();
+
+        s.equilibrer(hash_Set);
+        Assert.assertTrue(s.nbBornesLibres()==1);
+
+    }
+
+    @Test
+    public void testStationEquilibrer6() throws IncorrectNameException {
+        Abonne a = new Abonne("Jean-Eude","11111-11111-11111111111-11");
+        IRegistre r = new JRegistre();
+
+        // objet sous test
+        Station s = new Station("test",30,1,3);
+        s.setRegistre(r);
+
+        IVelo v = new Velo();
+        v.parcourir(500);
+        s.arrimerVelo(v,1);
+
+        IVelo v2 = new Velo();
+        v.parcourir(500);
+        s.arrimerVelo(v2,2);
+
+
+        Set<IVelo> hash_Set = new HashSet<IVelo>();
+        IVelo neuf1 = new Velo();
+        hash_Set.add(neuf1);
+        IVelo neuf2 = new Velo();
+        hash_Set.add(neuf2);
+
+        s.equilibrer(hash_Set);
+        Assert.assertTrue(s.nbBornesLibres()==1);
+        if (s.veloALaBorne(1)!=null){
+            Assert.assertTrue(s.veloALaBorne(1).prochaineRevision()==500);
+        }
+        if (s.veloALaBorne(2)!=null){
+            Assert.assertTrue(s.veloALaBorne(2).prochaineRevision()==500);
+        }
+        if (s.veloALaBorne(3)!=null){
+            Assert.assertTrue(s.veloALaBorne(3).prochaineRevision()==500);
+        }
+
+    }
+
+    @Test
+    public void testStationEquilibrer7() throws IncorrectNameException {
+        Abonne a = new Abonne("Jean-Eude","11111-11111-11111111111-11");
+        IRegistre r = new JRegistre();
+
+        // objet sous test
+        Station s = new Station("test",30,1,3);
+        s.setRegistre(r);
+
+        Set<IVelo> hash_Set = new HashSet<IVelo>();
+        IVelo revise1 = new Velo();
+        revise1.parcourir(500);
+        hash_Set.add(revise1);
+        IVelo neuf2 = new Velo();
+        hash_Set.add(neuf2);
+
+        s.equilibrer(hash_Set);
+        Assert.assertTrue(s.nbBornesLibres()==1);
+
+    }
+    @Test
+    public void test_Distance() throws IncorrectNameException {
+        Abonne a = new Abonne("Jean-Eude","11111-11111-11111111111-11");
+        IRegistre r = new JRegistre();
+
+        // objet sous test
+        Station s = new Station("test",30,1,10);
+        s.setRegistre(r);
+
+        Station s2 = new Station("test2",31,2,10);
+        s2.setRegistre(r);
+
+        Assert.assertEquals(146.7,s.distance(s2),0.1);
+
+
+    }*/
 
     /**
      * Tests Set & Get

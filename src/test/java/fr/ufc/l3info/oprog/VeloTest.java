@@ -420,6 +420,564 @@ public class VeloTest {
         assertFalse(v.toString().contains(" homme ") && v.toString().contains(" 200.0 ") && v.toString().contains(" (révision nécessaire)"));
 
     }
+    @Test
+    public void testVelo() {
+        Velo v = new Velo();
+        Assert.assertNotNull(v);
+    }
+    @Test
+    public void testVeloF() {
+        Velo v = new Velo('F');
+        Assert.assertNotNull(v);
+    }
+    @Test
+    public void testVelokilometrageSupOuEgaleZero() {
+        Velo v = new Velo('F');
+        v.kilometrage();
+        Assert.assertTrue(v.kilometrage()>=0);
+    }
+    @Test
+    public void testVelokilometrageJuste() {
+        Velo v = new Velo('F');
+        v.parcourir(100.0);
+        Assert.assertEquals(100.0,v.kilometrage(),0);
+    }
+    @Test
+    public void testVelokilometragePasJuste() {
+        Velo v = new Velo('F');
+        v.parcourir(100);
+        v.kilometrage();
+        Assert.assertNotEquals(300.0,v.kilometrage());
+    }
+    @Test
+    public void testVeloProchaineRevisionDeBase() {
+        Velo v = new Velo('?');
+        Assert.assertEquals(500.0,v.prochaineRevision(),0);
+    }
+    @Test
+    public void testVeloProchaineRevisionAFaireValeurNeg() {
+        Velo v = new Velo('F');
+        v.parcourir(600.0);
+        Assert.assertEquals(-100.0,v.prochaineRevision(),0);
+    }
+    @Test
+    public void testVeloParcourirEmprunter() {
+        Velo v = new Velo('F');
+        v.decrocher();
+        v.parcourir(50.0);
+        Assert.assertEquals(50.0,v.kilometrage(),0);
+    }
+    @Test
+    public void testVeloParcourirPasEmprunter() {
+        Velo v = new Velo('F');
+        v.decrocher();
+        v.arrimer();
+        v.parcourir(50.0);
+        Assert.assertNotEquals(50.0,v.kilometrage());
+    }
+    /*@Test
+    public void TestParcourirPasPuEtreEffectuerVAleurNegative() {
+        Velo v = new Velo('F');
+        v.decrocher();
+        v.parcourir(-60.0);
+        Assert.assertEquals(0.0,v.kilometrage(),0);
+    }*/
+    @Test
+    public void testVeloTarifJuste1() {
+        Velo v = new Velo('F');
+        Assert.assertEquals(2.0,v.tarif(),0);
+    }
+    @Test
+    public void testVeloTarifJuste2() {
+        Velo v = new Velo('F');
+        Assert.assertTrue(2.0==v.tarif());
+    }
+    @Test
+    public void testVeloTarifFalse() {
+        Velo v = new Velo('F');
+        Assert.assertFalse(v.tarif()!=2.0);
+    }
+    @Test
+    public void testVeloDecrocherValeurJuste() {
+        Velo v = new Velo('F');
+        Assert.assertTrue(v.decrocher()==0 || v.decrocher()==-1);
+    }
+
+    @Test
+    public void testVeloDecrocher() {
+        Velo v = new Velo('F');
+        v.arrimer();
+        Assert.assertEquals(0,v.decrocher());
+    }
+
+    @Test
+    public void testVeloDejaDecrocher() {
+        Velo v = new Velo('F');
+        v.arrimer();
+        Assert.assertEquals(0,v.decrocher());
+        Assert.assertEquals(-1,v.decrocher());
+    }
+    @Test
+    public void testVeloAccrocherValeurJuste() {
+        Velo v = new Velo('F');
+        Assert.assertTrue(v.arrimer()==0 || v.arrimer()==-1);
+    }
+
+    @Test
+    public void testVeloAccrocher() {
+        Velo v = new Velo('F');
+        v.decrocher();
+        Assert.assertEquals(0,v.arrimer());
+    }
+    @Test
+    public void testVeloDejaAccrocher() {
+        Velo v = new Velo('F');
+        v.decrocher();
+        Assert.assertEquals(0,v.arrimer());
+        Assert.assertEquals(-1,v.arrimer());
+    }
+    @Test
+    public void testAbimer() {
+        Velo v = new Velo('F');
+        v.abimer();
+        Assert.assertTrue(v.estAbime());
+    }
+    @Test
+    public void testAbimerCarPasDecrocherPourRevision() {
+        Velo v = new Velo('F');
+        v.abimer();
+        v.arrimer();
+        v.reviser();
+        Assert.assertEquals(true, v.estAbime());
+    }
+    @Test
+    public void testAbimerCarPasDecrocherPourReparation() {
+        Velo v = new Velo('F');
+        v.abimer();
+        v.arrimer();
+        v.reparer();
+        Assert.assertEquals(true, v.estAbime());
+    }
+    @Test
+    public void testPasAbimer() {
+        Velo v = new Velo('F');
+        Assert.assertFalse(v.estAbime());
+    }
+    /*@Test
+    public void testPasAbimerApresRevision() {
+        Velo v = new Velo('F');
+        v.decrocher();
+        v.abimer();
+        v.reviser();
+        Assert.assertFalse(v.estAbime());
+    }
+    @Test
+    public void testPasAbimerApresReparation() {
+        Velo v = new Velo('F');
+        v.decrocher();
+        v.abimer();
+        v.reparer();
+        Assert.assertFalse(v.estAbime());
+
+    }*/
+    @Test
+    public void testPasAbimerPourReparation() {
+        Velo v = new Velo('F');
+        v.arrimer();
+        v.decrocher();
+        v.reparer();
+        Assert.assertEquals(-2,v.reparer());
+
+    }
+    @Test
+    public void TestRevisionValeurJuste() {
+        Velo v = new Velo('F');
+        Assert.assertTrue(v.reviser()==0 || v.reviser()==-1);
+    }
+
+    @Test
+    public void TestRevisionEffectuer() {
+        Velo v = new Velo('F');
+        v.decrocher();
+        v.parcourir(60.0);
+        Assert.assertEquals(60.0,v.kilometrage(),0);
+        Assert.assertEquals(440.0,v.prochaineRevision(),0);
+        v.reviser();
+        Assert.assertEquals(500.0,v.prochaineRevision(),0);
+        Assert.assertEquals(0,v.reviser());
+    }
+    @Test
+    public void TestRevisionPasPuEtreEffectuer() {
+        Velo v = new Velo('F');
+        v.decrocher();
+        v.parcourir(60.0);
+        Assert.assertEquals(60.0,v.kilometrage(),0);
+        v.arrimer();
+        v.reviser();
+        Assert.assertEquals(60.0,v.kilometrage(),0);
+        Assert.assertEquals(-1,v.reviser());
+    }
+    @Test
+    public void TestStringFemme(){
+        Velo v = new Velo('F');
+        Assert.assertEquals("Vélo cadre femme - 0.0 km", v.toString());
+    }
+    @Test
+    public void TestStringHomme(){
+        Velo v = new Velo('H');
+        Assert.assertEquals("Vélo cadre homme - 0.0 km", v.toString());
+    }
+    @Test
+    public void TestStringf(){
+        Velo v = new Velo('f');
+        Assert.assertEquals("Vélo cadre femme - 0.0 km", v.toString());
+    }
+    @Test
+    public void TestStringh(){
+        Velo v = new Velo('h');
+        Assert.assertEquals("Vélo cadre homme - 0.0 km", v.toString());
+    }
+    @Test
+    public void TestStringMixteSansValeur(){
+        Velo v = new Velo();
+        Assert.assertEquals("Vélo cadre mixte - 0.0 km", v.toString());
+    }
+    @Test
+    public void TestStringValeurArrondiSup(){
+        Velo v = new Velo('x');
+        v.parcourir(45.67);
+        Assert.assertEquals("Vélo cadre mixte - 45.7 km", v.toString());
+    }
+    @Test
+    public void TestStringValeurArrondiInf(){
+        Velo v = new Velo('x');
+        v.parcourir(45.33);
+        Assert.assertEquals("Vélo cadre mixte - 45.3 km", v.toString());
+    }
+   @Test
+    public void TestStringValeurArrondiEgal(){
+        Velo v = new Velo('x');
+        v.parcourir(45.35);
+        Assert.assertEquals("Vélo cadre mixte - 45.4 km", v.toString());
+    }
+     /*@Test
+    public void TestStringRevision(){
+        Velo v = new Velo('x');
+        v.parcourir(600.35);
+        Assert.assertEquals("Vélo cadre mixte - 600.4 km (révision nécessaire)", v.toString());
+    }
+    @Test
+    public void TestStringMixteAvecValeur(){
+        Velo v = new Velo('x');
+        Assert.assertEquals("Vélo cadre mixte - 0.0 km", v.toString());
+    }*/
+
+    @Test
+    public void testConstructeurSansParametre() {
+        Velo v = new Velo();
+        assertTrue(v.toString().contains("mixte"));
+    }
+
+    @Test
+    public void testConstructeurTypeH() {
+        Velo v1 = new Velo('H');
+        Velo v2 = new Velo('h');
+        assertTrue(v1.toString().contains("homme"));
+        assertTrue(v2.toString().contains("homme"));
+    }
+
+    @Test
+    public void testConstructeurTypeF() {
+        Velo v1 = new Velo('F');
+        Velo v2 = new Velo('f');
+        assertTrue(v1.toString().contains("femme"));
+        assertTrue(v2.toString().contains("femme"));
+    }
+
+    @Test
+    public void testConstructeurTypeMixte() {
+        Velo v = new Velo('4');
+        assertTrue(v.toString().contains("mixte"));
+    }
+
+    //Test les autres attributs
+    @Test
+    public void testConstructeurKmDepart() {
+        Velo v1 = new Velo();
+        Velo v2 = new Velo('h');
+        assertEquals(0,v1.kilometrage(),DELTA);
+        assertEquals(0,v2.kilometrage(),DELTA);
+    }
+
+    @Test
+    public void testConstructeurTarifHoraire() {
+        Velo v1 = new Velo();
+        Velo v2 = new Velo('h');
+        assertEquals(2.0,v1.tarif(),DELTA);
+        assertEquals(2.0,v2.tarif(),DELTA);
+    }
+
+    @Test
+    public void testConstructeurProchaineRevision() {
+        Velo v = new Velo();
+        assertEquals(500,v.prochaineRevision(),DELTA);
+    }
+
+    @Test
+    public void testConstructeurEstDecroche() {
+        Velo v = new Velo();
+        assertEquals(-1,v.decrocher());
+    }
+
+    @Test
+    public void testConstructeurPasAbime() {
+        Velo v = new Velo();
+        assertFalse(v.estAbime());
+    }
+
+    /**
+     * Tests évolution de l'état du vélo
+     */
+
+    private Velo v;
+
+    @Before
+    public void setUp() {
+        v  = new Velo();
+    }
+
+    //Test de décrocher un vélo non abimé
+    @Test
+    public void testDecrocherVeloDejaDecroche_OK() {
+        assertEquals(-1,v.decrocher());
+    }
+
+    @Test
+    public void testDecrocherVeloAccroche_OK() {
+        v.arrimer();
+        assertEquals(0,v.decrocher());
+    }
+
+    //Test d'accrocher un vélo non abimé
+    @Test
+    public void testAccrocherVeloDecroche_OK() {
+        assertEquals(0,v.arrimer());
+    }
+
+    @Test
+    public void testAccrocherVeloDejaAccroche_OK() {
+        v.arrimer();
+        assertEquals(-1,v.arrimer());
+    }
+
+    //Test d'abimer un vélo
+    @Test
+    public void testAbimerVeloDecroche() {
+        v.abimer();
+        assertTrue(v.estAbime());
+    }
+
+    @Test
+    public void testAbimerVeloAccroche() {
+        v.arrimer();
+        v.abimer();
+        assertTrue(v.estAbime());
+    }
+
+    //Test de décrocher un vélo abimé
+    @Test
+    public void testDecrocherVeloDejaDecroche_Abime() {
+        v.abimer();
+        assertEquals(-1,v.decrocher());
+    }
+
+    @Test
+    public void testDecrocherVeloAccroche_Abime() {
+        v.abimer();
+        v.arrimer();
+        assertEquals(0,v.decrocher());
+    }
+
+    //Test d'accrocher un vélo abimé
+    @Test
+    public void testAccrocherVeloDecroche_Abime() {
+        v.abimer();
+        assertEquals(0,v.arrimer());
+    }
+
+    @Test
+    public void testAccrocherVeloDejaAccroche_Abime() {
+        v.abimer();
+        v.arrimer();
+        assertEquals(-1,v.arrimer());
+    }
+
+    /**
+     * Tests réparation du vélo
+     */
+    //Test de réparer un vélo abimé
+    @Test
+    public void testReparerVeloDecroche_Abime() {
+        v.abimer();
+        assertEquals(0,v.reparer());
+    }
+
+    @Test
+    public void testReparerVeloAccroche_Abime() {
+        v.abimer();
+        v.arrimer();
+        assertEquals(-1,v.reparer());
+    }
+
+    //Test de réparer un vélo non abimé
+    @Test
+    public void testReparerVeloDecroche_Ok() {
+        assertEquals(-2,v.reparer());
+    }
+
+    /**
+     * Tests parcours et révision vélo
+     */
+    //Test de parcourir une distance avec un vélo
+    @Test
+    public void testParcourirVeloAccroche_Ok() {
+        v.arrimer();
+        v.parcourir(40.0);
+        assertEquals(0,v.kilometrage(), DELTA);
+    }
+
+    @Test
+    public void testParcourirVeloDecroche_Ok() {
+        double distance=40.0;
+        v.parcourir(distance);
+        assertEquals(distance,v.kilometrage(), DELTA);
+    }
+
+    @Test
+    public void testParcourirVeloAccroche_Abime() {
+        v.arrimer();
+        v.abimer();
+        v.parcourir(40.0);
+        assertEquals(0,v.kilometrage(), DELTA);
+    }
+
+    @Test
+    public void testParcourirVeloDecroche_Abime() {
+        v.abimer();
+        double distance=40.0;
+        v.parcourir(distance);
+        assertEquals(distance,v.kilometrage(), DELTA);
+    }
+
+    @Test
+    public void testParcourirPlusieursFois() {
+        double distance1=40.0;
+        v.parcourir(distance1);
+        double distance2=100.0;
+        v.parcourir(distance2);
+        assertEquals(distance1+distance2,v.kilometrage(), DELTA);
+    }
+
+    @Test
+    public void testParcourirValeurNegative() {
+        v.parcourir(-40.0);
+        assertEquals(0,v.kilometrage(), DELTA);
+    }
+
+    //Test combien de kilomètres il reste avant la révision
+    @Test
+    public void testSiBesoinReviserVelo500km() {
+        v.parcourir(500);
+        assertEquals(0,v.prochaineRevision(), DELTA);
+    }
+
+    @Test
+    public void testSiBesoinReviserVeloPlus500km() {
+        v.parcourir(500.0000001);
+        assertTrue(0>v.prochaineRevision());
+    }
+
+    @Test
+    public void testSiBesoinReviserMoinsVelo500km() {
+        v.parcourir(499.99999999);
+        assertTrue(0<v.prochaineRevision());
+    }
+
+    //Test la révision d'un vélo décroché
+    @Test
+    public void testReviserVeloDecroche_Ok_Plus500() {
+        v.parcourir(600.00);
+        assertEquals(0,v.reviser());
+    }
+
+    @Test
+    public void testReviserVeloDecroche_Ok_Moins500() {
+        v.parcourir(200.00);
+        assertEquals(0,v.reviser());
+    }
+
+    @Test
+    public void testReviserVeloDecroche_Abime() {
+        v.abimer();
+        v.parcourir(300.00);
+        assertEquals(0,v.reviser());
+        assertEquals(0,v.kilometrage(), DELTA);
+        //Test si la réparation a eu lieu pendant la révision
+        assertEquals(-2,v.reparer());
+    }
+
+    //Test la révision d'un vélo accroché
+    @Test
+    public void testReviserVeloAccroche() {
+        v.arrimer();
+        v.parcourir(600.00);
+        assertEquals(-1,v.reviser());
+    }
+
+    @Test
+    public void testReviserVeloAccroche_Abime() {
+        v.parcourir(300);
+        v.arrimer();
+        v.abimer();
+        assertEquals(-1,v.reviser());
+        assertEquals(300,v.kilometrage(), DELTA);
+        //Test si la réparation a eu lieu pendant la révision
+        v.decrocher();
+        assertEquals(0,v.reparer());
+    }
+
+    /**
+     * Tests toString
+     */
+
+    @Test
+    public void testToStringRevision() {
+        v.parcourir(600);
+        assertTrue(v.toString().contains("(révision nécessaire)"));
+    }
+
+    @Test
+    public void testToStringPasRevision() {
+        assertFalse(v.toString().contains("(révision nécessaire)"));
+    }
+
+    @Test
+    public void testToStringKmArrondiDecimal() {
+        v.parcourir(327.37);
+        assertTrue(v.toString().contains(" 327.4 "));
+    }
+
+    @Test
+    public void testToStringKmArrondiUnite() {
+        v.parcourir(99.99);
+        assertTrue(v.toString().contains(" 100.0 "));
+    }
+
+    @Test
+    public void testToStringKmSansDecimal() {
+        v.parcourir(250);
+        assertTrue(v.toString().contains(" 250.0 "));
+    }
 
 
     @Test
