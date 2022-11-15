@@ -154,38 +154,6 @@ public class AbonneTest {
 
     }
 
-    /*Test Mise à jour rib*/
-    /*
-    @Test
-    public void testMiseAJourRibCorrect() throws IncorrectNameException{
-        // création d'un nouvel abonné
-        Abonne a = new Abonne("Fred","12345-12345-12345678912-13");
-        a.miseAJourRIB("11111-22222-33333333333-91");
-        // vérification de son rib mis à jour
-        assertEquals("11111-22222-33333333333-91",a.rib);
-
-    }
-
-    @Test
-    public void testMiseAJourRibFaux() throws IncorrectNameException{
-        // création d'un nouvel abonné
-        Abonne a = new Abonne("Fred","12345-12345-12345678912-13");
-        a.miseAJourRIB("11111-22222-33333333333-94");
-        // vérification de son rib mis à jour
-
-        assertEquals("12345-12345-12345678912-13",a.rib);
-
-    }
-    @Test
-    public void testMiseAJourRibCorrectAvecRibNullDepart() throws IncorrectNameException{
-        // création d'un nouvel abonné
-        Abonne a = new Abonne("Fred");
-        a.miseAJourRIB("11111-22222-33333333333-91");
-        // vérification de son rib mis à jour
-        assertEquals("11111-22222-33333333333-91",a.rib);
-
-    }
-*/
     /*Test bloquer abonne*/
     @Test
     public void testBloqueAbonne() throws IncorrectNameException {

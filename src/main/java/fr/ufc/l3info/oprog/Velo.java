@@ -6,7 +6,7 @@ public class Velo implements IVelo {
     double kilometre_restant=500;
     double tarif;
 
-    boolean revision_necessaire=false;
+
 
     boolean decroche=false;
     boolean abime=false;
@@ -23,11 +23,16 @@ public class Velo implements IVelo {
      * Construit un vélo avec un type de cadre spécifié en paramètre
      */
     public Velo(char t)  {
+
         if((t=='f'|| t=='F' || t=='h' || t=='H')){
             this.type=t;
-            this.kilometre=0;
-            this.decroche=true;
+        }else{
+            this.type='m';
         }
+
+        this.kilometre=0;
+        this.decroche=true;
+
 
 
     }
@@ -49,7 +54,7 @@ public class Velo implements IVelo {
     public double prochaineRevision() {
         double km_restant=kilometre_restant-this.kilometre;
         if(km_restant==0){
-            revision_necessaire=true;
+
             return 0;
         }
         return km_restant;
@@ -62,8 +67,10 @@ public class Velo implements IVelo {
      * @param km le nombre de kilomètres parcourus.
      */
     public void parcourir(double km) {
-        if(this.decroche){
-            this.kilometre=this.kilometre+km;
+        if(km>0) {
+            if (this.decroche) {
+                this.kilometre = this.kilometre + km;
+            }
         }
 
     }
@@ -157,6 +164,7 @@ public class Velo implements IVelo {
     public int reparer() {
         if(this.decroche==true){
             if(estAbime() == true) {
+                this.abime=false;
                 return 0;
             }
             return -2;
@@ -190,7 +198,7 @@ public class Velo implements IVelo {
         }
         double new_kilometre =(double)Math.round(this.kilometre * 10d) / 10d;
         String res;
-        if (revision_necessaire==true){
+        if (prochaineRevision()<=0){
             res="Vélo cadre "+new_type+ " - "+ new_kilometre+" km (révision nécessaire)";
         }else{
            res= "Vélo cadre "+new_type+ " - "+ new_kilometre+" km";

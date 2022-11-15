@@ -6,11 +6,11 @@ public class OptCadreAlu extends Option{
     }
 
     public String toString() {
-        String split[] = _originale.toString().split("-", 0);
+        String split[] = _originale.toString().split(" - ", 0);
         String cadre=split[0];
         String km=split[1];
 
-        return cadre+","+ "cadre aluminium"+" - "+ km;
+        return cadre+","+ " cadre aluminium"+" - "+ km;
 
 
     }

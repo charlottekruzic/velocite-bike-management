@@ -112,7 +112,7 @@ public class OptionTest {
         OptAssistanceElectrique o = new OptAssistanceElectrique(velo);
         System.out.println(o.toString());
         // vérification de l'option
-        assertTrue(o.toString().contains(" assistance électrique"));
+        assertTrue(o.toString().contains("assistance électrique"));
     }
 
     /*Test velo avec plusieurs option*/
@@ -347,7 +347,7 @@ public class OptionTest {
         OptCadreAlu o = new OptCadreAlu(velo);
 
         // vérification de son type de cadre
-        assertTrue(o.toString().contains(" homme "));
+        assertTrue(o.toString().contains("homme"));
 
     }
 
@@ -410,6 +410,7 @@ public class OptionTest {
     @Test
     public void testToStringOptCadreAlu() {
         v=new OptCadreAlu(v);
+        System.out.println(v.toString());
         assertEquals(v.toString(), "Vélo cadre mixte, cadre aluminium - 0.0 km");
     }
 
