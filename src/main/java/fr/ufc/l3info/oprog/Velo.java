@@ -17,6 +17,7 @@ public class Velo implements IVelo {
         this.type='m';
         this.kilometre=0;
         this.decroche=true;
+        this.abime=false;
     }
 
     /**
@@ -25,7 +26,11 @@ public class Velo implements IVelo {
     public Velo(char t)  {
         if((t=='f'|| t=='F' || t=='h' || t=='H')){
             this.type=t;
-            this.kilometre=0;
+            this.kilometre=0.0;
+            this.decroche=true;
+        }else{
+            this.type='m';
+            this.kilometre=0.0;
             this.decroche=true;
         }
 

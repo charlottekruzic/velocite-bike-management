@@ -642,7 +642,7 @@ public class VeloTest {
         Velo v = new Velo();
         Assert.assertEquals("Vélo cadre mixte - 0.0 km", v.toString());
     }
-    /*@Test
+    @Test
     public void TestStringValeurArrondiSup(){
         Velo v = new Velo('x');
         v.parcourir(45.67);
@@ -654,13 +654,13 @@ public class VeloTest {
         v.parcourir(45.33);
         Assert.assertEquals("Vélo cadre mixte - 45.3 km", v.toString());
     }
-    @Test
+   @Test
     public void TestStringValeurArrondiEgal(){
         Velo v = new Velo('x');
         v.parcourir(45.35);
         Assert.assertEquals("Vélo cadre mixte - 45.4 km", v.toString());
     }
-    @Test
+     /*@Test
     public void TestStringRevision(){
         Velo v = new Velo('x');
         v.parcourir(600.35);

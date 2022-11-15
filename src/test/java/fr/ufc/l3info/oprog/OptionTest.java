@@ -1171,7 +1171,7 @@ public class OptionTest {
         IVelo v = new Velo('x');
         v=new OptCadreAlu(v);
         Assert.assertEquals("Vélo cadre mixte, cadre aluminium - 0.0 km", v.toString());
-    }*
+    }*/
     @Test
     public void testReviserVeloOptAccroche_Abime() {
         v =new OptAssistanceElectrique(v);
