@@ -14,33 +14,28 @@ public class FabriqueVelo{
     }
 
     public IVelo construire(char cadre,String... options){
-        IVelo velo = new Velo(cadre);
+        IVelo v = new Velo(cadre);
+        boolean cadre_alu=false, suspension_av=false, suspension_ar=false, freins_disque=false, assistance_elec=false;
 
-        for(String option : options){
-            switch (option){
-                case "CADRE_ALUMINIUM":
-                    velo= new OptCadreAlu(velo);
-                    break;
-                case "SUSPENSION_AVANT":
-                    velo= new OptSuspensionAvant(velo);
-                    break;
-                case "SUSPENSION_ARRIERE":
-                    velo= new OptSuspensionArriere(velo);
-                    break;
-                case "FREINS_DISQUE":
-                    velo= new OptFreinsDisque(velo);
-                    break;
-                case "ASSISTANCE_ELECTRIQUE":
-                    velo= new OptAssistanceElectrique(velo);
-                    break;
-
+        for(String o : options){
+            if(o=="CADRE_ALUMINIUM" && !cadre_alu){
+                v=new OptCadreAlu(v);
+                cadre_alu=true;
+            }else if(o=="SUSPENSION_AVANT" && !suspension_av){
+                v=new OptSuspensionAvant(v);
+                suspension_av=true;
+            }else if(o=="SUSPENSION_ARRIERE" && !suspension_ar){
+                v=new OptSuspensionArriere(v);
+                suspension_ar=true;
+            }else if(o=="FREINS_DISQUE" && !freins_disque){
+                v=new OptFreinsDisque(v);
+                freins_disque=true;
+            }else if(o=="ASSISTANCE_ELECTRIQUE" && !assistance_elec){
+                v=new OptAssistanceElectrique(v);
+                assistance_elec=true;
             }
-
-
-
-
         }
-        return velo;
+        return v;
     }
 
 

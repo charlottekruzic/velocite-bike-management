@@ -154,7 +154,7 @@ public class AbonneTest {
 
 
     }
-*/
+
     /*Test bloquer abonne*/
     @Test
     public void testBloqueAbonne() throws IncorrectNameException {
@@ -601,53 +601,14 @@ public class AbonneTest {
 
 
     }
+
     @Test (expected= IncorrectNameException.class)
     public void testNomPasValideTrait() throws IncorrectNameException {
         // création d'un nouvel abonné
         Abonne a = new Abonne("charles-Emilien-----");
         Assert.assertEquals(new IncorrectNameException(), a.getNom());
-
-
-    @Test
-    public void testDifferentsAbonnes() throws IncorrectNameException {
-        Abonne lucien = new Abonne("Lucien");
-        Abonne jason = new Abonne("Jason");
-        assertFalse(lucien.equals(jason));
     }
 
-    @Test
-    public void testAbonneNull() throws IncorrectNameException {
-        Abonne lucien = new Abonne("Lucien");
-        Abonne nul = null;
-        assertFalse(lucien.equals(nul));
-    }
-
-    @Test
-    public void testPasUnAbonne() throws IncorrectNameException {
-        Abonne lucien = new Abonne("Lucien");
-        int pasUnAbonne = 12;
-        assertFalse(lucien.equals(pasUnAbonne));
-    }
-
-    @Test
-    public void testDifferentsAbonnesHash() throws IncorrectNameException {
-        Abonne lucien = new Abonne("Lucien");
-        Abonne agathe = new Abonne("Agathe");
-        HashSet<Abonne> abonnes = new HashSet<Abonne>();
-        abonnes.add(lucien);
-        abonnes.add(agathe);
-        assertEquals(2, abonnes.size());
-    }
-
-    @Test
-    public void testMemeAbonneHash() throws IncorrectNameException {
-        Abonne lucien = new Abonne("Lucien");
-        HashSet<Abonne> abonnes = new HashSet<Abonne>();
-        abonnes.add(lucien);
-        abonnes.add(lucien);
-        assertEquals(1, abonnes.size());
-    }
-    }
     @Test (expected= IncorrectNameException.class)
     public void testNomPasValideTrait2() throws IncorrectNameException {
         // création d'un nouvel abonné
