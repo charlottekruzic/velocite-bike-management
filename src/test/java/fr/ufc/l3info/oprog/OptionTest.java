@@ -1188,20 +1188,4 @@ public class OptionTest {
         v.decrocher();
         assertEquals(0,v.reparer());
     }
-
-    @Test
-    public void testReviserVeloOptAccroche_Abime() {
-        v =new OptAssistanceElectrique(v);
-        v.parcourir(300);
-        v.arrimer();
-        v.abimer();
-        assertEquals(-1,v.reviser());
-        assertEquals(300,v.kilometrage(), DELTA);
-        //Test si la réparation a eu lieu pendant la révision
-        v.decrocher();
-        assertEquals(0,v.reparer());
-    }
-
-
-
 }
