@@ -67,14 +67,18 @@ public class Station{
         if(registre.nbEmpruntsEnCours(a)!=0){
             return null;
         }
+
         if(a==null || a.estBloque()==true){
             return null;
         }
         if(b>capacite || b<1){
             return null;
         }
-        registre.emprunter(a, bornes[b], maintenant() );
-        return bornes[b];
+        IVelo v=bornes[b];
+        registre.emprunter(a, v, maintenant() );
+
+        bornes[b]=null;
+        return v;
     }
 
     public int arrimerVelo(IVelo v, int b){
@@ -101,32 +105,75 @@ public class Station{
         return 0;
     }
     public void equilibrer(Set<IVelo> velos) {
-        /*int nb=nbBornesLibres();
-        double moitier=(capacite/2)+1;
+        Object[] velos_remplacement= velos.toArray();
+        int nb_velo_remplacement=velos_remplacement.length;
 
-        int i = 0;
-        while (nb > moitier && i<capacite) {
-            if (bornes[i] != null) {
-                bornes[i] = null;
+        //Ajouter des vélos pour compléter les bornes libres
+        int nb_velo_max=this.capacite/2;
+        //Cherche un vélo disponible dans le stock
+        for(int i=0;i<nb_velo_remplacement;i++) {
+            IVelo v = (IVelo) velos_remplacement[i];
+            //Vérifie que la station n'est pas déjà assez remplie
+            if (nbBornesLibres() == nb_velo_max) {
+                break;
             }
-
-            i++;
-
+            // Cherche une borne disponible pour accrocher le vélo
+            int j;
+            for (j = 0; this.bornes[j] != null && j < nb_velo_max; j++) ;
+            if (i < this.capacite) {
+                v.arrimer();
+                this.bornes[j] = v;
+                velos.remove(v);
+                velos_remplacement[i]=null;
+            }
         }
-        while ( nb < moitier) {
-            Iterator<IVelo> it = velos.iterator();
 
-                while (it.hasNext()) {
-                    for(int j=0;j<capacite;j++){
-                    if (bornes[j] == null) {
-                        System.out.println(bornes[i]);
-                        bornes[j] = it.next();
+        //Retirer les vélos abimés et les remplacer si possible
+        //Parcours des bornes pour trouver les vélos abimés
+        for(int i=0;i<this.capacite;i++) {
+            if (this.bornes[i] != null && this.bornes[i].estAbime()) {
+                IVelo velo_abime=this.bornes[i];
+
+                //Recherche d'un vélo disponible dans le stock
+                for(int j=0;j<nb_velo_remplacement;j++) {
+                    IVelo v = (IVelo) velos_remplacement[j];
+                    //Remplacement
+                    if (v!=null && !v.estAbime()) {
+                        this.bornes[i] = v;
+                        velos.remove(v);
+                        velos_remplacement[j]=null;
+                        break;
                     }
                 }
-
+                if(this.bornes[i].estAbime()){
+                    this.bornes[i]=null;
+                }
+                velo_abime.decrocher();
+                velos.add(velo_abime);
             }
-        }*/
+        }
 
+        //Retirer et remplacer les vélos à réviser si possible
+        //Parcours des bornes pour trouver les vélos à réviser
+        for(int i=0;i<this.capacite;i++) {
+            System.out.println("av   "+bornes[i]);
+            if (this.bornes[i] != null && this.bornes[i].kilometrage() >= 500) {
+                IVelo velo_a_reviser=this.bornes[i];
+                //Recherche s'il y a des vélos en stocks
+                for(int j=0;j<nb_velo_remplacement;j++) {
+                    IVelo v = (IVelo) velos_remplacement[j];
+                    if (v!=null && v.kilometrage() < 500) {
+                        this.bornes[i] = v;
+                        velos.remove(v);
+                        velos_remplacement[j]=null;
+                        velo_a_reviser.decrocher();
+                        velos.add(velo_a_reviser);
+                        break;
+                    }
+                }
+            }
+            System.out.println("ap   "+bornes[i]);
+        }
     }
 
     public double distance(Station s){

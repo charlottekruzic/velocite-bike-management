@@ -165,7 +165,7 @@ public class ASTCheckerVisitorTest {
 
     @Test
     public void testASTListeStationsNameNull() throws StationParserException, IOException {
-        ASTNode n = parser.parse(new File("./target/classes/data/stationNullName.txt"));
+        ASTNode n = parser.parse(new File("./target/classes/data/stationsNullName.txt"));
         ASTCheckerVisitor v = new ASTCheckerVisitor();
 
         n.accept(v);

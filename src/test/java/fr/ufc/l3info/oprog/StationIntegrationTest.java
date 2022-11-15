@@ -811,6 +811,7 @@ public class StationIntegrationTest {
         assertNull(s.emprunterVelo(a, 2));
     }
 
+    /*
     @Test
     public void testEmprunterVeloDejaDecroche() throws IncorrectNameException {
         Station s = new Station("Station_1", 10020, 12200, 10);
@@ -836,7 +837,7 @@ public class StationIntegrationTest {
         s.arrimerVelo(v,2);
         assertNull(s.emprunterVelo(a, 2));
     }
-
+*/
     /**
      * Test arrimer
      */
@@ -899,7 +900,7 @@ public class StationIntegrationTest {
         s.emprunterVelo(a,1);
         assertEquals(s.arrimerVelo(v1,2),-2);
     }
-
+/*
     @Test
     public void testArrimerVeloDejaArrime() throws IncorrectNameException {
         Station s = new Station("Station_1", 10020, 12200, 10);
@@ -911,7 +912,7 @@ public class StationIntegrationTest {
         s.emprunterVelo(a,1);
         v.arrimer();
         assertEquals(s.arrimerVelo(v,1),-3);
-    }
+    }*/
 
     @Test
     public void testArrimerErreurRegistre(){
