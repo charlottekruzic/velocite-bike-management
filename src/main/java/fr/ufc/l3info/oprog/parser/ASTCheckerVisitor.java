@@ -61,20 +61,26 @@ public class ASTCheckerVisitor implements ASTNodeVisitor {
     }
 
     @Override
-    public Object visit(ASTDeclaration n) { if(n.getNumChildren()==0){
-        this.errors.put(n.getLCPrefix()+"message erreur",ERROR_KIND.EMPTY_LIST);
-    }else if(n.getNumChildren()!=2){
-        this.errors.put(n.getLCPrefix()+"message erreur",ERROR_KIND.WRONG_NUMBER_VALUE);
-    }else{
-        for (ASTNode child : n) {
-            child.accept(this);
+
+    public Object visit(ASTDeclaration n) {
+        if(n.getNumChildren()==0){
+            this.errors.put(n.getLCPrefix()+"message erreur",ERROR_KIND.EMPTY_LIST);
+        }else if(n.getNumChildren()!=2){
+            this.errors.put(n.getLCPrefix()+"message erreur",ERROR_KIND.WRONG_NUMBER_VALUE);
+        }else{
+            for (ASTNode child : n) {
+                child.accept(this);
+            }
         }
-    }
+
         return null;
     }
 
     @Override
-    public Object visit(ASTChaine n) { System.out.println("chaine : "+n.value); //nom
+
+    public Object visit(ASTChaine n) {
+        System.out.println("chaine : "+n.value); //nom
+
         String nom_sans_espace= n.value;
         nom_sans_espace=nom_sans_espace.replaceAll(" ","");
         nom_sans_espace=nom_sans_espace.trim();
@@ -95,7 +101,10 @@ public class ASTCheckerVisitor implements ASTNodeVisitor {
     }
 
     @Override
-    public Object visit(ASTIdentificateur n) { identificateur_de_la_valeur=n.value;
+
+    public Object visit(ASTIdentificateur n) {
+        identificateur_de_la_valeur=n.value;
+
         String id= n.value;
         id=id.replaceAll("\\s+","");
         id=id.trim();
@@ -109,13 +118,16 @@ public class ASTCheckerVisitor implements ASTNodeVisitor {
     }
 
     @Override
-    public Object visit(ASTNombre n){ if(identificateur_de_la_valeur.equals("capacite")){
-        if(n.value.contains(".")==true){
-            this.errors.put(n.getLCPrefix() + "message erreur", ERROR_KIND.WRONG_NUMBER_VALUE);
-        }else if(Integer.parseInt(n.value) <=0){
-            this.errors.put(n.getLCPrefix() + "message erreur", ERROR_KIND.WRONG_NUMBER_VALUE);
+
+    public Object visit(ASTNombre n){
+        if(identificateur_de_la_valeur.equals("capacite")){
+            if(n.value.contains(".")==true){
+                this.errors.put(n.getLCPrefix() + "message erreur", ERROR_KIND.WRONG_NUMBER_VALUE);
+            }else if(Integer.parseInt(n.value) <=0){
+                this.errors.put(n.getLCPrefix() + "message erreur", ERROR_KIND.WRONG_NUMBER_VALUE);
+            }
         }
-    }
+
         return null;
     }
 }

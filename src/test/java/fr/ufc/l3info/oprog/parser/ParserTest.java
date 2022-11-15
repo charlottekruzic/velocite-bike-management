@@ -100,6 +100,38 @@ public class ParserTest {
         assertEquals(0, nb);
     }
 
+
+    @Test (expected=StationParserException.class)
+    public void testParserDoubleCoteInterieur() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File("./target/classes/data/stationsDoubleCoteInterieur.txt"));
+    }
+
+    @Test (expected=StationParserException.class)
+    public void testParserDoubleCoteInterieurBackSlash() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File("./target/classes/data/stationsDoubleCoteInterieurBackSlash.txt"));
+    }
+
+    @Test (expected=StationParserException.class)
+    public void testParserAccoladeOuverteManquante() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File("./target/classes/data/stationsAccoladeOuverteManquante.txt"));
+    }
+
+    @Test (expected=StationParserException.class)
+    public void testParserAccoladeFermanteManquante() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File("./target/classes/data/stationsAccoladeFermanteManquante.txt"));
+    }
+
+    @Test (expected=StationParserException.class)
+    public void testParserDeuxAccoladesManquantes() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File("./target/classes/data/stationsDeuxAccoladesManquantes.txt"));
+    }
+
+    @Test (expected=StationParserException.class)
+    public void testParserSans2Points() throws StationParserException, IOException {
+        ASTNode n = parser.parse(new File("./target/classes/data/stationsSans2Points.txt"));
+    }
+
+
     @Test (expected = StationParserException.class)
     public void teststationsKO_s_enplus() throws StationParserException, IOException {
         ASTNode n = parser.parse(new File(path + "stations_KO_s_enplus.txt"));

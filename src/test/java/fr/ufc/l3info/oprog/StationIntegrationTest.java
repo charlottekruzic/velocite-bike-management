@@ -312,6 +312,7 @@ public class StationIntegrationTest {
     @Test
     public void TestveloALaBorneVide(){
 
+
         IVelo v=new Velo('m');
         Station s=new Station("test",1.0,1.0,1);
         s.arrimerVelo(v,2);
@@ -705,6 +706,7 @@ public class StationIntegrationTest {
 
 
     }*/
+
     /**
      * Tests Set & Get
      */
@@ -1136,5 +1138,6 @@ public class StationIntegrationTest {
         Station s2 = new Station("Station_2", 20000, -14000, 8);
         assertEquals(13981,s1.distance(s2),1);
     }
+
 
 }
