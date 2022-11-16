@@ -100,11 +100,11 @@ public class StationIntegrationTest {
     @Test
     public void testEmprunterVeloRegistreNull() throws IncorrectNameException{
         // création d'un abonne et d'une station
-       Abonne abonne = new Abonne("Jade","12345-12345-12345678912-13");
-       Station s = new Station("Gare Viotte",  47.24650155142733,6.022715427111734,10);
+        Abonne abonne = new Abonne("Jade","12345-12345-12345678912-13");
+        Station s = new Station("Gare Viotte",  47.24650155142733,6.022715427111734,10);
 
-       // vérification de l'emprunt avec un registre null
-       assertNull(s.emprunterVelo(abonne,12));
+        // vérification de l'emprunt avec un registre null
+        assertNull(s.emprunterVelo(abonne,12));
 
     }
 
@@ -329,7 +329,7 @@ public class StationIntegrationTest {
         Station s=new Station("test",1.0,1.0,3);
         Assert.assertNull(s.veloALaBorne(-1));
     }
-    /*@Test
+    @Test
     public void TestArrimerVeloRegistrepasvalide()throws IncorrectNameException{
         IRegistre r=null;
         Abonne a=new Abonne("Jean-Eude");
@@ -353,8 +353,9 @@ public class StationIntegrationTest {
 
     @Test
     public void TestEmpruntAbonneBloque() throws IncorrectNameException{
+        IRegistre registre = new JRegistre();
         Abonne a=new Abonne("Jean-Eude");
-        Station s = new Station("test",1.0,1.0,1);
+        Station s = new Station("test",1.0,1.0,2);
         Assert.assertEquals(null, s.emprunterVelo(a, 1));
 
     }
@@ -370,7 +371,7 @@ public class StationIntegrationTest {
         s.setRegistre(r);
         s.arrimerVelo(v,1);
 
-        Assert.assertEquals(null, s.emprunterVelo(a, -1));
+        Assert.assertEquals(null, s.emprunterVelo(a, 0));
     }
     @Test
     public void testEmpruntNoBorne2() throws IncorrectNameException{
@@ -431,6 +432,7 @@ public class StationIntegrationTest {
     public void testArrimerNoVelo() {
         Station s = new Station("test",30,1,10);
         Assert.assertTrue(s.arrimerVelo(null,1)==-1);
+
     }
     @Test
     public void testArrimerNoBorneValide() {
@@ -443,14 +445,14 @@ public class StationIntegrationTest {
         Station s = new Station("test",30,1,10);
         IVelo v = new Velo('m');
         Assert.assertTrue(s.arrimerVelo(v,-4)==-1);
-    }*/
+    }
     @Test
     public void testArrimerNoReg() {
         Station s = new Station("test",30,1,10);
         IVelo v = new Velo('m');
         Assert.assertTrue(s.arrimerVelo(v,1)==-2);
     }
-    /*@Test
+    @Test
     public void testArrimerNoPlace() throws IncorrectNameException{
         Abonne a=new Abonne("Jean-Eude");
         IVelo v = new Velo('m');
@@ -468,7 +470,7 @@ public class StationIntegrationTest {
         IVelo v = new Velo('m');
         s.setRegistre(r);
         s.arrimerVelo(v,1);
-        Assert.assertTrue(s.arrimerVelo(v,2)==-3);
+        Assert.assertEquals(-3,s.arrimerVelo(v,2));
     }
     @Test
     public void testArrimerSuccess() throws IncorrectNameException{
@@ -479,7 +481,7 @@ public class StationIntegrationTest {
         r.emprunter(a,v,2000000);
         s.setRegistre(r);
         Assert.assertEquals(0,s.arrimerVelo(v,1));
-    }*/
+    }
     @Test
     public void testStationNbBornes() {
         IRegistre r= new JRegistre();
@@ -509,10 +511,10 @@ public class StationIntegrationTest {
         Assert.assertEquals(null,s.veloALaBorne(1));
     }
 
-    /*@Test
+    @Test
     public void testStationEquilibrer1() throws IncorrectNameException {
 
-        Abonne a = new Abonne("Jean-Eude","11111-11111-11111111111-11");
+        Abonne a = new Abonne("Jean","12345-12345-12345678912-13");
         IRegistre r = new JRegistre();
 
         Station s = new Station("test",30,1,3);
@@ -531,11 +533,11 @@ public class StationIntegrationTest {
     @Test
     public void testStationEquilibrer2() throws IncorrectNameException {
 
-        Abonne a = new Abonne("Jean-Eude","11111-11111-11111111111-11");
+        Abonne a = new Abonne("Jean","12345-12345-12345678912-13");
         IRegistre r = new JRegistre();
 
         // objet sous test
-        Station s = new Station("test",30,1,3);
+        Station s = new Station("test",30,1,4);
         s.setRegistre(r);
 
         IVelo v = new Velo();
@@ -556,7 +558,7 @@ public class StationIntegrationTest {
 
     @Test
     public void testStationEquilibrer3() throws IncorrectNameException {
-        Abonne a = new Abonne("Jean-Eude","11111-11111-11111111111-11");
+        Abonne a = new Abonne("Jean","12345-12345-12345678912-13");
         IRegistre r = new JRegistre();
 
         // objet sous test
@@ -578,8 +580,8 @@ public class StationIntegrationTest {
 
     @Test
     public void testStationEquilibrer4() throws IncorrectNameException {
-        Abonne a = new Abonne("Jean-Eude","11111-11111-11111111111-11");
-        Abonne a2 = new Abonne("Christophe","11111-11111-11111111111-11");
+        Abonne a = new Abonne("Jean","12345-12345-12345678912-13");
+        Abonne a2 = new Abonne("Christophe","11111-22222-33333333333-91");
         IRegistre r = new JRegistre();
 
         Station s = new Station("test",30,1,3);
@@ -606,11 +608,11 @@ public class StationIntegrationTest {
 
     @Test
     public void testStationEquilibrer5() throws IncorrectNameException {
-        Abonne a = new Abonne("Jean-Eude","11111-11111-11111111111-11");
+        Abonne a = new Abonne("Jean","12345-12345-12345678912-13");
         IRegistre r = new JRegistre();
 
         // objet sous test
-        Station s = new Station("test",30,1,3);
+        Station s = new Station("test",30,1,4);
         s.setRegistre(r);
 
         IVelo v = new Velo();
@@ -634,11 +636,11 @@ public class StationIntegrationTest {
 
     @Test
     public void testStationEquilibrer6() throws IncorrectNameException {
-        Abonne a = new Abonne("Jean-Eude","11111-11111-11111111111-11");
+        Abonne a = new Abonne("Jean","12345-12345-12345678912-13");
         IRegistre r = new JRegistre();
 
         // objet sous test
-        Station s = new Station("test",30,1,3);
+        Station s = new Station("test",30,1,4);
         s.setRegistre(r);
 
         IVelo v = new Velo();
@@ -657,7 +659,7 @@ public class StationIntegrationTest {
         hash_Set.add(neuf2);
 
         s.equilibrer(hash_Set);
-        Assert.assertTrue(s.nbBornesLibres()==1);
+        Assert.assertTrue(s.nbBornesLibres()==2);
         if (s.veloALaBorne(1)!=null){
             Assert.assertTrue(s.veloALaBorne(1).prochaineRevision()==500);
         }
@@ -672,7 +674,7 @@ public class StationIntegrationTest {
 
     @Test
     public void testStationEquilibrer7() throws IncorrectNameException {
-        Abonne a = new Abonne("Jean-Eude","11111-11111-11111111111-11");
+        Abonne a = new Abonne("Jean","12345-12345-12345678912-13");
         IRegistre r = new JRegistre();
 
         // objet sous test
@@ -692,7 +694,7 @@ public class StationIntegrationTest {
     }
     @Test
     public void test_Distance() throws IncorrectNameException {
-        Abonne a = new Abonne("Jean-Eude","11111-11111-11111111111-11");
+        Abonne a = new Abonne("Jean","12345-12345-12345678912-13");
         IRegistre r = new JRegistre();
 
         // objet sous test
@@ -702,10 +704,10 @@ public class StationIntegrationTest {
         Station s2 = new Station("test2",31,2,10);
         s2.setRegistre(r);
 
-        Assert.assertEquals(146.7,s.distance(s2),0.1);
+        Assert.assertEquals(6850.9,s.distance(s2),0.1);
 
 
-    }*/
+    }
 
     /**
      * Tests Set & Get
@@ -769,7 +771,8 @@ public class StationIntegrationTest {
         Abonne a = new Abonne("Charlotte", "19372-10383-09976354833-37");
         IRegistre r = new JRegistre();
         s.setRegistre(r);
-        assertNull(s.emprunterVelo(a,1));
+        assertEquals(null,s.emprunterVelo(a,1));
+        //assertNull(s.emprunterVelo(a,1));
     }
 
     @Test
@@ -811,17 +814,21 @@ public class StationIntegrationTest {
         assertNull(s.emprunterVelo(a, 2));
     }
 
-    /*
+
     @Test
     public void testEmprunterVeloDejaDecroche() throws IncorrectNameException {
         Station s = new Station("Station_1", 10020, 12200, 10);
         Abonne a = new Abonne("Charlotte", "19372-10383-09976354833-37");
         IRegistre r = new JRegistre();
-        s.setRegistre(r);
+
         IVelo v = new Velo();
         s.arrimerVelo(v,1);
         v.decrocher();
+        s.setRegistre(r);
         assertNull(s.emprunterVelo(a, 1));
+
+
+
     }
 
     @Test
@@ -835,9 +842,10 @@ public class StationIntegrationTest {
         s.arrimerVelo(v,1);
         assertNotNull(s.emprunterVelo(b, 1));
         s.arrimerVelo(v,2);
-        assertNull(s.emprunterVelo(a, 2));
+        assertNull(s.emprunterVelo(a, 1));
+        //assertEquals(null,s.emprunterVelo(b, 2));
     }
-*/
+
     /**
      * Test arrimer
      */
@@ -900,7 +908,7 @@ public class StationIntegrationTest {
         s.emprunterVelo(a,1);
         assertEquals(s.arrimerVelo(v1,2),-2);
     }
-/*
+
     @Test
     public void testArrimerVeloDejaArrime() throws IncorrectNameException {
         Station s = new Station("Station_1", 10020, 12200, 10);
@@ -912,7 +920,7 @@ public class StationIntegrationTest {
         s.emprunterVelo(a,1);
         v.arrimer();
         assertEquals(s.arrimerVelo(v,1),-3);
-    }*/
+    }
 
     @Test
     public void testArrimerErreurRegistre(){
