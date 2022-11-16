@@ -680,19 +680,13 @@ public class OptionTest {
         v=new OptCadreAlu(v);
         Assert.assertEquals(2.2,v.tarif(),0);
     }
-    /*@Test
+    @Test
     public void OptionCadreAluString() {
         IVelo v = new Velo();
         v=new OptCadreAlu(v);
         Assert.assertEquals("Vélo cadre mixte, cadre aluminium - 0.0 km",v.toString());
     }
-    @Test
-    public void OptionCadreAluDoubleString() {
-        IVelo v = new Velo();
-        v=new OptCadreAlu(v);
-        v=new OptCadreAlu(v);
-        Assert.assertEquals("Vélo cadre mixte, cadre aluminium - 0.0 km",v.toString());
-    }*/
+
     @Test
     public void OptionFreinsDisqueTarif() {
         IVelo v = new Velo();
@@ -701,19 +695,13 @@ public class OptionTest {
 
 
     }
-   /* @Test
+    @Test
     public void OptionFreinsDisqueString() {
         IVelo v = new Velo();
         v=new OptFreinsDisque(v);
         Assert.assertEquals("Vélo cadre mixte, freins à disque - 0.0 km",v.toString());
     }
-    @Test
-    public void OptionFreinsDisqueDoubleString() {
-        IVelo v = new Velo();
-        v=new OptFreinsDisque(v);
-        v=new OptFreinsDisque(v);
-        Assert.assertEquals("Vélo cadre mixte, freins à disque - 0.0 km",v.toString());
-    }*/
+
     @Test
     public void OptionSuspensionAvantTarif() {
         IVelo v = new Velo();
@@ -722,19 +710,13 @@ public class OptionTest {
 
 
     }
-    /*@Test
+    @Test
     public void OptionSuspensionAvantString() {
         IVelo v = new Velo();
         v=new OptSuspensionAvant(v);
         Assert.assertEquals("Vélo cadre mixte, suspension avant - 0.0 km",v.toString());
     }
-    @Test
-    public void OptionSuspensionAvantDoubleString() {
-        IVelo v = new Velo();
-        v=new OptSuspensionAvant(v);
-        v=new OptSuspensionAvant(v);
-        Assert.assertEquals("Vélo cadre mixte, suspension avant - 0.0 km",v.toString());
-    }*/
+
     @Test
     public void OptionSuspensionArriereTarif() {
         IVelo v = new Velo();
@@ -743,19 +725,13 @@ public class OptionTest {
 
 
     }
-    /*@Test
+    @Test
     public void OptionSuspensionArriereString() {
         IVelo v = new Velo();
         v=new OptSuspensionArriere(v);
         Assert.assertEquals("Vélo cadre mixte, suspension arrière - 0.0 km",v.toString());
     }
-    @Test
-    public void OptionSuspensionArriereDoubleString() {
-        IVelo v = new Velo();
-        v=new OptSuspensionArriere(v);
-        v=new OptSuspensionArriere(v);
-        Assert.assertEquals("Vélo cadre mixte, suspension arrière - 0.0 km",v.toString());
-    }*/
+
     @Test
     public void OptionAssistanceElectriqueTarif() {
         IVelo v = new Velo();
@@ -763,20 +739,14 @@ public class OptionTest {
         Assert.assertEquals(4.0,o.tarif(),0);
 
     }
-    /*@Test
+    @Test
     public void OptionAssistanceElectriqueString() {
         IVelo v = new Velo();
         v=new OptAssistanceElectrique(v);
         Assert.assertEquals("Vélo cadre mixte, assistance électrique - 0.0 km",v.toString());
 
     }
-    @Test
-    public void OptionAssistanceElectriqueDoubleString() {
-        IVelo v = new Velo();
-        v=new OptAssistanceElectrique(v);
-        v=new OptAssistanceElectrique(v);
-        Assert.assertEquals("Vélo cadre mixte, assistance électrique - 0.0 km",v.toString());
-    }*/
+
     @Test
     public void Option2tarif() {
         IVelo v = new Velo();
@@ -784,21 +754,14 @@ public class OptionTest {
         v=new OptCadreAlu(v);
         Assert.assertEquals(4.2,v.tarif(),0);
     }
-    /*@Test
+    @Test
     public void Option2String() {
         IVelo v = new Velo();
         v=new OptAssistanceElectrique(v);
         v=new OptCadreAlu(v);
         Assert.assertEquals("Vélo cadre mixte, assistance électrique, cadre aluminium - 0.0 km",v.toString());
     }
-    @Test
-    public void Option2DoubleString() {
-        IVelo v = new Velo();
-        v=new OptAssistanceElectrique(v);
-        v=new OptCadreAlu(v);
-        v=new OptAssistanceElectrique(v);
-        Assert.assertEquals("Vélo cadre mixte, assistance électrique, cadre aluminium - 0.0 km",v.toString());
-    }*/
+
     @Test
     public void Option3tarif() {
         IVelo v = new Velo();
@@ -807,50 +770,7 @@ public class OptionTest {
         v=new OptFreinsDisque(v);
         Assert.assertEquals(4.5,v.tarif(),0);
     }
-    /*@Test
-    public void Option3Doubletarif() {
-        IVelo v = new Velo();
-        v=new OptAssistanceElectrique(v);
-        v=new OptCadreAlu(v);
-        v=new OptFreinsDisque(v);
-        v=new OptCadreAlu(v);
-        Assert.assertEquals(4.5,v.tarif(),0);
-    }
-    @Test
-    public void OptionMemeOptElectarif() {
-        IVelo v = new Velo();
-        v=new OptAssistanceElectrique(v);
-        v=new OptAssistanceElectrique(v);
-        Assert.assertEquals(4.0,v.tarif(),0);
-    }
-    @Test
-    public void OptionMemeOptAlutarif() {
-        IVelo v = new Velo();
-        v=new OptCadreAlu(v);
-        v=new OptCadreAlu(v);
-        Assert.assertEquals(2.2,v.tarif(),0);
-    }
-    @Test
-    public void OptionMemeOptfreinstarif() {
-        IVelo v = new Velo();
-        v=new OptFreinsDisque(v);
-        v=new OptFreinsDisque(v);
-        Assert.assertEquals(2.3,v.tarif(),0);
-    }
-    @Test
-    public void OptionMemeOptSuspAvtarif() {
-        IVelo v = new Velo();
-        v=new OptSuspensionAvant(v);
-        v=new OptSuspensionAvant(v);
-        Assert.assertEquals(2.5,v.tarif(),0);
-    }
-    @Test
-    public void OptionMemeOptSuspArrtarif() {
-        IVelo v = new Velo();
-        v=new OptSuspensionArriere(v);
-        v=new OptSuspensionArriere(v);
-        Assert.assertEquals(2.5,v.tarif(),0);
-    }
+
     @Test
     public void Option3String() {
         IVelo v = new Velo();
@@ -858,7 +778,7 @@ public class OptionTest {
         v=new OptCadreAlu(v);
         v=new OptFreinsDisque(v);
         Assert.assertEquals("Vélo cadre mixte, assistance électrique, cadre aluminium, freins à disque - 0.0 km",v.toString());
-    }*/
+    }
     @Test
     public void Option4tarif() {
         IVelo v = new Velo();
@@ -868,7 +788,7 @@ public class OptionTest {
         v=new OptSuspensionArriere(v);
         Assert.assertEquals(5.0,v.tarif(),0);
     }
-    /*@Test
+    @Test
     public void Option4String() {
         IVelo v = new Velo();
         v=new OptAssistanceElectrique(v);
@@ -877,16 +797,7 @@ public class OptionTest {
         v=new OptSuspensionArriere(v);
         Assert.assertEquals("Vélo cadre mixte, assistance électrique, cadre aluminium, freins à disque, suspension arrière - 0.0 km",v.toString());
     }
-    @Test
-    public void Option4DoubleString() {
-        IVelo v = new Velo();
-        v=new OptAssistanceElectrique(v);
-        v=new OptCadreAlu(v);
-        v=new OptFreinsDisque(v);
-        v=new OptSuspensionArriere(v);
-        v=new OptCadreAlu(v);
-        Assert.assertEquals("Vélo cadre mixte, assistance électrique, cadre aluminium, freins à disque, suspension arrière - 0.0 km",v.toString());
-    }*/
+
     @Test
     public void testVelo() {
         IVelo v = new Velo();
@@ -950,14 +861,14 @@ public class OptionTest {
         v.parcourir(50.0);
         Assert.assertNotEquals(50.0,v.kilometrage());
     }
-    /*@Test
+    @Test
     public void TestParcourirPasPuEtreEffectuerVAleurNegative() {
         IVelo v = new Velo('F');
         v=new OptAssistanceElectrique(v);
         v.decrocher();
         v.parcourir(-60.0);
         Assert.assertEquals(0.0,v.kilometrage(),0);
-    }*/
+    }
     @Test
     public void testVeloTarifJuste1() {
         IVelo v = new Velo('F');
@@ -1052,7 +963,7 @@ public class OptionTest {
         v=new OptAssistanceElectrique(v);
         Assert.assertFalse(v.estAbime());
     }
-    /*@Test
+    @Test
     public void testPasAbimerApresRevision() {
         IVelo v = new Velo('F');
         v=new OptAssistanceElectrique(v);
@@ -1070,7 +981,7 @@ public class OptionTest {
         v.reparer();
         Assert.assertFalse(v.estAbime());
 
-    }*/
+    }
     @Test
     public void testPasAbimerPourReparation() {
         IVelo v = new Velo('F');
@@ -1112,7 +1023,7 @@ public class OptionTest {
         Assert.assertEquals(60.0,v.kilometrage(),0);
         Assert.assertEquals(-1,v.reviser());
     }
-    /*@Test
+    @Test
     public void TestStringFemme(){
         IVelo v = new Velo('F');
         v=new OptCadreAlu(v);
@@ -1175,7 +1086,7 @@ public class OptionTest {
         IVelo v = new Velo('x');
         v=new OptCadreAlu(v);
         Assert.assertEquals("Vélo cadre mixte, cadre aluminium - 0.0 km", v.toString());
-    }*/
+    }
     @Test
     public void testReviserVeloOptAccroche_Abime() {
         v =new OptAssistanceElectrique(v);

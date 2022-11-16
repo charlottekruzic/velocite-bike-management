@@ -126,58 +126,58 @@ public class FabriqueVeloTest {
         // vérification de son nom
         Assert.assertEquals("Vélo cadre homme - 0.0 km", v.toString());
     }
-    /*@Test
+    @Test
     public void testFabriqueSansOptM () {
         // création d'un nouvel abonné
         FabriqueVelo f = FabriqueVelo.getInstance();
         IVelo v = f.construire('z');
         // vérification de son nom
         Assert.assertEquals("Vélo cadre mixte - 0.0 km", v.toString());
-    }*/
-    /*@Test
+    }
+    @Test
     public void testFabriqueOptalu() {
         // création d'un nouvel abonné
         FabriqueVelo f = FabriqueVelo.getInstance();
         IVelo v = f.construire('h', "CADRE_ALUMINIUM");
         // vérification de son nom
         Assert.assertEquals("Vélo cadre homme, cadre aluminium - 0.0 km", v.toString());
-    }*/
+    }
 
-   /* @Test
+   @Test
     public void testFabriqueOptsusava() {
         // création d'un nouvel abonné
         FabriqueVelo f = FabriqueVelo.getInstance();
         IVelo v = f.construire('h', "SUSPENSION_AVANT");
         // vérification de son nom
         Assert.assertEquals("Vélo cadre homme, suspension avant - 0.0 km", v.toString());
-    }*/
+    }
 
-    /*@Test
+    @Test
     public void testFabriqueOptsusarr() {
         // création d'un nouvel abonné
         FabriqueVelo f = FabriqueVelo.getInstance();
         IVelo v = f.construire('h', "SUSPENSION_ARRIERE");
         // vérification de son nom
         Assert.assertEquals("Vélo cadre homme, suspension arrière - 0.0 km", v.toString());
-    }*/
+    }
 
-    /*@Test
+    @Test
     public void testFabriqueOptfreid() {
         // création d'un nouvel abonné
         FabriqueVelo f = FabriqueVelo.getInstance();
         IVelo v = f.construire('h', "FREINS_DISQUE");
         // vérification de son nom
         Assert.assertEquals("Vélo cadre homme, freins à disque - 0.0 km", v.toString());
-    }*/
+    }
 
-    /*@Test
+    @Test
     public void testFabriqueOptassEle() {
         // création d'un nouvel abonné
         FabriqueVelo f = FabriqueVelo.getInstance();
         IVelo v = f.construire('h', "ASSISTANCE_ELECTRIQUE");
         // vérification de son nom
         Assert.assertEquals("Vélo cadre homme, assistance électrique - 0.0 km", v.toString());
-    }*/
+    }
     @Test
     public void testFabriqueOptfausse() {
         // création d'un nouvel abonné
@@ -186,70 +186,70 @@ public class FabriqueVeloTest {
         // vérification de son nom
         Assert.assertEquals("Vélo cadre homme - 0.0 km", v.toString());
     }
-    /*@Test
+    @Test
     public void testFabriqueOptassEleetfausse() {
         // création d'un nouvel abonné
         FabriqueVelo f = FabriqueVelo.getInstance();
         IVelo v = f.construire('h', "ASSISTANCE_ELECTRIQUE","Erreur");
         // vérification de son nom
         Assert.assertEquals("Vélo cadre homme, assistance électrique - 0.0 km", v.toString());
-    }*/
-    /*@Test
+    }
+    @Test
     public void testFabriqueOptassEleDouble() {
         // création d'un nouvel abonné
         FabriqueVelo f = FabriqueVelo.getInstance();
         IVelo v = f.construire('h', "ASSISTANCE_ELECTRIQUE","ASSISTANCE_ELECTRIQUE");
         // vérification de son nom
         Assert.assertEquals("Vélo cadre homme, assistance électrique - 0.0 km", v.toString());
-    }*/
-    /*@Test
+    }
+    @Test
     public void testFabriqueOptassEleQuadruple() {
         // création d'un nouvel abonné
         FabriqueVelo f = FabriqueVelo.getInstance();
         IVelo v = f.construire('h', "ASSISTANCE_ELECTRIQUE","ASSISTANCE_ELECTRIQUE","ASSISTANCE_ELECTRIQUE","ASSISTANCE_ELECTRIQUE");
         // vérification de son nom
         Assert.assertEquals("Vélo cadre homme, assistance électrique - 0.0 km", v.toString());
-    }*/
-    /*@Test
+    }
+    @Test
     public void testFabriqueOptelecetalu() {
         // création d'un nouvel abonné
         FabriqueVelo f = FabriqueVelo.getInstance();
         IVelo v = f.construire('h', "ASSISTANCE_ELECTRIQUE","CADRE_ALUMINIUM");
         // vérification de son nom
         Assert.assertEquals("Vélo cadre homme, assistance électrique, cadre aluminium - 0.0 km", v.toString());
-    }*/
-    /*@Test
+    }
+    @Test
     public void testFabriqueOptelecetaluetfausse() {
         // création d'un nouvel abonné
         FabriqueVelo f = FabriqueVelo.getInstance();
         IVelo v = f.construire('h', "ASSISTANCE_ELECTRIQUE","Erreur","CADRE_ALUMINIUM");
         // vérification de son nom
         Assert.assertEquals("Vélo cadre homme, assistance électrique, cadre aluminium - 0.0 km", v.toString());
-    }*/
-    /*@Test
+    }
+    @Test
     public void testFabrique3Opt() {
         // création d'un nouvel abonné
         FabriqueVelo f = FabriqueVelo.getInstance();
         IVelo v = f.construire('h', "ASSISTANCE_ELECTRIQUE","CADRE_ALUMINIUM","FREINS_DISQUE");
         // vérification de son nom
         Assert.assertEquals("Vélo cadre homme, assistance électrique, cadre aluminium, freins à disque - 0.0 km", v.toString());
-    }*/
-    /*@Test
+    }
+    @Test
     public void testFabrique4Opt() {
         // création d'un nouvel abonné
         FabriqueVelo f = FabriqueVelo.getInstance();
         IVelo v = f.construire('h', "SUSPENSION_AVANT","ASSISTANCE_ELECTRIQUE","CADRE_ALUMINIUM","FREINS_DISQUE");
         // vérification de son nom
         Assert.assertEquals("Vélo cadre homme, suspension avant, assistance électrique, cadre aluminium, freins à disque - 0.0 km", v.toString());
-    }*/
-    /*@Test
+    }
+    @Test
     public void testFabrique5Opt() {
         // création d'un nouvel abonné
         FabriqueVelo f = FabriqueVelo.getInstance();
         IVelo v = f.construire('h', "SUSPENSION_AVANT","ASSISTANCE_ELECTRIQUE","CADRE_ALUMINIUM","FREINS_DISQUE","SUSPENSION_ARRIERE");
         // vérification de son nom
         Assert.assertEquals("Vélo cadre homme, suspension avant, assistance électrique, cadre aluminium, freins à disque, suspension arrière - 0.0 km", v.toString());
-    }*/
+    }
 
 
     @Test
