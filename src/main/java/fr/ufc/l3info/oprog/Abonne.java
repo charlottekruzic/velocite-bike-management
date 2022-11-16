@@ -25,7 +25,8 @@ public class Abonne {
         for (int i = 0; i < nom.length(); i++) {
             if ((!Character.isLetter(nom.charAt(i)) && !Character.isWhitespace(nom.charAt(i)) && nom.charAt(i)!='-')
                     || (nom.charAt(i)=='-' && i==nom.length()-1)
-                    || (nom.charAt(i)=='-' && i==0)){
+                    || (nom.charAt(i)=='-' && i==0)
+                    || ((nom.charAt(i)==' ') && (nom.charAt(i+1)==' ') && i!=0)){
                 throw new IncorrectNameException();
             }
         }
@@ -37,6 +38,33 @@ public class Abonne {
 
     }
 
+
+    private boolean ribEstCorrect(String rib){
+        //Vérifier qu'il n'y a que des chiffres et des tirets
+        for(int i=0;i<rib.length();i++){
+            if(rib.charAt(i)!='-' && rib.charAt(i)!='0' && rib.charAt(i)!='1' && rib.charAt(i)!='2' && rib.charAt(i)!='3' && rib.charAt(i)!='4'
+                    && rib.charAt(i)!='5' && rib.charAt(i)!='6' && rib.charAt(i)!='7' && rib.charAt(i)!='8' && rib.charAt(i)!='9'){
+                return false;
+            }
+        }
+
+        String[] split = rib.split("-", 0);
+
+        if(split.length!=4) {
+            return false;
+        }
+        long codeBanque=Long.parseLong(split[0]);
+        long codeGuichet=Long.parseLong(split[1]);
+        long numCompte=Long.parseLong(split[2]);
+        long cle=Long.parseLong(split[3]);
+        long cleRib=97-((89*codeBanque+15*codeGuichet+3*numCompte) % 97);
+
+        System.out.println("clerib"+cleRib);
+        System.out.println("cle"+cle);
+
+        return cleRib==cle;
+    }
+
     /**
      * Créé un abonné dont le nom est passé en paramètre, avec les informations bancaires spécifiées dans le second paramètre.
      *  Le comportement attendu est le même que celui du constructeur précédent. Le RIB n'est enregistré que si celui-ci est valide.
@@ -45,45 +73,9 @@ public class Abonne {
      * @throws IncorrectNameException si le nom de l'abonné n'est pas correct.
      */
     public Abonne(String nom, String rib) throws IncorrectNameException {
-        if(nom==null|| nom.length()==0){
-            throw new IncorrectNameException();
-        }
-        for (int i = 0; i < nom.length(); i++) {
-            if (!Character.isLetter(nom.charAt(i))
-                    && !Character.isWhitespace(nom.charAt(i))){
-                throw new IncorrectNameException();
-            }
-        }
-        nom = nom.trim();
-        this.nom=nom;
-        count++;
-        this.Id=count;
-        this.bloque=true;
+        this(nom);
 
-        //Vérifier qu'il n'y a que des chiffres et des tirets
-        for(int i=0;i<rib.length();i++){
-            if(rib.charAt(i)!='-' && rib.charAt(i)!='0' && rib.charAt(i)!='1' && rib.charAt(i)!='2' && rib.charAt(i)!='3' && rib.charAt(i)!='4'
-                    && rib.charAt(i)!='5' && rib.charAt(i)!='6' && rib.charAt(i)!='7' && rib.charAt(i)!='8' && rib.charAt(i)!='9'){
-                return;
-            }
-        }
-
-        String[] split = rib.split("-", 0);
-        for (String s : split) {
-            System.out.println(s);
-        }
-
-        if(split.length!=4) {
-            return;
-        }
-        long codeBanque=Long.parseLong(split[0]);
-        long codeGuichet=Long.parseLong(split[1]);
-        long numCompte=Long.parseLong(split[2]);
-        long cle=Long.parseLong(split[3]);
-        long cleRib=97-((89*codeBanque+15*codeGuichet+3*numCompte) % 97);
-        System.out.println("clerib"+cleRib);
-        System.out.println("cle"+cle);
-        if(cleRib==cle){
+        if(ribEstCorrect(rib)){
             bloque=false;
             this.rib=rib;
             System.out.println(Id);
@@ -113,19 +105,10 @@ public class Abonne {
      * @param rib nouveau RIB pour la mise à jour.
      */
     public void miseAJourRIB(String rib) {
-        String[] split = rib.split("-", 0);
-        long codeBanque = Integer.parseInt(split[0]);
-        long codeGuichet = Integer.parseInt(split[1]);
-        long numCompte = Long.parseLong(split[2]);
-        long cle = Integer.parseInt(split[3]);
-        long cleRib = 97 - ((89 * codeBanque + 15 * codeGuichet + 3 * numCompte) % 97);
-        System.out.println("clerib" + cleRib);
-        if (cleRib == cle) {
+        if(ribEstCorrect(rib)){
             this.bloque=false;
             this.rib = rib;
         }
-
-
     }
 
     /**

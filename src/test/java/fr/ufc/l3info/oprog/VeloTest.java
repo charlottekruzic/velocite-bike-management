@@ -475,13 +475,13 @@ public class VeloTest {
         v.parcourir(50.0);
         Assert.assertNotEquals(50.0,v.kilometrage());
     }
-    /*@Test
+    @Test
     public void TestParcourirPasPuEtreEffectuerVAleurNegative() {
         Velo v = new Velo('F');
         v.decrocher();
         v.parcourir(-60.0);
         Assert.assertEquals(0.0,v.kilometrage(),0);
-    }*/
+    }
     @Test
     public void testVeloTarifJuste1() {
         Velo v = new Velo('F');
@@ -563,7 +563,7 @@ public class VeloTest {
         Velo v = new Velo('F');
         Assert.assertFalse(v.estAbime());
     }
-    /*@Test
+    @Test
     public void testPasAbimerApresRevision() {
         Velo v = new Velo('F');
         v.decrocher();
@@ -579,7 +579,7 @@ public class VeloTest {
         v.reparer();
         Assert.assertFalse(v.estAbime());
 
-    }*/
+    }
     @Test
     public void testPasAbimerPourReparation() {
         Velo v = new Velo('F');
@@ -660,7 +660,7 @@ public class VeloTest {
         v.parcourir(45.35);
         Assert.assertEquals("Vélo cadre mixte - 45.4 km", v.toString());
     }
-     /*@Test
+    @Test
     public void TestStringRevision(){
         Velo v = new Velo('x');
         v.parcourir(600.35);
@@ -670,7 +670,7 @@ public class VeloTest {
     public void TestStringMixteAvecValeur(){
         Velo v = new Velo('x');
         Assert.assertEquals("Vélo cadre mixte - 0.0 km", v.toString());
-    }*/
+    }
 
     @Test
     public void testConstructeurSansParametre() {
