@@ -280,14 +280,14 @@ public class JRegistreTest {
         assertEquals(0, registre.facturation(abonne, maintenant,fin),DELTA);
 
     }
-    /*@Test
+    @Test
     public void testJRegistreEmpruntReussi() throws IncorrectNameException{
         JRegistre re= new JRegistre();
         Abonne a= new Abonne("Jean-Mi");
         IVelo v= new Velo('m');
         Assert.assertEquals(0,re.emprunter(a,v,10102022));
-    }*/
-    /*@Test
+    }
+    @Test
     public void testJRegistreEmprunterReussi2VelosMemePersonne () throws IncorrectNameException {
         IRegistre r = new JRegistre();
         IVelo v = new Velo();
@@ -295,8 +295,8 @@ public class JRegistreTest {
         r.emprunter(a,v,10102022);
         IVelo v2 = new Velo();
         Assert.assertEquals(0,r.emprunter(a,v2,10102022));
-    }*/
-    /*@Test
+    }
+    @Test
     public void testJRegistreEmprunterReussi2velos2Personnes() throws IncorrectNameException {
         IRegistre r = new JRegistre();
         IVelo v = new Velo();
@@ -305,7 +305,7 @@ public class JRegistreTest {
         Abonne b = new Abonne("Marc-Henri");
         IVelo v2 = new Velo();
         Assert.assertEquals(r.emprunter(b,v2,10102022),0);
-    }*/
+    }
     @Test
     public void testJRegistreEmpruntPasReussiPasAbonne() throws IncorrectNameException{
         JRegistre re= new JRegistre();
@@ -313,13 +313,13 @@ public class JRegistreTest {
         IVelo v= new Velo('m');
         Assert.assertEquals(-1,re.emprunter(a,v,10102022));
     }
-    /*@Test
+    @Test
     public void testJRegistreEmpruntPasReussiPasVelo() throws IncorrectNameException{
         JRegistre re= new JRegistre();
         Abonne a= new Abonne("Jean-Mi");
         IVelo v= null;
         Assert.assertEquals(-1,re.emprunter(a,v,10102022));
-    }*/
+    }
     @Test
     public void testJRegistreEmpruntPasReussiPasVeloEtAbonne() throws IncorrectNameException{
         JRegistre re= new JRegistre();
@@ -327,7 +327,7 @@ public class JRegistreTest {
         IVelo v= null;
         Assert.assertEquals(-1,re.emprunter(a,v,10102022));
     }
-    /*@Test
+    @Test
     public void testJRegistreEmpruntPasReussiDejaEmprunter() throws IncorrectNameException {
         JRegistre re= new JRegistre();
         Abonne a= new Abonne("Jean-Mi");
@@ -336,57 +336,57 @@ public class JRegistreTest {
 
         Assert.assertEquals(0,re.emprunter(b,v,02102022));
         Assert.assertEquals(-2,re.emprunter(a,v,10102022));
-    }*/
+    }
 
-    /*@Test
+    @Test
     public void testJRegistreEmpruntPasReussiEmpruntCarDejaEmprunterEtPasRendu() throws IncorrectNameException{
         JRegistre re= new JRegistre();
         Abonne a= new Abonne("Jean-Mi");
         IVelo v= new Velo('m');
         re.emprunter(a,v,02102022);
         Assert.assertEquals(-2,re.emprunter(a,v,10102022));
-    }*/
-    /*@Test
+    }
+    @Test
     public void testJRegistreRetournerReussi() throws IncorrectNameException{
         JRegistre re= new JRegistre();
         Abonne a= new Abonne("Jean-Mi");
         IVelo v= new Velo('m');
         re.emprunter(a,v,02102022);
         Assert.assertEquals(0,re.retourner(v,11102022));
-    }*/
-    /*@Test
+    }
+    @Test
     public void testJRegistreRetournerReussi2() throws IncorrectNameException{
         JRegistre re= new JRegistre();
         Abonne a= new Abonne("Jean-Mi");
         IVelo v= new Velo('m');
         re.emprunter(a,v,02102022);
         Assert.assertEquals(0,re.retourner(v,02102022));
-    }*/
-    /*@Test
+    }
+    @Test
     public void testJRegistreRetournerPasReussiVeloNull() throws IncorrectNameException{
         JRegistre re= new JRegistre();
         Abonne a= new Abonne("Jean-Mi");
         IVelo v= null;
         re.emprunter(a,v,02102022);
         Assert.assertEquals(-1,re.retourner(v,11102022));
-    }*/
-    /*@Test
+    }
+    @Test
     public void testJRegistreRetournerPasReussiPasEmprunter() throws IncorrectNameException{
         JRegistre re= new JRegistre();
         Abonne a= new Abonne("Jean-Mi");
         IVelo v= new Velo('m');
         Assert.assertEquals(-2,re.retourner(v,11102022));
-    }*/
+    }
 
-    /*@Test
+    @Test
     public void testJRegistreRetournerPasReussiPbDateAnterieur() throws IncorrectNameException{
         JRegistre re= new JRegistre();
         Abonne a= new Abonne("Jean-Mi");
         IVelo v= new Velo('m');
         re.emprunter(a,v,12102022);
         Assert.assertEquals(-3,re.retourner(v,11102022));
-    }*/
-    /*@Test
+    }
+    @Test
     public void testJRegistreRetournerPasReussiPbDateChevauchementempruntVelo() throws IncorrectNameException{
         JRegistre re= new JRegistre();
         Abonne a= new Abonne("Jean-Mi");
@@ -399,8 +399,8 @@ public class JRegistreTest {
         re.retourner(v,dans20minutes);
         re.emprunter(b,v,dans5minutes);
         Assert.assertEquals(-3,re.retourner(v,11102022));
-    }*/
-    /*@Test
+    }
+    @Test
     public void testJRegistreRetournerPasempruntenCours() throws IncorrectNameException{
         IRegistre r = new JRegistre();
         IVelo v = new Velo();
@@ -408,9 +408,9 @@ public class JRegistreTest {
         r.emprunter(a,v,12102022);
         r.retourner(v,12102023);
         Assert.assertEquals(-2,r.retourner(v,12102024));
-    }*/
+    }
 
-    /*@Test
+    @Test
     public void testJRegistreEmprunterRetourner() throws IncorrectNameException{
         IRegistre r = new JRegistre();
         IVelo v = new Velo();
@@ -419,24 +419,24 @@ public class JRegistreTest {
         r.retourner(v,12102022);
         Assert.assertEquals(0,r.emprunter(a,v,12102023));
         Assert.assertEquals(0,r.retourner(v,12102024));
-    }*/
-    /*@Test
+    }
+    @Test
     public void testJRegistreNbEmpruntsPasEnCoursEmprunt() throws IncorrectNameException{
         IRegistre r = new JRegistre();
         Abonne a = new Abonne("Jean-Mi");
         Assert.assertEquals(0,r.nbEmpruntsEnCours(a));
-    }*/
+    }
 
-    /*@Test
+    @Test
     public void testJRegistreNbEmpruntsEnCours() throws IncorrectNameException{
         IRegistre r = new JRegistre();
         IVelo v = new Velo();
         Abonne a = new Abonne("Jean-Mi");
         r.emprunter(a,v,12102022);
         Assert.assertEquals(1,r.nbEmpruntsEnCours(a));
-    }*/
+    }
 
-    /*@Test
+    @Test
     public void testJRegistreNbEmpruntsEnCours2() throws IncorrectNameException{
         IRegistre r = new JRegistre();
         IVelo v = new Velo();
@@ -445,9 +445,9 @@ public class JRegistreTest {
         r.emprunter(a,v,12102022);
         r.emprunter(a,v2,12102022);
         Assert.assertEquals(2,r.nbEmpruntsEnCours(a));
-    }*/
+    }
 
-    /*@Test
+    @Test
     public void testJRegistreNbEmpruntsEnCoursRetourner() throws IncorrectNameException{
         IRegistre r = new JRegistre();
         IVelo v = new Velo();
@@ -457,15 +457,15 @@ public class JRegistreTest {
         r.emprunter(a,v2,12102022);
         r.retourner(v2,12102024);
         Assert.assertEquals(1,r.nbEmpruntsEnCours(a));
-    }*/
-    /*@Test
+    }
+    @Test
     public void testJRegistreFacturation() throws IncorrectNameException{
         IRegistre r = new JRegistre();
         Abonne a = new Abonne("Jean-Mi");
         Assert.assertEquals(r.facturation(a,0,1000),0.0,0.1);
-    }*/
+    }
 
-    /*@Test
+    @Test
     public void testFacturation_2() throws IncorrectNameException{
         IRegistre r = new JRegistre();
         IVelo v = new Velo();
@@ -473,9 +473,9 @@ public class JRegistreTest {
         r.emprunter(a,v,1);
         r.retourner(v,99999998);
         Assert.assertEquals(55.5 ,r.facturation(a,0,99999999),0.1);
-    }*/
+    }
 
-    /*@Test
+    @Test
     public void testJRegistreFacturation3() throws IncorrectNameException{
         IRegistre r = new JRegistre();
         IVelo v = new Velo();
@@ -483,16 +483,16 @@ public class JRegistreTest {
         r.emprunter(a,v,555555555);
         r.retourner(v,999999996);
         Assert.assertEquals(246.9 ,r.facturation(a,0,999999999),0.1);
-    }*/
+    }
 
-    /*@Test
+    @Test
     public void testJRegistreFacturation4() throws IncorrectNameException{
         IRegistre r = new JRegistre();
         IVelo v = new Velo();
         Abonne a = new Abonne("Jean-Mi");
         r.emprunter(a,v,1);
         Assert.assertEquals(0.0 ,r.facturation(a,0,999999999),0.1);
-    }*/
+    }
 
     /**
      * Test emprunter vélo

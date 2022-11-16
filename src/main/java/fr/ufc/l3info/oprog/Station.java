@@ -7,7 +7,7 @@ import java.util.Set;
 import static java.lang.Math.*;
 
 public class Station{
-     String nom;
+    String nom;
     double latitude;
     double longitude;
     int capacite;
@@ -56,52 +56,58 @@ public class Station{
             return null;
         }
         if(bornes[b]==null){
-           return null;
+            return null;
         }
         return  bornes[b];
     }
     public IVelo emprunterVelo(Abonne a, int b){
+        if(b>capacite || b<1){
+            return null;
+        }
+        if(bornes[b]==null || bornes[b].estAbime()){
+            return null;
+        }
+        if(a==null || a.estBloque()==true){
+            return null;
+        }
         if(registre==null){
-                return null;
+            return null;
         }
         if(registre.nbEmpruntsEnCours(a)!=0){
             return null;
         }
 
-        if(a==null || a.estBloque()==true){
-            return null;
-        }
-        if(b>capacite || b<1){
-            return null;
-        }
         IVelo v=bornes[b];
         registre.emprunter(a, v, maintenant() );
 
+
+        v.decrocher();
         bornes[b]=null;
         return v;
     }
 
     public int arrimerVelo(IVelo v, int b){
-        if(registre==null){
-            return -2;
-        }
-        if(v==null){
+        if(b>capacite || b<1){
             return -1;
         }
-        if(b>capacite || b<1){
+        if(v==null){
             return -1;
         }
         if(bornes[b]!=null){
             return -2;
         }
-
-        int retour =this.registre.retourner(v,maintenant());
+        if(registre==null){
+            return -2;
+        }
+        if (v.arrimer()==-1){
+            return -3;
+        }
         bornes[b]=v;
+        int retour =this.registre.retourner(v,maintenant());
+
         if(retour!=0){
             return -4;
         }
-
-
         return 0;
     }
     public void equilibrer(Set<IVelo> velos) {
