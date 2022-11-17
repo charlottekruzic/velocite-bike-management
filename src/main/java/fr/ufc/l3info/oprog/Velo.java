@@ -8,7 +8,7 @@ public class Velo implements IVelo {
 
 
 
-    boolean decroche=false;
+    boolean decroche;
     boolean abime=false;
     /**
      * Construit un vélo avec un cadre de type mixte.
@@ -24,22 +24,15 @@ public class Velo implements IVelo {
      * Construit un vélo avec un type de cadre spécifié en paramètre
      */
     public Velo(char t)  {
-
-        if((t=='f'|| t=='F' || t=='h' || t=='H')){
+        if(t=='f'|| t=='F' || t=='h' || t=='H'){
             this.type=t;
         }else{
             this.type='m';
-            this.kilometre=0.0;
-            this.decroche=true;
-
         }
-
         this.kilometre=0;
         this.decroche=true;
-
-
-
     }
+
     /**
      * Indique le nombre de kilomètres total qu'a déjà parcouru le vélo.
      *
@@ -56,12 +49,7 @@ public class Velo implements IVelo {
      * @return le nombre de kilomètres avant la prochaine révision.
      */
     public double prochaineRevision() {
-        double km_restant=kilometre_restant-this.kilometre;
-        if(km_restant==0){
-
-            return 0;
-        }
-        return km_restant;
+        return kilometre_restant- this.kilometre;
     }
 
     /**
@@ -76,7 +64,6 @@ public class Velo implements IVelo {
                 this.kilometre = this.kilometre + km;
             }
         }
-
     }
 
     /**
@@ -96,7 +83,7 @@ public class Velo implements IVelo {
      * -1 si le vélo est déjà décroché.
      */
     public int decrocher() {
-        if(this.decroche==true){
+        if(this.decroche){
             return -1;
         }
         this.decroche=true;
@@ -110,7 +97,7 @@ public class Velo implements IVelo {
      * -1 si le vélo est déjà accroché.
      */
     public int arrimer() {
-        if(this.decroche==false){
+        if(!this.decroche){
             return -1;
         }
         this.decroche=false;
@@ -122,7 +109,6 @@ public class Velo implements IVelo {
      */
     public void abimer() {
         this.abime=true;
-
     }
 
     /**
@@ -131,10 +117,7 @@ public class Velo implements IVelo {
      * @return true si le vélo est abimé, false sinon.
      */
     public boolean estAbime() {
-        if(this.abime==true){
-            return true;
-        }
-        return false;
+        return this.abime;
     }
 
     /**
@@ -146,10 +129,10 @@ public class Velo implements IVelo {
      * -1 sinon (le vélo est encore accroché).
      */
     public int reviser() {
-        if(this.decroche==true) {
+        if(this.decroche) {
             this.kilometre_restant=500.0;
             this.kilometre=0;
-            if (estAbime() == true){
+            if (estAbime()){
                 reparer();
             }
 
@@ -166,8 +149,8 @@ public class Velo implements IVelo {
      * -2 si le vélo est décroché, mais qu'il n'est pas abimé.
      */
     public int reparer() {
-        if(this.decroche==true){
-            if(estAbime() == true) {
+        if(this.decroche){
+            if(estAbime()) {
                 this.abime=false;
                 return 0;
             }
@@ -181,24 +164,19 @@ public class Velo implements IVelo {
      * @return une chaîne décrivant le vélo.
      */
     public String toString(){
-        String new_type=" ";
+        String new_type="";
         switch (this.type){
             case 'm':
                 new_type="mixte";
                 break;
             case 'f':
-                new_type="femme";
-                break;
             case 'F':
                 new_type="femme";
                 break;
             case 'h':
-                new_type="homme";
-                break;
             case 'H':
                 new_type="homme";
                 break;
-
         }
         double new_kilometre =(double)Math.round(this.kilometre * 10d) / 10d;
         String res;
