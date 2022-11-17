@@ -11,9 +11,7 @@ public class Station{
     double latitude;
     double longitude;
     int capacite;
-
     IRegistre registre;
-
     IVelo [] bornes;
 
     public Station(String nom, double latitude, double longitude, int capacite){
@@ -27,9 +25,8 @@ public class Station{
             this.capacite=capacite;
             this.bornes = new IVelo[capacite];
         }
-
-
     }
+
     public void setRegistre(IRegistre registre) {
         this.registre=registre;
 
@@ -76,11 +73,8 @@ public class Station{
         if(registre.nbEmpruntsEnCours(a)!=0){
             return null;
         }
-
         IVelo v=bornes[b];
         registre.emprunter(a, v, maintenant() );
-
-
         v.decrocher();
         bornes[b]=null;
         return v;
@@ -110,6 +104,7 @@ public class Station{
         }
         return 0;
     }
+
     public void equilibrer(Set<IVelo> velos) {
         Object[] velos_remplacement= velos.toArray();
         int nb_velo_remplacement=velos_remplacement.length;
@@ -139,7 +134,6 @@ public class Station{
         for(int i=0;i<this.capacite;i++) {
             if (this.bornes[i] != null && this.bornes[i].estAbime()) {
                 IVelo velo_abime=this.bornes[i];
-
                 //Recherche d'un vélo disponible dans le stock
                 for(int j=0;j<nb_velo_remplacement;j++) {
                     IVelo v = (IVelo) velos_remplacement[j];
@@ -162,7 +156,6 @@ public class Station{
         //Retirer et remplacer les vélos à réviser si possible
         //Parcours des bornes pour trouver les vélos à réviser
         for(int i=0;i<this.capacite;i++) {
-            System.out.println("av   "+bornes[i]);
             if (this.bornes[i] != null && this.bornes[i].kilometrage() >= 500) {
                 IVelo velo_a_reviser=this.bornes[i];
                 //Recherche s'il y a des vélos en stocks
@@ -178,7 +171,6 @@ public class Station{
                     }
                 }
             }
-            System.out.println("ap   "+bornes[i]);
         }
     }
 
@@ -186,15 +178,10 @@ public class Station{
         double a=sin((s.latitude-latitude)/2)*sin((s.latitude-latitude)/2) + cos(latitude)*cos(s.latitude)*sin((s.longitude-longitude)/2)*sin((s.longitude-longitude)/2);
         double c=2*atan2(sqrt(a),sqrt(1-a));
         double d= 6371 * c;
-
         return d;
     }
 
     public long maintenant(){
         return System.currentTimeMillis();
     }
-
-
-
-
 }

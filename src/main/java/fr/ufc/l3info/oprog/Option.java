@@ -4,8 +4,6 @@ public class  Option implements IVelo{
     IVelo _originale;
     double tarifOption;
 
-    String OptionCadre;
-
     public Option(IVelo v, double t) {
         _originale = v;
         tarifOption = t;
@@ -106,8 +104,6 @@ public class  Option implements IVelo{
 
     public String toString(){
         return _originale.toString();
-
-
     }
 
 
