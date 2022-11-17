@@ -18,94 +18,71 @@ public class VeloTest {
     public void testVeloConstructeurVideFaux() {
         // création d'un nouveau velo
         Velo v = new Velo();
-
         // vérification de son type de cadre
         assertFalse(v.toString().contains(" homme "));
-
     }
     @Test
     public void testVeloConstructeurVideJuste() {
         // création d'un nouveau velo
         Velo v = new Velo();
-
         // vérification de son type de cadre
         assertTrue(v.toString().contains(" mixte "));
-
     }
 
     /*Test constructeur avec parametre*/
-
     @Test
     public void testVeloConstructeurParametreH() {
         // création d'un nouveau velo
         Velo v = new Velo('H');
-
         // vérification de son type de cadre
         assertTrue(v.toString().contains(" homme "));
-
     }
     @Test
     public void testVeloConstructeurParametreF() {
         // création d'un nouveau velo
         Velo v = new Velo('F');
-
         // vérification de son type de cadre
         assertTrue(v.toString().contains(" femme "));
-
     }
 
     @Test
     public void testVeloConstructeurParametref() {
         // création d'un nouveau velo
         Velo v = new Velo('f');
-
         // vérification de son type de cadre
         assertTrue(v.toString().contains(" femme "));
-
     }
     @Test
     public void testVeloConstructeurParametreh() {
         // création d'un nouveau velo
         Velo v = new Velo('h');
-
         // vérification de son type de cadre
         assertTrue(v.toString().contains(" homme "));
-
     }
 
     @Test
     public void testVeloConstructeurParametrek() {
         // création d'un nouveau velo
         Velo v = new Velo('k');
-
         // vérification de son type de cadre
         assertFalse(v.toString().contains(" k "));
-
     }
     @Test
     public void testVeloConstructeurParametreNull() {
         // création d'un nouveau velo
         Velo v = new Velo(' ');
-
         // vérification de son type de cadre
         assertFalse(v.toString().contains("null"));
-
     }
     @Test
     public void testVeloConstructeurParametre1() {
         // création d'un nouveau velo
         Velo v = new Velo('1');
-
         // vérification de son type de cadre
         assertFalse(v.toString().contains("1"));
-
     }
 
-
-
-
     /*Test kilometrage*/
-
     @Test
     public void testKilometrageCreation() {
         // création d'un nouveau velo
@@ -116,10 +93,7 @@ public class VeloTest {
 
     }
 
-
-
     /*Test parcourir*/
-
    @Test
     public void testKilometrageApresParcours() {
         // création d'un nouveau velo
@@ -139,7 +113,6 @@ public class VeloTest {
 
         // vérification de son kilometrage après parcours
         assertEquals(0, v.kilometrage(), DELTA);
-
     }
 
     /*Test prochaine revision*/
@@ -151,7 +124,6 @@ public class VeloTest {
 
         // vérification de sa prochaine révision
         assertEquals(474.2, v.prochaineRevision(), DELTA);
-
     }
     @Test
     public void testProchaineRevision0() {
@@ -162,7 +134,6 @@ public class VeloTest {
 
         // vérification de sa prochaine révision
         assertEquals(285, v.prochaineRevision(), DELTA);
-
     }
 
     @Test
@@ -175,10 +146,8 @@ public class VeloTest {
             v.reviser();
         }
         v.parcourir(15);
-
         // vérification de sa prochaine révision
         assertEquals(485, v.prochaineRevision(), DELTA);
-
     }
 
     @Test
@@ -190,7 +159,6 @@ public class VeloTest {
 
         // vérification de sa prochaine révision
         assertEquals(0, v.prochaineRevision(), DELTA);
-
     }
 
     /*Test tarif*/
@@ -198,10 +166,8 @@ public class VeloTest {
     public void testTarifJuste() {
         // création d'un nouveau velo
         Velo v = new Velo();
-
         // vérification de son tarif
         assertEquals(2, v.tarif(), DELTA);
-
     }
 
     /*Test decrocher*/
@@ -210,20 +176,16 @@ public class VeloTest {
         // création d'un nouveau velo
         Velo v = new Velo();
         v.arrimer();
-
         // vérifié s'il est décroché
         assertEquals(0, v.decrocher());
-
     }
 
     @Test
     public void testDejaDecrocher() {
         // création d'un nouveau velo
         Velo v = new Velo();
-
         // vérifié s'il est déjà décroché
         assertEquals(-1, v.decrocher());
-
     }
 
     /*Test arrimer*/
@@ -231,11 +193,10 @@ public class VeloTest {
     public void testArrimer() {
         // création d'un nouveau velo
         Velo v = new Velo();
-
         // vérifié s'il y est arrimé
         assertEquals(0, v.arrimer());
-
     }
+
     @Test
     public void testDejaArrimer() {
         // création d'un nouveau velo
@@ -244,7 +205,6 @@ public class VeloTest {
 
         // vérifié s'il est déjà arrimé
         assertEquals(-1, v.arrimer());
-
     }
 
     /*Test abimer*/
@@ -256,7 +216,6 @@ public class VeloTest {
 
         // vérifié s'il est abimé
         assertEquals(true, v.estAbime());
-
     }
     @Test
     public void testAbimerFaux() {
@@ -265,7 +224,6 @@ public class VeloTest {
 
         // vérifié s'il est pas abimé
         assertEquals(false, v.estAbime());
-
     }
 
     /*Test reviser*/
@@ -277,7 +235,6 @@ public class VeloTest {
 
         // vérifié s'il a été révisé
         assertEquals(0, v.reviser());
-
     }
     @Test
     public void testReviserDecrochePasAbime() {
@@ -325,7 +282,6 @@ public class VeloTest {
     public void testPasReparerAbime() {
         // création d'un nouveau velo
         Velo v = new Velo();
-
         // vérification de sa réparation
         assertEquals(-2, v.reparer());
 
@@ -418,7 +374,6 @@ public class VeloTest {
         v.prochaineRevision();
         // vérification de son type de cadre
         assertFalse(v.toString().contains(" homme ") && v.toString().contains(" 200.0 ") && v.toString().contains(" (révision nécessaire)"));
-
     }
     @Test
     public void testVelo() {
