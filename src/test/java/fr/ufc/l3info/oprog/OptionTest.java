@@ -110,7 +110,6 @@ public class OptionTest {
         // création d'un nouveau velo
         IVelo velo = new Velo();
         OptAssistanceElectrique o = new OptAssistanceElectrique(velo);
-        System.out.println(o.toString());
         // vérification de l'option
         assertTrue(o.toString().contains("assistance électrique"));
 
@@ -123,7 +122,6 @@ public class OptionTest {
         IVelo velo = new Velo();
         velo= new OptAssistanceElectrique(velo);
         velo= new OptSuspensionArriere(velo);
-        System.out.println(velo.toString());
         // vérification des options
         assertTrue(velo.toString().contains("assistance électrique") && velo.toString().contains("suspension arrière"));
     }

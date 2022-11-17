@@ -86,14 +86,7 @@ public class FabriqueVeloTest {
         // vérification sans option
         Assert.assertFalse(velo.toString().contains("cadre aluminium") || velo.toString().contains("assistance électrique") || velo.toString().contains("suspension arrière") || velo.toString().contains("suspension avant") || velo.toString().contains("freins à disque"));
     }
-    /*@Test
-    public void testFabriqueSansOpt() {
-        // création d'un nouvel abonné
-        FabriqueVelo f = FabriqueVelo.getInstance();
-        IVelo v = f.construire('F', null);
-        // vérification de son nom
-        Assert.assertEquals("Vélo cadre femme - 0.0 km", v.toString());
-    }*/
+
     @Test
     public void testFabriqueSansOptF () {
         // création d'un nouvel abonné

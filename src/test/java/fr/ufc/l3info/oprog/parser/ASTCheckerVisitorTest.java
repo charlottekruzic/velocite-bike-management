@@ -294,11 +294,5 @@ public class ASTCheckerVisitorTest {
         n.accept(cv);
         Assert.assertTrue(cv.getErrors().containsValue(ERROR_KIND.WRONG_NUMBER_VALUE));
     }
-    /*@Test
-    public void testVisitorKOmulti_errors() throws StationParserException, IOException {
-        ASTNode n = parser.parse(new File(path + "stationsKOmulti_errors.txt"));
-        ASTCheckerVisitor cv = new ASTCheckerVisitor();
-        n.accept(cv);
-        Assert.assertTrue(cv.getErrors().containsValue(ERROR_KIND.WRONG_NUMBER_VALUE) && cv.getErrors().containsValue(ERROR_KIND.EMPTY_STATION_NAME) && cv.getErrors().containsValue(ERROR_KIND.MISSING_DECLARATION) && cv.getErrors().containsValue(ERROR_KIND.DUPLICATE_DECLARATION));
-    }*/
+
 }

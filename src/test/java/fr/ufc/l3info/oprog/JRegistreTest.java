@@ -2,7 +2,6 @@ package fr.ufc.l3info.oprog;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import static org.junit.Assert.assertEquals;
 
@@ -19,10 +18,8 @@ public class JRegistreTest {
         IRegistre registre = new JRegistre();
         IVelo velo = new Velo();
         Station s = new Station("Gare Viotte",  47.24650155142733,6.022715427111734,10);
-
         // vérification de l'emprunt avec abonne null
         assertEquals(-1, registre.emprunter(null, velo,s.maintenant()));
-
     }
 
     @Test
@@ -31,10 +28,8 @@ public class JRegistreTest {
         IRegistre registre = new JRegistre();
         Abonne abonne = new Abonne("jade");
         Station s = new Station("Gare Viotte",  47.24650155142733,6.022715427111734,10);
-
         // vérification de l'emprunt avec velo null
         assertEquals(-1, registre.emprunter(abonne, null,s.maintenant()));
-
     }
 
     @Test
@@ -44,7 +39,6 @@ public class JRegistreTest {
         Abonne abonne = new Abonne("jade");
         IVelo velo = new Velo();
         Station s = new Station("Gare Viotte",  47.24650155142733,6.022715427111734,10);
-
         registre.emprunter(abonne, velo,s.maintenant());
 
         // vérification de l'emprunt avec un velo déjà emprunté
@@ -69,8 +63,6 @@ public class JRegistreTest {
         // vérification de l'emprunt
         assertEquals(-2, registre.emprunter(abonne,velo,apres10minutes));
     }
-
-
 
     /*Test retourner*/
 
