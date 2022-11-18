@@ -5,15 +5,13 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Ville implements Iterable<Station>{
-    private List<Station> stations;
+    private Map<String,Station> stations;
+    private String stationPrinsipale;
     Ville(){
-        stations=new ArrayList<Station>();
+        stations=new HashMap<String,Station>();
     }
 
     public void initialiser(File f) throws IOException {
@@ -34,15 +32,30 @@ public class Ville implements Iterable<Station>{
 
         ASTStationBuilder builder = new ASTStationBuilder();
         for (Station s : builder.getStations()) {
-            stations.add(s);
+            stations.put(s.nom,s);
         }
+        Iterator<String> i = stations.keySet().iterator();
+        String key = null;
+        if(i.hasNext()){
+            key = i.next();
+        }
+        setStationPrincipale(key);
     }
 
     public void setStationPrincipale(String st){
-
+        if(getStation(st)!=null){
+            stationPrinsipale = st;
+        }
     }
 
     public Station getStation(String nom){
+        Iterator<String> i = stations.keySet().iterator();
+        String key = null;
+        if(i.hasNext()){
+            key = i.next();
+            Station station = stations.get(key);
+            return station;
+        }
         return null;
     }
 
