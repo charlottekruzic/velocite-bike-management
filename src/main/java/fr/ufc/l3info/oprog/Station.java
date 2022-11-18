@@ -70,6 +70,9 @@ public class Station{
         if(registre==null){
             return null;
         }
+        if(bornes[b].estAbime()){
+            return null;
+        }
         if(registre.nbEmpruntsEnCours(a)!=0){
             return null;
         }

@@ -50,4 +50,12 @@ public interface IRegistre {
      *          d'utilisation de chaque vélo.
      */
     double facturation(Abonne a, long debut, long fin);
+
+    /**
+     * Permet d'obtenir des informations sur l'emprunteur du vélo
+     * @param v    un vélo
+     * @return l'emprunteur courant du vélo passé en paramètre
+     * ou null si le vélo n'est pas en cours d'emprunt
+     */
+    Abonne emprunteur(IVelo v);
 }

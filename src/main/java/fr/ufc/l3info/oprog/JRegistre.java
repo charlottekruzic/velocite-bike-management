@@ -25,6 +25,7 @@ public class JRegistre implements IRegistre {
         if (a == null || v == null) {
             return -1;
         }
+
         if (empruntsEnCours.containsKey(v)) {
             return -2;
         }
@@ -53,8 +54,13 @@ public class JRegistre implements IRegistre {
         if (v == null) {
             return -1;
         }
+
         if (! empruntsEnCours.containsKey(v)) {
             return -2;
+        }
+
+        if (v.estAbime()) {
+            emprunteur(v).bloquer();
         }
 
         Emprunt emEnCours = null;
@@ -113,6 +119,18 @@ public class JRegistre implements IRegistre {
             }
         }
         return facture;
+    }
+
+    /**
+     * Permet d'obtenir des informations sur l'emprunteur du vélo
+     *
+     * @param v un vélo
+     * @return l'emprunteur courant du vélo passé en paramètre
+     * ou null si le vélo n'est pas en cours d'emprunt
+     */
+    @Override
+    public Abonne emprunteur(IVelo v) {
+        return empruntsEnCours.get(v);
     }
 
 
