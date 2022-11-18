@@ -34,8 +34,6 @@ public class Abonne {
         this.nom=nom;
         count++;
         Id=count;
-        System.out.println(Id);
-
     }
 
 
@@ -59,9 +57,6 @@ public class Abonne {
         long cle=Long.parseLong(split[3]);
         long cleRib=97-((89*codeBanque+15*codeGuichet+3*numCompte) % 97);
 
-        System.out.println("clerib"+cleRib);
-        System.out.println("cle"+cle);
-
         return cleRib==cle;
     }
 
@@ -78,7 +73,6 @@ public class Abonne {
         if(ribEstCorrect(rib)){
             bloque=false;
             this.rib=rib;
-            System.out.println(Id);
         }
 
     }

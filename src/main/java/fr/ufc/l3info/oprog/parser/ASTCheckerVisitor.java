@@ -79,12 +79,9 @@ public class ASTCheckerVisitor implements ASTNodeVisitor {
     @Override
 
     public Object visit(ASTChaine n) {
-        System.out.println("chaine : "+n.value); //nom
-
         String nom_sans_espace= n.value;
         nom_sans_espace=nom_sans_espace.replaceAll(" ","");
         nom_sans_espace=nom_sans_espace.trim();
-        System.out.println("name : "+nom_sans_espace); //nom
         if(nom_sans_espace.length()==2 || nomsStations.contains(n.value.trim())) {
             if (nom_sans_espace.length() == 2) {
                 this.errors.put(n.getLCPrefix() + "message erreur", ERROR_KIND.EMPTY_STATION_NAME);
@@ -94,7 +91,6 @@ public class ASTCheckerVisitor implements ASTNodeVisitor {
             }
         }else{
             nomsStations.add(n.value);
-            System.out.println("noms : "+nomsStations);
         }
 
         return null;
