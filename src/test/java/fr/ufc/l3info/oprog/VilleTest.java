@@ -9,15 +9,14 @@ import static org.junit.Assert.assertEquals;
 
 public class VilleTest {
     final String path = "./target/classes/data/";
-    @Test
+    @Test (expected= IOException.class)
     public void testInitialiserWrongNumberValue() throws IOException {
         File f = new File(path + "stationsWrongNumberValue.txt");
         Ville v = new Ville();
         v.initialiser(f);
-
     }
 
-    @Test
+    @Test (expected= IOException.class)
     public void testInitialiserNomStationsNonUnique() throws IOException {
         File f = new File(path + "nomStationsNonUnique.txt");
         Ville v = new Ville();
@@ -25,7 +24,7 @@ public class VilleTest {
 
     }
 
-    @Test
+    @Test (expected= IOException.class)
     public void testInitialiserAccoladeFermanteManquante() throws IOException {
         File f = new File(path + "stationsAccoladeFermanteManquante.txt");
         Ville v = new Ville();
@@ -38,10 +37,12 @@ public class VilleTest {
         File f = new File(path + "stationsOK.txt");
         Ville v = new Ville();
         v.initialiser(f);
-        assertEquals("21 - Avenue Fontaine Argent, Boulevard Diderot",getStation("21 - Avenue Fontaine Argent, Boulevard Diderot"));
-        assertEquals("Avenue du Maréchal Foch",getStation("Avenue du Maréchal Foch"));
+        assertEquals("21 - Avenue Fontaine Argent, Boulevard Diderot",v.getStation("21 - Avenue Fontaine Argent, Boulevard Diderot"));
+        assertEquals("Avenue du Maréchal Foch",v.getStation("Avenue du Maréchal Foch"));
 
     }
+
+    //initialiser 2 fois
 
 
 }
