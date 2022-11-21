@@ -1148,5 +1148,29 @@ public class StationIntegrationTest {
         assertEquals(13981,s1.distance(s2),1);
     }
 
+    @Test
+    public void testEmpruntVeloAbime() throws IncorrectNameException{
+        Station s = new Station("Station_1", 10020, 12200, 10);
+        Abonne a = new Abonne("Charlotte", "19372-10383-09976354833-37");
+        IRegistre r = new JRegistre();
+        s.setRegistre(r);
+        IVelo v = new Velo();
+        s.arrimerVelo(v,1);
+        v.abimer();
+        assertNull(s.emprunterVelo(a, 1));
+    }
+    /*@Test
+    public void testEmpruntVeloAbimeAbonneBloque() throws IncorrectNameException{
+        Station s = new Station("Station_1", 10020, 12200, 10);
+        Abonne a = new Abonne("Charlotte", "19372-10383-09976354833-37");
+        IRegistre r = new JRegistre();
+        s.setRegistre(r);
+        IVelo v = new Velo();
+        s.arrimerVelo(v,1);
+        s.emprunterVelo(a,1);
+        v.abimer();
+        assertTrue(a.estBloque());
+    }*/
+
 
 }

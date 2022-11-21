@@ -31,6 +31,7 @@ public class Station{
         this.registre=registre;
 
     }
+
     public String getNom(){
         return nom;
     }
@@ -57,20 +58,21 @@ public class Station{
         }
         return  bornes[b];
     }
+
     public IVelo emprunterVelo(Abonne a, int b){
         if(b>capacite || b<1){
             return null;
         }
-        if(bornes[b]==null || bornes[b].estAbime()){
+        if(bornes[b]==null){
+            return null;
+        }
+        if(bornes[b].estAbime()){
             return null;
         }
         if(a==null || a.estBloque()==true){
             return null;
         }
         if(registre==null){
-            return null;
-        }
-        if(bornes[b].estAbime()){
             return null;
         }
         if(registre.nbEmpruntsEnCours(a)!=0){
