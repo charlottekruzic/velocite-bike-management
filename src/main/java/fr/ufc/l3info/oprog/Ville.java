@@ -8,14 +8,17 @@ import java.io.IOException;
 import java.util.*;
 
 public class Ville implements Iterable<Station>{
-    private Map<String,Station> stations;
-    private String stationPrinsipale;
+    //private Map<String,Station> stations;
+    private Set<Station> stations;
+    private Station stationPrincipale;
     Ville(){
-        stations=new HashMap<String,Station>();
+        //stations=new HashMap<String,Station>();
+        stations = new HashSet<Station>();
     }
 
     public void initialiser(File f) throws IOException {
         stations.clear();
+        System.out.println("s : "+stations);
         StationParser parser = StationParser.getInstance();
         ASTNode n;
         try{
@@ -24,37 +27,52 @@ public class Ville implements Iterable<Station>{
             throw new IOException();
         }
 
+        ASTStationBuilder builder = new ASTStationBuilder();
+
         ASTCheckerVisitor v = new ASTCheckerVisitor();
-        n.accept(v);
+        n.accept(builder);
+
         if(v.getErrors().size()!=0){
             throw new IOException();
         }
 
-        ASTStationBuilder builder = new ASTStationBuilder();
+        //Ajout des stations à la ville
+        int i=0;                                        //enleve
         for (Station s : builder.getStations()) {
-            stations.put(s.nom,s);
+            if(i==0){
+                setStationPrincipale(s.getNom());       //enleve
+            }
+            System.out.println("nom : "+s.getNom());
+            stations.add(s);
+            i++;                                        //enleve
         }
-        Iterator<String> i = stations.keySet().iterator();
-        String key = null;
-        if(i.hasNext()){
-            key = i.next();
-        }
-        setStationPrincipale(key);
+
+        //Définition de la station principale
+
+        //Enlever quand itérateur marchera              enleve
+
+
+        //Remettre quand iterateur marchera
+
+       /* if(!stations.isEmpty()) {
+            setStationPrincipale(iterator().next().getNom());
+        }*/
     }
 
     public void setStationPrincipale(String st){
-        if(getStation(st)!=null){
-            stationPrinsipale = st;
+        for(Station s : stations){
+            if(s.getNom()==st){
+                stationPrincipale = s;
+                break;
+            }
         }
     }
 
     public Station getStation(String nom){
-        Iterator<String> i = stations.keySet().iterator();
-        String key = null;
-        if(i.hasNext()){
-            key = i.next();
-            Station station = stations.get(key);
-            return station;
+        for(Station s : stations){
+            if(s.getNom().equals(nom)){
+                return s;
+            }
         }
         return null;
     }
@@ -67,11 +85,6 @@ public class Ville implements Iterable<Station>{
         return null;
     }
 
-    public Map<Abonne, Double> facturation(int mois, int annee){
-        return null;
-    }
-
-
     /**
      * Returns an iterator over elements of type {@code T}.
      *
@@ -80,6 +93,15 @@ public class Ville implements Iterable<Station>{
     @NotNull
     @Override
     public Iterator<Station> iterator() {
+        //ClosestStationIterator i = new ClosestStationIterator(stations, stationPrincipale);
+        ClosestStationIterator i = new ClosestStationIterator(stations, stationPrincipale);
         return null;
     }
+
+    public Map<Abonne, Double> facturation(int mois, int annee){
+        return null;
+    }
+
+
+
 }

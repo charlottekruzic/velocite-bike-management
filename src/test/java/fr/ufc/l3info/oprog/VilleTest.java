@@ -44,8 +44,23 @@ public class VilleTest {
 
     }
 
-    //initialiser 2 fois
+    @Test
+    public void testInitialiserDoubleAppel() throws IOException {
+        File f1 = new File(path + "stationsOK.txt");
+        Ville v = new Ville();
+        v.initialiser(f1);
+        assertEquals("21 - Avenue Fontaine Argent, Boulevard Diderot",v.getStation("21 - Avenue Fontaine Argent, Boulevard Diderot").getNom());
+        assertEquals("Avenue du Maréchal Foch",v.getStation("Avenue du Maréchal Foch").getNom());
+        File f2 = new File(path + "stationsOK_2.txt");
+        v.initialiser(f2);
+        assertEquals(null,v.getStation("21 - Avenue Fontaine Argent, Boulevard Diderot"));
+        assertEquals(null,v.getStation("Avenue du Maréchal Foch"));
+        assertEquals("09 - Station 1",v.getStation("09 - Station 1").getNom());
+        assertEquals("10 - Station 2",v.getStation("10 - Station 2").getNom());
 
+    }
+
+/*
     @Test
     public void testInitialiserDoubleAppel() throws IOException {
         File f = new File(path + "stationsOK.txt");
@@ -56,7 +71,8 @@ public class VilleTest {
         v.initialiser(f);
         Iterator<Station> i=v.iterator();
         assertEquals(v.getStation("21 - Avenue Fontaine Argent, Boulevard Diderot"),i.next());
-    }
+    }*/
+
     @Test
     public void testsetStationPrincipaleSuccess() throws IOException {
         File f = new File(path + "stationsOK.txt");
