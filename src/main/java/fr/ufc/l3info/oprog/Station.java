@@ -7,12 +7,12 @@ import java.util.Set;
 import static java.lang.Math.*;
 
 public class Station{
-    String nom;
-    double latitude;
-    double longitude;
-    int capacite;
-    IRegistre registre;
-    IVelo [] bornes;
+    private String nom;
+    private double latitude;
+    private double longitude;
+    private int capacite;
+    private IRegistre registre;
+    private IVelo [] bornes;
 
     public Station(String nom, double latitude, double longitude, int capacite){
         this.nom=nom;

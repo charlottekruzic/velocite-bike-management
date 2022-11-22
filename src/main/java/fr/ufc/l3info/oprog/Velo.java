@@ -1,15 +1,12 @@
 package fr.ufc.l3info.oprog;
 
 public class Velo implements IVelo {
-    char type;
-    double kilometre;
-    double kilometre_restant=500;
-    double tarif;
-
-
-
-    boolean decroche;
-    boolean abime=false;
+    private char type;
+    private double kilometre;
+    private double kilometre_restant=500;
+    private double tarif;
+    private boolean decroche;
+    private boolean abime=false;
     /**
      * Construit un vélo avec un cadre de type mixte.
      */
