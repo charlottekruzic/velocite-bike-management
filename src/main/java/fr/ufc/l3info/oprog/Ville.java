@@ -94,8 +94,8 @@ public class Ville implements Iterable<Station>{
     @Override
     public Iterator<Station> iterator() {
         //ClosestStationIterator i = new ClosestStationIterator(stations, stationPrincipale);
-        ClosestStationIterator i = new ClosestStationIterator(stations, stationPrincipale);
-        return null;
+        Iterator i = new ClosestStationIterator(stations, stationPrincipale);
+        return i;
     }
 
     public Map<Abonne, Double> facturation(int mois, int annee){
