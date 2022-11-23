@@ -126,6 +126,7 @@ public class VilleTest {
         File f = new File(path + "stationsOK.txt");
         Ville v = new Ville();
         v.initialiser(f);
+        System.out.println(v.getStationPlusProche(47.24,6.02).getNom());
         assertEquals("Avenue du Maréchal Foch",v.getStationPlusProche(47.24,6.02).getNom());
     }
     @Test
