@@ -120,7 +120,7 @@ public class Station{
         for(int i=0;i<nb_velo_remplacement;i++) {
             IVelo v = (IVelo) velos_remplacement[i];
             //Vérifie que la station n'est pas déjà assez remplie
-            if (nbBornesLibres() == nb_velo_max) {
+            if (nbBornesLibres() == capacite-nb_velo_max) {
                 break;
             }
             // Cherche une borne disponible pour accrocher le vélo

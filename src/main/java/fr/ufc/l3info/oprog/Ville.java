@@ -42,6 +42,7 @@ public class Ville implements Iterable<Station>{
         int i=0;
         for (Station s : builder.getStations()) {
             //Définition de la station principale
+            System.out.println("aa "+s.getNom());
             if(i==0){
                 stationPrincipale=s;
             }
@@ -61,7 +62,9 @@ public class Ville implements Iterable<Station>{
 
     public Station getStation(String nom){
         for(Station s : stations){
+
             if(s.getNom().equals(nom)){
+                System.out.println(s.getNom());
                 return s;
             }
         }

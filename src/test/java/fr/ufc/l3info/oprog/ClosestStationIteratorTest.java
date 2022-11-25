@@ -81,8 +81,8 @@ public class ClosestStationIteratorTest {
     public void testHasNext1Station() {
         Station s1 = new Station("station1",1.5178,2.4523,5);
         Set<Station> stations = new HashSet<>();
-        ClosestStationIterator sI = new ClosestStationIterator(stations,s1);
         stations.add(s1);
+        ClosestStationIterator sI = new ClosestStationIterator(stations,s1);
         assertFalse(sI.hasNext());
     }
     @Test
