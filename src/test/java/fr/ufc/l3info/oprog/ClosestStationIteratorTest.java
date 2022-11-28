@@ -25,6 +25,22 @@ public class ClosestStationIteratorTest {
         assertTrue(sI.hasNext());
     }
     @Test
+    public void testHasNextTrue2() {
+        Station s1 = new Station("station1",1.5178,2.4523,5);
+        Station s2 = new Station("station2",1.5179,2.4523,5);
+        Station s3 = new Station("station3",1.5174,2.4523,5);
+        Station s4 = new Station("station4",1.5171,2.4523,5);
+        Set<Station> stations = new HashSet<>();
+        stations.add(s1);
+        stations.add(s2);
+        stations.add(s3);
+        stations.add(s4);
+        ClosestStationIterator sI = new ClosestStationIterator(stations,s1);
+        sI.next();
+        sI.next();
+        assertTrue(sI.hasNext());
+    }
+    @Test
     public void testHasNextFalse() {
         Station s1 = new Station("station1",1.5178,2.4523,5);
         Station s2 = new Station("station2",1.5179,2.4523,5);
@@ -35,7 +51,11 @@ public class ClosestStationIteratorTest {
         stations.add(s2);
         stations.add(s3);
         stations.add(s4);
-        ClosestStationIterator sI = new ClosestStationIterator(stations,s4);
+        ClosestStationIterator sI = new ClosestStationIterator(stations,s2);
+        sI.next();
+        sI.next();
+        sI.next();
+        sI.next();
         assertFalse(sI.hasNext());
     }
     @Test
@@ -83,28 +103,45 @@ public class ClosestStationIteratorTest {
         Set<Station> stations = new HashSet<>();
         stations.add(s1);
         ClosestStationIterator sI = new ClosestStationIterator(stations,s1);
-        assertFalse(sI.hasNext());
+        assertTrue(sI.hasNext());
     }
     @Test
     public void testNextTrue() {
         Station s1 = new Station("station1",1.5178,2.4523,5);
-        Station s2 = new Station("station2",1.5179,2.4523,5);
-        Station s3 = new Station("station3",1.5174,2.4523,5);
-        Station s4 = new Station("station4",1.5171,2.4523,5);
+        Station s2 = new Station("station2",3.5171,4.4523,5);
+        Station s3 = new Station("station3",2.5174,3.4523,5);
+        Station s4 = new Station("station4",1.9527,2.1253,5);
         Set<Station> stations = new HashSet<>();
         stations.add(s1);
         stations.add(s2);
         stations.add(s3);
         stations.add(s4);
         ClosestStationIterator sI = new ClosestStationIterator(stations,s1);
-        assertEquals("station2",sI.next().getNom());
+
+        assertEquals("station1",sI.next().getNom());
+        assertEquals("station4",sI.next().getNom());
+    }
+    @Test
+    public void testNextTrue2() {
+        Station s1 = new Station("station1",1.5178,2.4523,5);
+        Station s2 = new Station("station2",3.5171,4.4523,5);
+        Station s3 = new Station("station3",2.5174,3.4523,5);
+        Station s4 = new Station("station4",1.9527,2.1253,5);
+        Set<Station> stations = new HashSet<>();
+        stations.add(s1);
+        stations.add(s2);
+        stations.add(s3);
+        stations.add(s4);
+        ClosestStationIterator sI = new ClosestStationIterator(stations,s4);
+        sI.next();
+        assertEquals("station1",sI.next().getNom());
     }
     @Test
     public void testNextFalse() {
         Station s1 = new Station("station1",1.5178,2.4523,5);
-        Station s2 = new Station("station2",1.5179,2.4523,5);
-        Station s3 = new Station("station3",1.5174,2.4523,5);
-        Station s4 = new Station("station4",1.5171,2.4523,5);
+        Station s2 = new Station("station2",3.5171,4.4523,5);
+        Station s3 = new Station("station3",2.5174,3.4523,5);
+        Station s4 = new Station("station4",1.9527,2.1253,5);
         Set<Station> stations = new HashSet<>();
         stations.add(s1);
         stations.add(s2);
