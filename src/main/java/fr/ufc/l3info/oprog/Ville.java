@@ -16,8 +16,9 @@ public class Ville implements Iterable<Station>{
     private IRegistre registre_ville;
 
     Ville(){
-        stations = new HashSet<>();
-        registre_ville=new JRegistre();
+        this.stations = new HashSet<>();
+        this.registre_ville=new JRegistre();
+        this.abonnes_ville = new ArrayList<>();
     }
 
     public void initialiser(File f) throws IOException {
@@ -40,11 +41,11 @@ public class Ville implements Iterable<Station>{
         n.accept(builder);
         //Ajout des stations à la ville
         int i=0;
-        for (Station s : builder.getStations()) {
+        Set<Station> b = builder.getStations();
+        for (Station s : b) {
             //Définition de la station principale
-            System.out.println("aa "+s.getNom());
             if(i==0){
-                stationPrincipale=s;
+                this.stationPrincipale=s;
             }
             stations.add(s);
             i++;
@@ -54,17 +55,16 @@ public class Ville implements Iterable<Station>{
     public void setStationPrincipale(String st){
         for(Station s : stations){
             if(s.getNom().equals(st)){
-                stationPrincipale = s;
+                this.stationPrincipale = s;
                 break;
             }
         }
     }
 
     public Station getStation(String nom){
-        for(Station s : stations){
+        for(Station s : this.stations){
 
             if(s.getNom().equals(nom)){
-                System.out.println(s.getNom());
                 return s;
             }
         }
@@ -74,8 +74,7 @@ public class Ville implements Iterable<Station>{
     public Station getStationPlusProche(double lat, double lon){
         Station station_donnee = new Station("Station inconnu", lat, lon, 0);
         Station station_plus_proche=stationPrincipale;
-        System.out.println(stationPrincipale.getNom());
-        for(Station s : stations){
+        for(Station s : this.stations){
             if(s.distance(station_donnee)<station_plus_proche.distance(station_donnee)){
                 station_plus_proche=s;
             }
@@ -95,6 +94,7 @@ public class Ville implements Iterable<Station>{
             if (err) {
                 return null;
             }
+            this.abonnes_ville.add(new_abonne);
             return new_abonne;
         }
     }
@@ -107,25 +107,49 @@ public class Ville implements Iterable<Station>{
     @NotNull
     @Override
     public Iterator<Station> iterator() {
-        return new ClosestStationIterator(stations, stationPrincipale);
+        return new ClosestStationIterator(this.stations, this.stationPrincipale);
     }
 
     public Map<Abonne, Double> facturation(int mois, int annee){
-       /* Map<Abonne, Double> facturation_abo = new HashMap<>();
-        double deb_mois_ms;
-        double fin_mois_ms;
-
-        for (int i = 0; i < abonnes_ville.size(); i++) {
-            Abonne abonne = abonnes_ville.get(i);
-            double facture = 0.0;
-            registre_ville.facturation(abonne,)
+        Map<Abonne, Double> facturations = new HashMap<>();
+      /*  long debut_mois_depuis_1970;
+        long fin_mois_depuis_1970;
+        long aujourdhui_depuis_1970;
 
 
+        Date d1 = new Date(annee, mois, 1, 0, 0, 0);
+        System.out.println("Date = " + d1);
+        System.out.println("Milliseconds since January 1, 1970, 00:00:00 GMT = " + d1.getTime());
+
+        Date d2 = new Date(annee, mois, 31, 23, 59, 59);
+        System.out.println("Date = " + d2);
+        System.out.println("Milliseconds since January 1, 1970, 00:00:00 GMT = " + d2.getTime());
 
 
-            facturation_abo.put(abonne, abonne.a);
-        }*/
-        return null;
+        Date d3 = new Date();
+        aujourdhui_depuis_1970=d3.getTime();
+        System.out.println("Date = " + d3);
+        System.out.println("Milliseconds since January 1, 1970, 00:00:00 GMT = " + d3.getTime());
+
+
+
+
+
+        //Si valeurs mauvaises
+        if(mois<1 || mois>12){
+            return facturations;
+        }
+
+        //calcule pour tous les abonnés de la ville
+        for (Abonne a : abonnes_ville) {
+        }
+
+
+
+
+*/
+
+        return facturations;
     }
 
 

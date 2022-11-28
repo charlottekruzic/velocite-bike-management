@@ -1,14 +1,17 @@
 package fr.ufc.l3info.oprog;
 
+import jdk.jfr.events.ExceptionStatisticsEvent;
+
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
 
 public class ClosestStationIterator implements Iterator {
-    Set<Station> stations;
-    Station initial;
-    Station current;
-    Set<Station> stations_non_visite;
+    private Set<Station> stations;
+    private Station initial;
+    private Station current;
+    private Set<Station> stations_non_visite;
 
 
     public ClosestStationIterator(Set<Station> stations, Station s){
@@ -36,6 +39,7 @@ public class ClosestStationIterator implements Iterator {
 
     public Station next() {
         if (stations_non_visite.isEmpty()){
+            //throw new ArrayIndexOutOfBoundsException("No more stations");
             return null;//exception
         }
         if (this.current == null) {
@@ -43,14 +47,16 @@ public class ClosestStationIterator implements Iterator {
         } else {
             double min = -1;
             double distance;
+            Station s_plus_proche = current;
             for (Station s : this.stations_non_visite) {
                 distance = current.distance(s);
                 if ((min == -1 && distance != 0) || (distance != 0 && distance < min)) {
-                    current = s;
+                    s_plus_proche = s;
                     min = distance;
                 }
 
             }
+            current = s_plus_proche;
         }
 
         this.stations_non_visite.remove(current);
