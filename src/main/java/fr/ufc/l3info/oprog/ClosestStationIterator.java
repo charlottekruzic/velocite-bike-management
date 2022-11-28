@@ -27,6 +27,9 @@ public class ClosestStationIterator implements Iterator {
     }
 
     public boolean hasNext(){
+       /* for(Station s : this.stations_non_visite){
+            System.out.println(s.getNom());
+        }*/
         if(this.stations_non_visite.isEmpty()) {
             return false;
         }else{
@@ -44,17 +47,17 @@ public class ClosestStationIterator implements Iterator {
             double min = -1;
             double distance;
             for (Station s : this.stations_non_visite) {
+                System.out.println("current ");
                 distance = current.distance(s);
-                if (min == -1 && distance != 0) {
+                if ((min == -1 && distance != 0) || (distance != 0 && distance < min)) {
                     current = s;
                     min = distance;
-                } else if (distance != 0 && distance < min) {
-                    min = distance;
-                    current = s;
                 }
+
             }
         }
-        stations_non_visite.remove(current);
+
+        this.stations_non_visite.remove(current);
         return current;
     }
 
