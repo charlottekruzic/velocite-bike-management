@@ -125,6 +125,13 @@ public class VilleTest {
         assertEquals("Avenue du Maréchal Foch",v.getStationPlusProche(47.24,6.02).getNom());
     }
     @Test
+    public void testgetStationPlusProche2() throws IncorrectNameException, IOException {
+        File f = new File(path + "ville_test.txt");
+        Ville v = new Ville();
+        v.initialiser(f);
+        assertEquals("Vers l'infini et au dela",v.getStationPlusProche(49.0,6.02).getNom());
+    }
+    @Test
     public void testcreerAbonne() throws IncorrectNameException, IOException {
         Ville ville = new Ville();
         Assert.assertEquals("Nemo",ville.creerAbonne("Nemo","19372-10383-09976354833-37").getNom());
@@ -145,13 +152,23 @@ public class VilleTest {
         File f = new File(path + "stationsOK.txt");
         Ville v = new Ville();
         v.initialiser(f);
-        int cpt=0;
-        Iterator<Station> i=v.iterator();
+        int cpt = 0;
+        Iterator<Station> i = v.iterator();
         while (i.hasNext()) {
             i.next();
             cpt++;
         }
-        assertEquals(2,cpt);
+        assertEquals(2, cpt);
+    }
+    
+    @Test
+    public void Test_Iterator() throws IncorrectNameException, IOException{
+        File f = new File(path + "ville_test.txt");
+        Ville v = new Ville();
+        v.initialiser(f);
+        v.setStationPrincipale("Avenue de la fin");
+        Iterator<Station> i = v.iterator();
+        assertEquals(v.getStation("l'aventure c'est extra"),i.next());
     }
 
     @Test
@@ -162,17 +179,23 @@ public class VilleTest {
         Station s = v.getStation("Avenue du Maréchal Foch");
 
         Abonne a = new Abonne("Nemo", "19372-10383-09976354833-37");
-
+        Abonne b= new Abonne("Marin","13341-89317-13746913443-92");
         IRegistre r = new JRegistre();
         s.setRegistre(r);
 
         IVelo ve = new Velo();
+        IVelo ve2=new Velo();
         s.arrimerVelo(ve, 1);
+        s.arrimerVelo(ve2,2);
 
         r.emprunter(a, ve, 1);
-        r.retourner(ve, 10000);
+        r.emprunter(b,ve2,2);
 
-        //faire la facturation
+        r.retourner(ve, 10000);
+        r.retourner(ve2,10000);
+
+        assertEquals(3,v.facturation(11,2022));
+
     }
 
     @Test
