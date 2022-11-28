@@ -111,7 +111,7 @@ public class VilleTest {
 
     }
     @Test
-    public void testsetStationPlusProche() throws IncorrectNameException, IOException {
+    public void testgetStationPlusProche() throws IncorrectNameException, IOException {
         File f = new File(path + "stationsOK.txt");
         Ville v = new Ville();
         v.initialiser(f);
@@ -128,6 +128,11 @@ public class VilleTest {
     public void testcreerAbonnenull() throws IncorrectNameException, IOException {
         Ville ville = new Ville();
         Assert.assertEquals(null,ville.creerAbonne("Nemo 35","19372-10383-09976354833-37"));
+    }
+    @Test
+    public void testcreerAbonneMauvaisRib() {
+        Ville ville = new Ville();
+        Assert.assertTrue(ville.creerAbonne("Nemo","12345-12345-12345678912-15").estBloque());
     }
     @Test
     public void testIterator() throws IncorrectNameException, IOException {
