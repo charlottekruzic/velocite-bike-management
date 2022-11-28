@@ -689,7 +689,7 @@ public class StationIntegrationTest {
         hash_Set.add(neuf2);
 
         s.equilibrer(hash_Set);
-        Assert.assertTrue(s.nbBornesLibres()==1);
+        Assert.assertEquals(2,s.nbBornesLibres());
 
     }
     @Test
@@ -961,7 +961,7 @@ public class StationIntegrationTest {
             velos.add(new Velo());
         }
         s.equilibrer(velos);
-        assertEquals(5,s.nbBornesLibres());
+        assertEquals(6,s.nbBornesLibres());
     }
 
     @Test
