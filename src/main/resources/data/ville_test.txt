@@ -1,0 +1,29 @@
+station "21 - Avenue Fontaine Argent, Boulevard Diderot" {
+    latitude:47.0;
+    longitude:5.0;
+    capacite:12
+}
+
+station "Avenue du Maréchal Foch" {
+    capacite : 10 ;
+    longitude : 6.0 ;
+    latitude : 48.0
+}
+
+station "Avenue de la fin" {
+    capacite : 18 ;
+    longitude : 8.0 ;
+    latitude : 52.0
+}
+
+station "Vers l'infini et au dela" {
+    capacite : 6 ;
+    longitude : 7.0 ;
+    latitude : 50.0
+}
+
+station "l'aventure c'est extra" {
+    capacite : 9 ;
+    longitude : 9.0 ;
+    latitude : 54.0
+}
