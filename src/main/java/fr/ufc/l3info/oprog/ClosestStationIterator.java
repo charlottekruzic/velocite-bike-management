@@ -14,10 +14,10 @@ public class ClosestStationIterator implements Iterator {
     public ClosestStationIterator(Set<Station> stations, Station s){
         // si tous les attributs sont corrects
         if(stations!=null && s != null && stations.contains(s)){
-            this.stations=stations;
+            this.stations=new HashSet<>(stations);
             this.initial=s;
             this.current=null;
-            this.stations_non_visite=stations;
+            this.stations_non_visite=new HashSet<>(stations);
         }else{
             this.stations=new HashSet<>();
             this.initial=null;
@@ -27,7 +27,7 @@ public class ClosestStationIterator implements Iterator {
     }
 
     public boolean hasNext(){
-        if(next()==null) {
+        if(this.stations_non_visite.isEmpty()) {
             return false;
         }else{
             return true;
@@ -43,8 +43,7 @@ public class ClosestStationIterator implements Iterator {
         } else {
             double min = -1;
             double distance;
-            current = this.initial;
-            for (Station s : stations) {
+            for (Station s : this.stations_non_visite) {
                 distance = current.distance(s);
                 if (min == -1 && distance != 0) {
                     current = s;
