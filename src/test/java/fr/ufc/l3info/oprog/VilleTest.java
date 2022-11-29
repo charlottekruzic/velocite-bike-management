@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import static org.junit.Assert.assertEquals;
@@ -124,13 +125,13 @@ public class VilleTest {
         v.initialiser(f);
         assertEquals("Avenue du Maréchal Foch",v.getStationPlusProche(47.24,6.02).getNom());
     }
-    /*@Test
+    @Test
     public void testgetStationPlusProche2() throws IncorrectNameException, IOException {
         File f = new File(path + "ville_test.txt");
         Ville v = new Ville();
         v.initialiser(f);
-        assertEquals("Vers l'infini et au dela",v.getStationPlusProche(49.0,6.02).getNom());
-    }*/
+        assertEquals("Vers l'infini et au dela",v.getStationPlusProche(49.7,6.9).getNom());
+    }
     @Test
     public void testcreerAbonne() throws IncorrectNameException, IOException {
         Ville ville = new Ville();
@@ -160,15 +161,15 @@ public class VilleTest {
         }
         assertEquals(2, cpt);
     }
-    /*
-    @Test
+
+    /*@Test
     public void Test_Iterator() throws IncorrectNameException, IOException{
         File f = new File(path + "ville_test.txt");
         Ville v = new Ville();
         v.initialiser(f);
         v.setStationPrincipale("Avenue de la fin");
         Iterator<Station> i = v.iterator();
-        assertEquals(v.getStation("l'aventure c'est extra"),i.next());
+        assertEquals(v.getStation("l'aventure c'est extra").getNom(),i.next().getNom());
     }*/
 
     /*@Test
@@ -185,16 +186,26 @@ public class VilleTest {
 
         IVelo ve = new Velo();
         IVelo ve2=new Velo();
+        s.emprunterVelo(a,2);
+        s.emprunterVelo(b,3);
         s.arrimerVelo(ve, 1);
         s.arrimerVelo(ve2,2);
 
-        r.emprunter(a, ve, 1);
-        r.emprunter(b,ve2,2);
+        long c120minutes = System.currentTimeMillis() + 120 * 60 * 1000;
 
-        r.retourner(ve, 10000);
-        r.retourner(ve2,10000);
 
-        assertEquals(3,v.facturation(11,2022));
+        r.retourner(ve, c120minutes);
+        r.retourner(ve2,c120minutes);
+        double payer=0.0;
+
+        for (HashMap.Entry<Abonne, Double> entry : v.facturation(11,2022).entrySet()) {
+            System.out.println(entry.getKey().getNom() + ":" + entry.getValue().toString());
+            payer+=entry.getValue();
+        }
+
+        assertEquals(4.0,payer,0.1);
+
+        //assertEquals(3,v.facturation(11,2022));
 
     }*/
 
