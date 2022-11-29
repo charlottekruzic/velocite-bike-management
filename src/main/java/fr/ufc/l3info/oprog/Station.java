@@ -79,7 +79,7 @@ public class Station{
             return null;
         }
         IVelo v=bornes[b];
-        registre.emprunter(a, v, maintenant() );
+        registre.emprunter(a, v, maintenant());
         v.decrocher();
         bornes[b]=null;
         return v;

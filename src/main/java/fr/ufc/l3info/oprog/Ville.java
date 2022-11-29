@@ -24,11 +24,21 @@ public class Ville implements Iterable<Station>{
     public void initialiser(File f) throws IOException {
         stations.clear();
         StationParser parser = StationParser.getInstance();
-        ASTNode n;
+        ASTNode n = null;//premier fils -> premier fils
+
+        String nom_station_1 = null;
+        boolean trouve = false;
         try{
             n=parser.parse(f);
         }catch (StationParserException e){
+            trouve = true;
             throw new IOException();
+        }finally {
+            if(trouve==false){
+                //Définition de la station principale
+                String nom_station_guillemet= String.valueOf(n.getChild(0).getChild(0));
+                nom_station_1=nom_station_guillemet.substring(1,nom_station_guillemet.length()-1);
+            }
         }
 
         ASTCheckerVisitor v = new ASTCheckerVisitor();
@@ -40,15 +50,12 @@ public class Ville implements Iterable<Station>{
         ASTStationBuilder builder = new ASTStationBuilder();
         n.accept(builder);
         //Ajout des stations à la ville
-        int i=0;
         Set<Station> b = builder.getStations();
         for (Station s : b) {
-            //Définition de la station principale
-            if(i==0){
+            stations.add(s);
+            if(s.getNom().equals(nom_station_1)){
                 this.stationPrincipale=s;
             }
-            stations.add(s);
-            i++;
         }
     }
 
@@ -72,10 +79,14 @@ public class Ville implements Iterable<Station>{
     }
 
     public Station getStationPlusProche(double lat, double lon){
-        Station station_donnee = new Station("Station inconnu", lat, lon, 0);
+        Station station_donnee = new Station("Station inconnu", lat, lon, 2);
         Station station_plus_proche=stationPrincipale;
         for(Station s : this.stations){
+            System.out.println("nouvelle distance : "+s.distance(station_donnee));
+            System.out.println("plus proche distance : "+station_plus_proche.distance(station_donnee));
             if(s.distance(station_donnee)<station_plus_proche.distance(station_donnee)){
+                System.out.println("youhouuu");
+                System.out.println("station : "+s.getNom());
                 station_plus_proche=s;
             }
         }
@@ -112,42 +123,33 @@ public class Ville implements Iterable<Station>{
 
     public Map<Abonne, Double> facturation(int mois, int annee){
         Map<Abonne, Double> facturations = new HashMap<>();
-      /*  long debut_mois_depuis_1970;
-        long fin_mois_depuis_1970;
-        long aujourdhui_depuis_1970;
-
-
-        Date d1 = new Date(annee, mois, 1, 0, 0, 0);
-        System.out.println("Date = " + d1);
-        System.out.println("Milliseconds since January 1, 1970, 00:00:00 GMT = " + d1.getTime());
-
-        Date d2 = new Date(annee, mois, 31, 23, 59, 59);
-        System.out.println("Date = " + d2);
-        System.out.println("Milliseconds since January 1, 1970, 00:00:00 GMT = " + d2.getTime());
-
-
-        Date d3 = new Date();
-        aujourdhui_depuis_1970=d3.getTime();
-        System.out.println("Date = " + d3);
-        System.out.println("Milliseconds since January 1, 1970, 00:00:00 GMT = " + d3.getTime());
-
-
-
-
 
         //Si valeurs mauvaises
         if(mois<1 || mois>12){
             return facturations;
         }
 
-        //calcule pour tous les abonnés de la ville
-        for (Abonne a : abonnes_ville) {
+        //Premier jour
+        Calendar debut_mois = Calendar.getInstance();
+        debut_mois.set(annee, mois, 1, 0,0,0);
+        long debut_mois_ms = debut_mois.getTimeInMillis();
+
+        //Dernier jour
+        if(mois==12){
+            mois=1;
+            annee=annee+1;
         }
 
+        Calendar fin_mois = Calendar.getInstance();
+        debut_mois.set(annee, mois, 1, 0,0,0);
+        long fin_mois_ms = fin_mois.getTimeInMillis()-1;
 
 
 
-*/
+        //calcule pour tous les abonnés de la ville
+        for (Abonne a : abonnes_ville) {
+            facturations.put(a, registre_ville.facturation(a, debut_mois_ms, fin_mois_ms));
+        }
 
         return facturations;
     }

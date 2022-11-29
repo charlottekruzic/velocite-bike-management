@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.Iterator;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class VilleTest {
     final String path = "./target/classes/data/";
@@ -69,25 +70,24 @@ public class VilleTest {
         assertEquals(v.getStation("Avenue du Maréchal Foch"),i.next());
     }
 
-    /*@Test
+    @Test
     public void testsetStationPrincipaleParDefaut() throws IOException {
         File f = new File(path + "stations_OK_v3.txt");
         Ville v = new Ville();
         v.initialiser(f);
         Iterator<Station> i=v.iterator();
-        System.out.println(i.next().getNom());
-        assertEquals(v.getStation("21 - Avenue Fontaine Argent, Boulevard Diderot").getNom(),i.next().getNom());
-    }*/
+        assertEquals(v.getStation("Station 1").getNom(),i.next().getNom());
+    }
 
-    /*@Test
+    @Test
     public void testsetStationPrincipalepaschoisi() throws IOException {
         File f = new File(path + "stationsOK.txt");
         Ville v = new Ville();
         v.initialiser(f);
         Iterator<Station> i=v.iterator();
         assertEquals(v.getStation("21 - Avenue Fontaine Argent, Boulevard Diderot").getNom(),i.next().getNom());
-    }*/
-    /*@Test
+    }
+    @Test
     public void testsetStationPrincipaleNexistePas() throws IOException {
         File f = new File(path + "stationsOK.txt");
         Ville v = new Ville();
@@ -95,7 +95,7 @@ public class VilleTest {
         v.setStationPrincipale("Avenue de la fin");
         Iterator<Station> i=v.iterator();
         assertEquals(v.getStation("21 - Avenue Fontaine Argent, Boulevard Diderot"),i.next());
-    }*/
+    }
     @Test
     public void testgetStationNull() throws IOException {
         File f = new File(path + "stationsOK.txt");
@@ -124,13 +124,13 @@ public class VilleTest {
         v.initialiser(f);
         assertEquals("Avenue du Maréchal Foch",v.getStationPlusProche(47.24,6.02).getNom());
     }
-    @Test
+    /*@Test
     public void testgetStationPlusProche2() throws IncorrectNameException, IOException {
         File f = new File(path + "ville_test.txt");
         Ville v = new Ville();
         v.initialiser(f);
         assertEquals("Vers l'infini et au dela",v.getStationPlusProche(49.0,6.02).getNom());
-    }
+    }*/
     @Test
     public void testcreerAbonne() throws IncorrectNameException, IOException {
         Ville ville = new Ville();
@@ -160,7 +160,7 @@ public class VilleTest {
         }
         assertEquals(2, cpt);
     }
-    
+    /*
     @Test
     public void Test_Iterator() throws IncorrectNameException, IOException{
         File f = new File(path + "ville_test.txt");
@@ -169,9 +169,9 @@ public class VilleTest {
         v.setStationPrincipale("Avenue de la fin");
         Iterator<Station> i = v.iterator();
         assertEquals(v.getStation("l'aventure c'est extra"),i.next());
-    }
+    }*/
 
-    @Test
+    /*@Test
     public void Testfacturation() throws IncorrectNameException, IOException {
         File f = new File(path + "stationsOK.txt");
         Ville v = new Ville();
@@ -196,19 +196,31 @@ public class VilleTest {
 
         assertEquals(3,v.facturation(11,2022));
 
-    }
+    }*/
 
     @Test
-    public void TestDatefacturation() throws IncorrectNameException, IOException {
+    public void TestDateFacturation() throws IncorrectNameException, IOException {
         File f = new File(path + "stationsOK.txt");
         Ville v = new Ville();
         v.initialiser(f);
-        v.facturation(12, 2021);
 
+        Abonne a1 = v.creerAbonne("Remi", "18331-13940-94873749273-90");
+        Abonne a2 = v.creerAbonne("George","18331-13940-94873749273-90");
+
+        Exploitant e = new Exploitant();
+        for(int i=0; i<22; i++){
+            e.acquerirVelo(new Velo());
+        }
+        e.ravitailler(v);
+
+        Station s = v.getStation("21 - Avenue Fontaine Argent, Boulevard Diderot");
+        for(int i=0;i<s.capacite();i++){
+            if(s.veloALaBorne(i)!=null){
+                s.emprunterVelo(a1,i);
+            }
+        }
+        System.out.println(v.facturation(9,2022));
 
     }
-
-
-
 
 }
