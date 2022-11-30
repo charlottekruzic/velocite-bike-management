@@ -296,7 +296,7 @@ public class VilleTest {
     }
 
     @Test
-    public void TestDateFacturation() throws IncorrectNameException, IOException {
+    public void TestDecembreFacturation() throws IncorrectNameException, IOException {
         File f = new File(path + "stationsOK.txt");
         Ville v = new Ville();
         v.initialiser(f);
@@ -312,11 +312,11 @@ public class VilleTest {
 
         //Date d'emprunt et de retour
         Calendar date_emprunt = Calendar.getInstance();
-        date_emprunt.set(2022, 8, 3, 12,0,0);
+        date_emprunt.set(2021, 12, 3, 12,0,0);
         long date_emprunt_ms = date_emprunt.getTimeInMillis();
 
         Calendar date_retour = Calendar.getInstance();
-        date_retour.set(2022, 8, 3, 15,0,0);
+        date_retour.set(2021, 12, 3, 15,0,0);
         long date_retour_ms = date_retour.getTimeInMillis();
 
 
@@ -342,7 +342,7 @@ public class VilleTest {
             }
         }
 
-        Map<Abonne, Double> facturations = v.facturation(8,2022);
+        Map<Abonne, Double> facturations = v.facturation(12,2021);
         double facturation_tot=0.0;
         for (Map.Entry<Abonne, Double> entry : facturations.entrySet()) {
             facturation_tot+=entry.getValue();
