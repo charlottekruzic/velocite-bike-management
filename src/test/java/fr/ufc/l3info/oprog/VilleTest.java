@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -215,11 +216,10 @@ public class VilleTest {
     @Test
     public void TestDateFacturation() throws IncorrectNameException, IOException {
         File f = new File(path + "stationsOK.txt");
-        Ville v = Mockito.spy(new Ville());
+        Ville v = new Ville();
         v.initialiser(f);
 
-
-        Abonne a1 = v.creerAbonne("Remi", "18331-13940-94873749273-90");
+        Abonne a1 = v.creerAbonne("Remi", "19922-13333-13444444441-21");
         Abonne a2 = v.creerAbonne("George","18331-13940-94873749273-90");
 
         Exploitant e = new Exploitant();
@@ -228,17 +228,45 @@ public class VilleTest {
         }
         e.ravitailler(v);
 
-        Station s = v.getStation("21 - Avenue Fontaine Argent, Boulevard Diderot");
+        //Date d'emprunt et de retour
+        Calendar date_emprunt = Calendar.getInstance();
+        date_emprunt.set(2022, 8, 3, 12,0,0);
+        long date_emprunt_ms = date_emprunt.getTimeInMillis();
 
-        for(int i=0;i<s.capacite();i++){
-            if(s.veloALaBorne(i)!=null){
-                s.emprunterVelo(a1,i);
+        Calendar date_retour = Calendar.getInstance();
+        date_retour.set(2022, 8, 3, 15,0,0);
+        long date_retour_ms = date_retour.getTimeInMillis();
+
+
+        Station s1 = Mockito.spy(v.getStation("21 - Avenue Fontaine Argent, Boulevard Diderot"));
+        Mockito.when(s1.maintenant()).thenReturn(date_emprunt_ms);
+
+        //emprunt du vélo
+        IVelo velo=null;
+        for(int i=0;i<s1.capacite();i++){
+            if(s1.veloALaBorne(i)!=null){
+                velo = s1.emprunterVelo(a1,i);
+                break;
             }
         }
 
+        Station s2 = Mockito.spy(v.getStation("Avenue du Maréchal Foch"));
+        Mockito.when(s2.maintenant()).thenReturn(date_retour_ms);
+        //retour du vélo
+        for(int i=1;i<s2.capacite();i++){
+            if(s2.veloALaBorne(i)==null){
+                s2.arrimerVelo(velo,i);
+                break;
+            }
+        }
 
+        Map<Abonne, Double> facturations = v.facturation(8,2022);
+        double facturation_tot=0.0;
+        for (Map.Entry<Abonne, Double> entry : facturations.entrySet()) {
+            facturation_tot+=entry.getValue();
+        }
 
-       v.facturation(5,2022);
+        Assert.assertEquals(6, facturation_tot, 0.000001);
 
     }
 
