@@ -348,7 +348,111 @@ public class VilleTest {
         }
 
         assertEquals(0.0,payer,0.1);
+    }
 
+    @Test
+    public void TestFacturationAnnePasPasser() throws IncorrectNameException, IOException {
+        File f = new File(path + "stationsOK.txt");
+        Ville v = new Ville();
+        v.initialiser(f);
+        IVelo velo = null;
+
+        Abonne a1 = v.creerAbonne("Remi", "18331-13940-94873749273-90");
+
+        Exploitant e = new Exploitant();
+        for(int i=0; i<22; i++){
+            e.acquerirVelo(new Velo());
+        }
+        e.ravitailler(v);
+
+        Station s = Mockito.spy(v.getStation("21 - Avenue Fontaine Argent, Boulevard Diderot"));
+
+        Calendar date_emprunt = Calendar.getInstance();
+        date_emprunt.set(2022, 5, 2, 1,0,0);
+        long date_emprunt_ms = date_emprunt.getTimeInMillis();
+
+        Mockito.when(s.maintenant()).thenReturn(date_emprunt_ms);
+        for(int i=0;i<s.capacite();i++){
+            if(s.veloALaBorne(i)!=null){
+                velo = s.emprunterVelo(a1,i);
+                break;
+            }
+        }
+
+
+        Calendar date_retour = Calendar.getInstance();
+        date_retour.set(2023, 5, 2, 5,0,0);
+        long date_retour_ms = date_retour.getTimeInMillis();
+
+        Mockito.when(s.maintenant()).thenReturn(date_retour_ms);
+
+        for(int i=0;i<s.capacite();i++){
+            if(s.veloALaBorne(i)==null){
+                s.arrimerVelo(velo,i);
+                break;
+            }
+        }
+
+        double payer=0.0;
+        for (HashMap.Entry<Abonne, Double> entry : v.facturation(5,2023).entrySet()) {
+            payer+=entry.getValue();
+        }
+
+        assertEquals(0.0,payer,0.00001);
+
+    }
+
+
+
+    @Test
+    public void TestFacturationMoinsInexistant() throws IncorrectNameException, IOException {
+        File f = new File(path + "stationsOK.txt");
+        Ville v = new Ville();
+        v.initialiser(f);
+        IVelo velo = null;
+
+        Abonne a1 = v.creerAbonne("Remi", "18331-13940-94873749273-90");
+
+        Exploitant e = new Exploitant();
+        for(int i=0; i<22; i++){
+            e.acquerirVelo(new Velo());
+        }
+        e.ravitailler(v);
+
+        Station s = Mockito.spy(v.getStation("21 - Avenue Fontaine Argent, Boulevard Diderot"));
+
+        Calendar date_emprunt = Calendar.getInstance();
+        date_emprunt.set(2022, 5, 2, 1,0,0);
+        long date_emprunt_ms = date_emprunt.getTimeInMillis();
+
+        Mockito.when(s.maintenant()).thenReturn(date_emprunt_ms);
+        for(int i=0;i<s.capacite();i++){
+            if(s.veloALaBorne(i)!=null){
+                velo = s.emprunterVelo(a1,i);
+                break;
+            }
+        }
+
+
+        Calendar date_retour = Calendar.getInstance();
+        date_retour.set(2023, 15, 2, 5,0,0);
+        long date_retour_ms = date_retour.getTimeInMillis();
+
+        Mockito.when(s.maintenant()).thenReturn(date_retour_ms);
+
+        for(int i=0;i<s.capacite();i++){
+            if(s.veloALaBorne(i)==null){
+                s.arrimerVelo(velo,i);
+                break;
+            }
+        }
+
+        double payer=0.0;
+        for (HashMap.Entry<Abonne, Double> entry : v.facturation(15,2022).entrySet()) {
+            payer+=entry.getValue();
+        }
+
+        assertEquals(0.0,payer,0.00001);
 
     }
 
