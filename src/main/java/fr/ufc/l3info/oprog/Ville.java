@@ -52,6 +52,7 @@ public class Ville implements Iterable<Station>{
         //Ajout des stations à la ville
         Set<Station> b = builder.getStations();
         for (Station s : b) {
+            s.setRegistre(this.registre_ville);
             stations.add(s);
             if(s.getNom().equals(nom_station_1)){
                 this.stationPrincipale=s;
@@ -82,11 +83,7 @@ public class Ville implements Iterable<Station>{
         Station station_donnee = new Station("Station inconnu", lat, lon, 2);
         Station station_plus_proche=stationPrincipale;
         for(Station s : this.stations){
-            System.out.println("nouvelle distance : "+s.distance(station_donnee));
-            System.out.println("plus proche distance : "+station_plus_proche.distance(station_donnee));
             if(s.distance(station_donnee)<station_plus_proche.distance(station_donnee)){
-                System.out.println("youhouuu");
-                System.out.println("station : "+s.getNom());
                 station_plus_proche=s;
             }
         }
@@ -138,10 +135,12 @@ public class Ville implements Iterable<Station>{
         if(mois==12){
             mois=1;
             annee=annee+1;
+        }else{
+            mois=mois+1;
         }
 
         Calendar fin_mois = Calendar.getInstance();
-        debut_mois.set(annee, mois, 1, 0,0,0);
+        fin_mois.set(annee, mois, 1, 0,0,0);
         long fin_mois_ms = fin_mois.getTimeInMillis()-1;
 
 
