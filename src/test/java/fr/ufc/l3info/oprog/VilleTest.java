@@ -177,6 +177,63 @@ public class VilleTest {
     }
 
     @Test
+    public void TestDecembreFacturation() throws IncorrectNameException, IOException {
+        File f = new File(path + "stationsOK.txt");
+        Ville v = new Ville();
+        v.initialiser(f);
+
+        Abonne a1 = v.creerAbonne("Remi", "19922-13333-13444444441-21");
+        Abonne a2 = v.creerAbonne("George","18331-13940-94873749273-90");
+
+        Exploitant e = new Exploitant();
+        for(int i=0; i<22; i++){
+            e.acquerirVelo(new Velo());
+        }
+        e.ravitailler(v);
+
+        //Date d'emprunt et de retour
+        Calendar date_emprunt = Calendar.getInstance();
+        date_emprunt.set(2021, 12, 3, 12,0,0);
+        long date_emprunt_ms = date_emprunt.getTimeInMillis();
+
+        Calendar date_retour = Calendar.getInstance();
+        date_retour.set(2021, 12, 3, 15,0,0);
+        long date_retour_ms = date_retour.getTimeInMillis();
+
+
+        Station s1 = Mockito.spy(v.getStation("21 - Avenue Fontaine Argent, Boulevard Diderot"));
+        Mockito.when(s1.maintenant()).thenReturn(date_emprunt_ms);
+
+        //emprunt du vélo
+        IVelo velo=null;
+        for(int i=0;i<s1.capacite();i++){
+            if(s1.veloALaBorne(i)!=null){
+                velo = s1.emprunterVelo(a1,i);
+                break;
+            }
+        }
+
+        Station s2 = Mockito.spy(v.getStation("Avenue du Maréchal Foch"));
+        Mockito.when(s2.maintenant()).thenReturn(date_retour_ms);
+        //retour du vélo
+        for(int i=1;i<s2.capacite();i++){
+            if(s2.veloALaBorne(i)==null){
+                s2.arrimerVelo(velo,i);
+                break;
+            }
+        }
+
+        Map<Abonne, Double> facturations = v.facturation(12,2021);
+        double facturation_tot=0.0;
+        for (Map.Entry<Abonne, Double> entry : facturations.entrySet()) {
+            facturation_tot+=entry.getValue();
+        }
+
+        Assert.assertEquals(6, facturation_tot, 0.000001);
+
+    }
+
+    @Test
     public void Testfacturation() throws IncorrectNameException, IOException {
         File f = new File(path + "stationsOK.txt");
         Ville v = new Ville();
@@ -292,63 +349,6 @@ public class VilleTest {
 
         assertEquals(0.0,payer,0.1);
 
-
-    }
-
-    @Test
-    public void TestDecembreFacturation() throws IncorrectNameException, IOException {
-        File f = new File(path + "stationsOK.txt");
-        Ville v = new Ville();
-        v.initialiser(f);
-
-        Abonne a1 = v.creerAbonne("Remi", "19922-13333-13444444441-21");
-        Abonne a2 = v.creerAbonne("George","18331-13940-94873749273-90");
-
-        Exploitant e = new Exploitant();
-        for(int i=0; i<22; i++){
-            e.acquerirVelo(new Velo());
-        }
-        e.ravitailler(v);
-
-        //Date d'emprunt et de retour
-        Calendar date_emprunt = Calendar.getInstance();
-        date_emprunt.set(2021, 12, 3, 12,0,0);
-        long date_emprunt_ms = date_emprunt.getTimeInMillis();
-
-        Calendar date_retour = Calendar.getInstance();
-        date_retour.set(2021, 12, 3, 15,0,0);
-        long date_retour_ms = date_retour.getTimeInMillis();
-
-
-        Station s1 = Mockito.spy(v.getStation("21 - Avenue Fontaine Argent, Boulevard Diderot"));
-        Mockito.when(s1.maintenant()).thenReturn(date_emprunt_ms);
-
-        //emprunt du vélo
-        IVelo velo=null;
-        for(int i=0;i<s1.capacite();i++){
-            if(s1.veloALaBorne(i)!=null){
-                velo = s1.emprunterVelo(a1,i);
-                break;
-            }
-        }
-
-        Station s2 = Mockito.spy(v.getStation("Avenue du Maréchal Foch"));
-        Mockito.when(s2.maintenant()).thenReturn(date_retour_ms);
-        //retour du vélo
-        for(int i=1;i<s2.capacite();i++){
-            if(s2.veloALaBorne(i)==null){
-                s2.arrimerVelo(velo,i);
-                break;
-            }
-        }
-
-        Map<Abonne, Double> facturations = v.facturation(12,2021);
-        double facturation_tot=0.0;
-        for (Map.Entry<Abonne, Double> entry : facturations.entrySet()) {
-            facturation_tot+=entry.getValue();
-        }
-
-        Assert.assertEquals(6, facturation_tot, 0.000001);
 
     }
 
