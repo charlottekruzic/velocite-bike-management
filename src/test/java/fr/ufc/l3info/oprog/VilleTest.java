@@ -2,9 +2,11 @@ package fr.ufc.l3info.oprog;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -213,8 +215,9 @@ public class VilleTest {
     @Test
     public void TestDateFacturation() throws IncorrectNameException, IOException {
         File f = new File(path + "stationsOK.txt");
-        Ville v = new Ville();
+        Ville v = Mockito.spy(new Ville());
         v.initialiser(f);
+
 
         Abonne a1 = v.creerAbonne("Remi", "18331-13940-94873749273-90");
         Abonne a2 = v.creerAbonne("George","18331-13940-94873749273-90");
@@ -226,12 +229,16 @@ public class VilleTest {
         e.ravitailler(v);
 
         Station s = v.getStation("21 - Avenue Fontaine Argent, Boulevard Diderot");
+
         for(int i=0;i<s.capacite();i++){
             if(s.veloALaBorne(i)!=null){
                 s.emprunterVelo(a1,i);
             }
         }
-        System.out.println(v.facturation(9,2022));
+
+
+
+       v.facturation(5,2022);
 
     }
 
