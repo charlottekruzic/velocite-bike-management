@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import static org.junit.Assert.assertEquals;
@@ -186,16 +187,26 @@ public class VilleTest {
 
         IVelo ve = new Velo();
         IVelo ve2=new Velo();
+        s.emprunterVelo(a,2);
+        s.emprunterVelo(b,3);
         s.arrimerVelo(ve, 1);
         s.arrimerVelo(ve2,2);
 
-        r.emprunter(a, ve, 1);
-        r.emprunter(b,ve2,2);
+        long c120minutes = System.currentTimeMillis() + 120 * 60 * 1000;
 
-        r.retourner(ve, 10000);
-        r.retourner(ve2,10000);
 
-        assertEquals(3,v.facturation(11,2022));
+        r.retourner(ve, c120minutes);
+        r.retourner(ve2,c120minutes);
+        double payer=0.0;
+
+        for (HashMap.Entry<Abonne, Double> entry : v.facturation(11,2022).entrySet()) {
+            System.out.println(entry.getKey().getNom() + ":" + entry.getValue().toString());
+            payer+=entry.getValue();
+        }
+
+        assertEquals(4.0,payer,0.1);
+
+        //assertEquals(3,v.facturation(11,2022));
 
     }*/
 
