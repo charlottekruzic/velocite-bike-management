@@ -281,7 +281,7 @@ public class StationIntegrationTest {
         Station s2 = new Station("Granvelle",  47.23531038159631,6.025353690286829,9);
 
         // vérification de la distance entre deux bornes
-        assertEquals(73.227,s.distance(s2),DELTA);
+        assertEquals(1.260239096416513,s.distance(s2),DELTA);
 
     }
     @Test
@@ -704,7 +704,7 @@ public class StationIntegrationTest {
         Station s2 = new Station("test2",31,2,10);
         s2.setRegistre(r);
 
-        Assert.assertEquals(6850.9,s.distance(s2),0.1);
+        Assert.assertEquals(146.77568122705154,s.distance(s2),0.1);
 
 
     }
@@ -1138,14 +1138,14 @@ public class StationIntegrationTest {
     public void testDistancePositive() {
         Station s1 = new Station("Station_1", 10000, 12000, 10);
         Station s2 = new Station("Station_2", 20000, 14000, 8);
-        assertEquals(9326,s1.distance(s2),1);
+        assertEquals(6743.855359621518,s1.distance(s2),1);
     }
 
     @Test
     public void testDistanceNegative() {
         Station s1 = new Station("Station_1", -10000, 12000, 10);
         Station s2 = new Station("Station_2", 20000, -14000, 8);
-        assertEquals(13981,s1.distance(s2),1);
+        assertEquals(12389.048053578526,s1.distance(s2),1);
     }
 
     @Test

@@ -180,10 +180,18 @@ public class Station{
     }
 
     public double distance(Station s){
-        double a=sin((s.latitude-latitude)/2)*sin((s.latitude-latitude)/2) + cos(latitude)*cos(s.latitude)*sin((s.longitude-longitude)/2)*sin((s.longitude-longitude)/2);
-        double c=2*atan2(sqrt(a),sqrt(1-a));
-        double d= 6371 * c;
+        double R = 6371;
+        double a1 = s.latitude * Math.PI/180;
+        double a2 = this.latitude * Math.PI/180;
+        double delta_a = (this.latitude-s.latitude) * Math.PI/180;
+        double delta_l = (this.longitude-s.longitude) * Math.PI/180;
+
+        double a = Math.sin(delta_a/2) * Math.sin(delta_a/2) + Math.cos(a1) * Math.cos(a2) * Math.sin(delta_l/2) * Math.sin(delta_l/2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+        double d = R * c;
         return d;
+
     }
 
     public long maintenant(){

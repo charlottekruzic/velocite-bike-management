@@ -124,13 +124,13 @@ public class VilleTest {
         v.initialiser(f);
         assertEquals("Avenue du Maréchal Foch",v.getStationPlusProche(47.24,6.02).getNom());
     }
-    /*@Test
+    @Test
     public void testgetStationPlusProche2() throws IncorrectNameException, IOException {
         File f = new File(path + "ville_test.txt");
         Ville v = new Ville();
         v.initialiser(f);
-        assertEquals("Vers l'infini et au dela",v.getStationPlusProche(49.0,6.02).getNom());
-    }*/
+        assertEquals("Avenue du Maréchal Foch",v.getStationPlusProche(49.0,6.02).getNom());
+    }
     @Test
     public void testcreerAbonne() throws IncorrectNameException, IOException {
         Ville ville = new Ville();
@@ -160,7 +160,7 @@ public class VilleTest {
         }
         assertEquals(2, cpt);
     }
-    /*
+
     @Test
     public void Test_Iterator() throws IncorrectNameException, IOException{
         File f = new File(path + "ville_test.txt");
@@ -168,8 +168,9 @@ public class VilleTest {
         v.initialiser(f);
         v.setStationPrincipale("Avenue de la fin");
         Iterator<Station> i = v.iterator();
-        assertEquals(v.getStation("l'aventure c'est extra"),i.next());
-    }*/
+        i.next();
+        assertEquals(v.getStation("l'aventure c'est extra").getNom(),i.next().getNom());
+    }
 
     /*@Test
     public void Testfacturation() throws IncorrectNameException, IOException {
