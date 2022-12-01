@@ -176,45 +176,8 @@ public class VilleTest {
         assertEquals(v.getStation("l'aventure c'est extra").getNom(),i.next().getNom());
     }
 
-    /*@Test
-    public void Testfacturation() throws IncorrectNameException, IOException {
-        File f = new File(path + "stationsOK.txt");
-        Ville v = new Ville();
-        v.initialiser(f);
-        Station s = v.getStation("Avenue du Maréchal Foch");
-
-        Abonne a = new Abonne("Nemo", "19372-10383-09976354833-37");
-        Abonne b= new Abonne("Marin","13341-89317-13746913443-92");
-        IRegistre r = new JRegistre();
-        s.setRegistre(r);
-
-        IVelo ve = new Velo();
-        IVelo ve2=new Velo();
-        s.emprunterVelo(a,2);
-        s.emprunterVelo(b,3);
-        s.arrimerVelo(ve, 1);
-        s.arrimerVelo(ve2,2);
-
-        long c120minutes = System.currentTimeMillis() + 120 * 60 * 1000;
-
-
-        r.retourner(ve, c120minutes);
-        r.retourner(ve2,c120minutes);
-        double payer=0.0;
-
-        for (HashMap.Entry<Abonne, Double> entry : v.facturation(11,2022).entrySet()) {
-            System.out.println(entry.getKey().getNom() + ":" + entry.getValue().toString());
-            payer+=entry.getValue();
-        }
-
-        assertEquals(4.0,payer,0.1);
-
-        //assertEquals(3,v.facturation(11,2022));
-
-    }*/
-
     @Test
-    public void TestDateFacturation() throws IncorrectNameException, IOException {
+    public void TestDecembreFacturation() throws IncorrectNameException, IOException {
         File f = new File(path + "stationsOK.txt");
         Ville v = new Ville();
         v.initialiser(f);
@@ -230,11 +193,11 @@ public class VilleTest {
 
         //Date d'emprunt et de retour
         Calendar date_emprunt = Calendar.getInstance();
-        date_emprunt.set(2022, 8, 3, 12,0,0);
+        date_emprunt.set(2021, 12, 3, 12,0,0);
         long date_emprunt_ms = date_emprunt.getTimeInMillis();
 
         Calendar date_retour = Calendar.getInstance();
-        date_retour.set(2022, 8, 3, 15,0,0);
+        date_retour.set(2021, 12, 3, 15,0,0);
         long date_retour_ms = date_retour.getTimeInMillis();
 
 
@@ -260,13 +223,236 @@ public class VilleTest {
             }
         }
 
-        Map<Abonne, Double> facturations = v.facturation(8,2022);
+        Map<Abonne, Double> facturations = v.facturation(12,2021);
         double facturation_tot=0.0;
         for (Map.Entry<Abonne, Double> entry : facturations.entrySet()) {
             facturation_tot+=entry.getValue();
         }
 
         Assert.assertEquals(6, facturation_tot, 0.000001);
+
+    }
+
+    @Test
+    public void Testfacturation() throws IncorrectNameException, IOException {
+        File f = new File(path + "stationsOK.txt");
+        Ville v = new Ville();
+        v.initialiser(f);
+
+        //creation de 2 abonnes
+        Abonne a1 = v.creerAbonne("Remi", "18331-13940-94873749273-90");
+        Abonne a2 = v.creerAbonne("George","18331-13940-94873749273-90");
+        //creation d'un exploitant
+        Exploitant e = new Exploitant();
+        //les exploitants acquerissent 22 velos
+        for(int i=0; i<22; i++){
+            e.acquerirVelo(new Velo());
+        }
+        //il ravitaille la ville
+        e.ravitailler(v);
+
+        Calendar date_emprunt = Calendar.getInstance();
+        date_emprunt.set(2022, 4, 3, 10,0,0);
+        long date_emprunt_ms = date_emprunt.getTimeInMillis();
+
+        Calendar date_retour = Calendar.getInstance();
+        date_retour.set(2022, 4, 3, 15,0,0);
+        long date_retour_ms = date_retour.getTimeInMillis();
+
+        Station s=Mockito.spy(v.getStation("21 - Avenue Fontaine Argent, Boulevard Diderot"));
+        //Station s = v.getStation("21 - Avenue Fontaine Argent, Boulevard Diderot");
+
+        Mockito.when(s.maintenant()).thenReturn(date_emprunt_ms);
+
+        IVelo ve=null;
+        //l'abonne Remi emprunte les velos de la sation fontaine argent
+        for(int i=1;i<s.capacite();i++){
+            if(s.veloALaBorne(i)!=null){
+                ve=s.emprunterVelo(a1,i);
+                break;
+            }
+        }
+        Mockito.when(s.maintenant()).thenReturn(date_retour_ms);
+
+        //repose les velos sur les bornes
+        for (int i=1; i<s.capacite(); i++){
+            if(s.veloALaBorne(i)==null){
+                s.arrimerVelo(ve,i);
+                break;
+            }
+
+        }
+
+        double payer=0.0;
+        for (HashMap.Entry<Abonne, Double> entry : v.facturation(4,2022).entrySet()) {
+            payer+=entry.getValue();
+        }
+
+        assertEquals(10.0,payer,0.1);
+
+
+    }
+    @Test
+    public void TestfacturationDateMauvaise() throws IncorrectNameException, IOException {
+        File f = new File(path + "stationsOK.txt");
+        Ville v = new Ville();
+        v.initialiser(f);
+
+        //creation de 2 abonnes
+        Abonne a1 = v.creerAbonne("Remi", "18331-13940-94873749273-90");
+        Abonne a2 = v.creerAbonne("George","18331-13940-94873749273-90");
+        //creation d'un exploitant
+        Exploitant e = new Exploitant();
+        //les exploitants acquerissent 22 velos
+        for(int i=0; i<22; i++){
+            e.acquerirVelo(new Velo());
+        }
+        //il ravitaille la ville
+        e.ravitailler(v);
+
+        Calendar date_emprunt = Calendar.getInstance();
+        date_emprunt.set(2022, 4, 3, 10,0,0);
+        long date_emprunt_ms = date_emprunt.getTimeInMillis();
+
+        Calendar date_retour = Calendar.getInstance();
+        date_retour.set(2022, 4, 3, 15,0,0);
+        long date_retour_ms = date_retour.getTimeInMillis();
+
+        Station s=Mockito.spy(v.getStation("21 - Avenue Fontaine Argent, Boulevard Diderot"));
+        //Station s = v.getStation("21 - Avenue Fontaine Argent, Boulevard Diderot");
+
+        Mockito.when(s.maintenant()).thenReturn(date_emprunt_ms);
+
+        IVelo ve=null;
+        //l'abonne Remi emprunte les velos de la sation fontaine argent
+        for(int i=1;i<s.capacite();i++){
+            if(s.veloALaBorne(i)!=null){
+                ve=s.emprunterVelo(a1,i);
+                break;
+            }
+        }
+        Mockito.when(s.maintenant()).thenReturn(date_retour_ms);
+
+        //repose les velos sur les bornes
+        for (int i=1; i<s.capacite(); i++){
+            if(s.veloALaBorne(i)==null){
+                s.arrimerVelo(ve,i);
+                break;
+            }
+
+        }
+
+        double payer=0.0;
+        for (HashMap.Entry<Abonne, Double> entry : v.facturation(14,2022).entrySet()) {
+            payer+=entry.getValue();
+        }
+
+        assertEquals(0.0,payer,0.1);
+    }
+
+    @Test
+    public void TestFacturationAnnePasPasser() throws IncorrectNameException, IOException {
+        File f = new File(path + "stationsOK.txt");
+        Ville v = new Ville();
+        v.initialiser(f);
+        IVelo velo = null;
+
+        Abonne a1 = v.creerAbonne("Remi", "18331-13940-94873749273-90");
+
+        Exploitant e = new Exploitant();
+        for(int i=0; i<22; i++){
+            e.acquerirVelo(new Velo());
+        }
+        e.ravitailler(v);
+
+        Station s = Mockito.spy(v.getStation("21 - Avenue Fontaine Argent, Boulevard Diderot"));
+
+        Calendar date_emprunt = Calendar.getInstance();
+        date_emprunt.set(2022, 5, 2, 1,0,0);
+        long date_emprunt_ms = date_emprunt.getTimeInMillis();
+
+        Mockito.when(s.maintenant()).thenReturn(date_emprunt_ms);
+        for(int i=0;i<s.capacite();i++){
+            if(s.veloALaBorne(i)!=null){
+                velo = s.emprunterVelo(a1,i);
+                break;
+            }
+        }
+
+
+        Calendar date_retour = Calendar.getInstance();
+        date_retour.set(2023, 5, 2, 5,0,0);
+        long date_retour_ms = date_retour.getTimeInMillis();
+
+        Mockito.when(s.maintenant()).thenReturn(date_retour_ms);
+
+        for(int i=0;i<s.capacite();i++){
+            if(s.veloALaBorne(i)==null){
+                s.arrimerVelo(velo,i);
+                break;
+            }
+        }
+
+        double payer=0.0;
+        for (HashMap.Entry<Abonne, Double> entry : v.facturation(5,2023).entrySet()) {
+            payer+=entry.getValue();
+        }
+
+        assertEquals(0.0,payer,0.00001);
+
+    }
+
+
+
+    @Test
+    public void TestFacturationMoinsInexistant() throws IncorrectNameException, IOException {
+        File f = new File(path + "stationsOK.txt");
+        Ville v = new Ville();
+        v.initialiser(f);
+        IVelo velo = null;
+
+        Abonne a1 = v.creerAbonne("Remi", "18331-13940-94873749273-90");
+
+        Exploitant e = new Exploitant();
+        for(int i=0; i<22; i++){
+            e.acquerirVelo(new Velo());
+        }
+        e.ravitailler(v);
+
+        Station s = Mockito.spy(v.getStation("21 - Avenue Fontaine Argent, Boulevard Diderot"));
+
+        Calendar date_emprunt = Calendar.getInstance();
+        date_emprunt.set(2022, 5, 2, 1,0,0);
+        long date_emprunt_ms = date_emprunt.getTimeInMillis();
+
+        Mockito.when(s.maintenant()).thenReturn(date_emprunt_ms);
+        for(int i=0;i<s.capacite();i++){
+            if(s.veloALaBorne(i)!=null){
+                velo = s.emprunterVelo(a1,i);
+                break;
+            }
+        }
+
+
+        Calendar date_retour = Calendar.getInstance();
+        date_retour.set(2023, 15, 2, 5,0,0);
+        long date_retour_ms = date_retour.getTimeInMillis();
+
+        Mockito.when(s.maintenant()).thenReturn(date_retour_ms);
+
+        for(int i=0;i<s.capacite();i++){
+            if(s.veloALaBorne(i)==null){
+                s.arrimerVelo(velo,i);
+                break;
+            }
+        }
+
+        double payer=0.0;
+        for (HashMap.Entry<Abonne, Double> entry : v.facturation(15,2022).entrySet()) {
+            payer+=entry.getValue();
+        }
+
+        assertEquals(0.0,payer,0.00001);
 
     }
 
