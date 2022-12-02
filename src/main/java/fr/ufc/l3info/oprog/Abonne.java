@@ -16,7 +16,7 @@ public class Abonne {
      * @param nom le nom du nouvel abonné.
      * @throws IncorrectNameException si le nom de l'abonné n'est pas correct.
      */
-    public Abonne(String nom) throws IncorrectNameException {
+    protected Abonne(String nom) throws IncorrectNameException {
         bloque=true;
         if(nom==null|| nom.length()==0){
             throw new IncorrectNameException();
@@ -67,7 +67,7 @@ public class Abonne {
      * @param rib le RIB
      * @throws IncorrectNameException si le nom de l'abonné n'est pas correct.
      */
-    public Abonne(String nom, String rib) throws IncorrectNameException {
+    protected Abonne(String nom, String rib) throws IncorrectNameException {
         this(nom);
 
         if(ribEstCorrect(rib)){
@@ -108,7 +108,7 @@ public class Abonne {
     /**
      * Permet de bloquer volontairement un abonné.
      */
-    public void bloquer() {
+    protected void bloquer() {
         this.bloque=true;
     }
 
