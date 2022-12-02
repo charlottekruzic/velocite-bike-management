@@ -15,7 +15,7 @@ public class Ville implements Iterable<Station>{
 
     private IRegistre registre_ville;
 
-    Ville(){
+    public Ville(){
         this.stations = new HashSet<>();
         this.registre_ville=new JRegistre();
         this.abonnes_ville = new ArrayList<>();
