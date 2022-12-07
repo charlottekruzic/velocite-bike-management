@@ -10,7 +10,7 @@ public class Velo implements IVelo {
     /**
      * Construit un vélo avec un cadre de type mixte.
      */
-    public Velo()  {
+    protected Velo()  {
         this.type='m';
         this.kilometre=0;
         this.decroche=true;
@@ -20,7 +20,7 @@ public class Velo implements IVelo {
     /**
      * Construit un vélo avec un type de cadre spécifié en paramètre
      */
-    public Velo(char t)  {
+    protected Velo(char t)  {
         if(t=='f'|| t=='F' || t=='h' || t=='H'){
             this.type=t;
         }else{

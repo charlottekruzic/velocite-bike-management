@@ -4,7 +4,7 @@ public class  Option implements IVelo{
     IVelo _originale;
     double tarifOption;
 
-    public Option(IVelo v, double t) {
+    protected Option(IVelo v, double t) {
         _originale = v;
         tarifOption = t;
 
