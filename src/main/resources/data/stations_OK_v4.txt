@@ -1,0 +1,35 @@
+station "Homestead" {
+    latitude:25.46610554011662;
+    longitude:-80.47283757965569;
+    capacite:12
+}
+
+station "Miami" {
+    latitude:25.778474894413346;
+    longitude:-80.20114850639551;
+    capacite:12
+}
+
+station "Hollywood" {
+    latitude:26.01146474886889;
+    longitude:-80.16338300346582;
+    capacite:4
+}
+
+station "Kendal" {
+    latitude:25.673818143987962;
+    longitude:-80.35015058159082;
+    capacite:12
+}
+
+station "Coral Springs" {
+    latitude:26.281298001044366;
+    longitude:-80.26787472162016;
+    capacite:4
+}
+
+station "Tamarac" {
+    latitude:26.221368786882152;
+    longitude:-80.28503009009133;
+    capacite:12
+}

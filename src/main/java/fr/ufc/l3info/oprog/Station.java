@@ -53,20 +53,20 @@ public class Station{
         if(b>capacite || b<1){
             return null;
         }
-        if(bornes[b]==null){
+        if(bornes[b-1]==null){
             return null;
         }
-        return  bornes[b];
+        return  bornes[b-1];
     }
 
     public IVelo emprunterVelo(Abonne a, int b){
         if(b>capacite || b<1){
             return null;
         }
-        if(bornes[b]==null){
+        if(bornes[b-1]==null){
             return null;
         }
-        if(bornes[b].estAbime()){
+        if(bornes[b-1].estAbime()){
             return null;
         }
         if(a==null || a.estBloque()==true){
@@ -78,10 +78,10 @@ public class Station{
         if(registre.nbEmpruntsEnCours(a)!=0){
             return null;
         }
-        IVelo v=bornes[b];
+        IVelo v=bornes[b-1];
         registre.emprunter(a, v, maintenant());
         v.decrocher();
-        bornes[b]=null;
+        bornes[b-1]=null;
         return v;
     }
 
@@ -92,7 +92,7 @@ public class Station{
         if(v==null){
             return -1;
         }
-        if(bornes[b]!=null){
+        if(bornes[b-1]!=null){
             return -2;
         }
         if(registre==null){
@@ -101,7 +101,7 @@ public class Station{
         if (v.arrimer()==-1){
             return -3;
         }
-        bornes[b]=v;
+        bornes[b-1]=v;
         int retour =this.registre.retourner(v,maintenant());
 
         if(retour!=0){
