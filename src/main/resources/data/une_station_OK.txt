@@ -1,0 +1,5 @@
+station "La station" {
+    latitude:1;
+    longitude:2;
+    capacite:40
+}
